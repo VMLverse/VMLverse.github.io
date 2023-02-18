@@ -8,4 +8,4 @@ In my free time I enjoy working on my Python package pybaseball, writing the Bas
 
 I earned my B.A. in Economics at Boston College, where my studies focused on statistical modeling, machine learning, data engineering, and quantitative social science. My research at this
 
-[Link to Blog Contents](blog_template.md)
+[Link to Blog Contents](confusion_matrix.md)
