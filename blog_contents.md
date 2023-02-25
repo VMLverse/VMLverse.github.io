@@ -1,3 +1,7 @@
+layout: page
+title: "Blog-Contents"
+permalink: /blogcontents
+
 <div align="right">
 <a href="https://vimvenu-rgb.github.io/">About Me</a> | 
  <a href="https://vimvenu-rgb.github.io/blog_contents.md">Blog Contents</a> | 
