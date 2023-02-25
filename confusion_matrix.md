@@ -50,8 +50,8 @@ Precision and recall are often used together to evaluate the performance of a mo
     <td>False Negative</td>
   </tr>
   <tr>
-    <td>eg. Prediction = Positive (Alarm Rings) But Reality = False (Opposite, i.e., no Fire)</td>
-    <td>eg. Prediction = Negative (No Alarm) But Reality = False (Opposite) ie., Fire</td>
+    <td>eg. Prediction = Positive (Alarm Rings)<br />But Reality = False (Opposite, i.e., no Fire)</td>
+    <td>eg. Prediction = Negative (No Alarm)<br />But Reality = False (Opposite) ie., Fire</td>
   </tr>
   <tr>
     <td>Useful in Spam Domain: False Positive in Spam. Prediction = Spam, but reality is a genuine mail (False). Impact: User misses out an important email as it gets classified as spam</td>
