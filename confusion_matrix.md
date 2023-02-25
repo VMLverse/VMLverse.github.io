@@ -37,8 +37,25 @@ Precision and recall are often used together to evaluate the performance of a mo
 
 
 ## Type I and II Errors
-| Type I Error                                                                                                                                                                        | Type II Error                                                                                                                                                                                                            |
-|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| False Positive                                                                                                                                                                      | False Negative                                                                                                                                                                                                           |
-| eg. Prediction = Positive (Alarm Rings) But Reality = False (Opposite, i.e., no Fire)                                                                                               | eg. Prediction = Negative (No Alarm) But Reality = False (Opposite) ie., Fire                                                                                                                                            |
-| Useful in Spam Domain: False Positive in Spam. Prediction = Spam, but reality is a  genuine mail (False). Impact: User misses out an important email  as it gets classified as spam | Useful in Fire Alarm or Medical: False Negative in Medical. Prediction = No Disease or Fire Actual = Opposite (Disease or Fire) Impact: User will not be treated for harmful  disease or User will not be alert to Fire. |
+<table>
+<thead>
+  <tr>
+    <th>Type I Error</th>
+    <th>Type II Error</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>False Positive</td>
+    <td>False Negative</td>
+  </tr>
+  <tr>
+    <td>eg. Prediction = Positive (Alarm Rings) But Reality = False (Opposite, i.e., no Fire)</td>
+    <td>eg. Prediction = Negative (No Alarm) But Reality = False (Opposite) ie., Fire</td>
+  </tr>
+  <tr>
+    <td>Useful in Spam Domain: False Positive in Spam. Prediction = Spam, but reality is a genuine mail (False). Impact: User misses out an important email as it gets classified as spam</td>
+    <td>Useful in Fire Alarm or Medical: False Negative in Medical. Prediction = No Disease or Fire Actual = Opposite (Disease or Fire) Impact: User will not be treated for harmful disease or User will not be alert to Fire.</td>
+  </tr>
+</tbody>
+</table>
