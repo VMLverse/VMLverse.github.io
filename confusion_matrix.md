@@ -54,8 +54,12 @@ Precision and recall are often used together to evaluate the performance of a mo
     <td>eg. Prediction = Negative (No Alarm)<br />But Reality = False (Opposite) ie., Fire</td>
   </tr>
   <tr>
-    <td>Useful in Spam Domain: False Positive in Spam. Prediction = Spam, but reality is a genuine mail (False). Impact: User misses out an important email as it gets classified as spam</td>
-    <td>Useful in Fire Alarm or Medical: False Negative in Medical. Prediction = No Disease or Fire Actual = Opposite (Disease or Fire) Impact: User will not be treated for harmful disease or User will not be alert to Fire.</td>
+    <td>Useful in Spam Domain: False Positive in Spam.<br />
+     Prediction = Spam, but reality is a genuine mail (False).<br />
+     Impact: User misses out an important email as it gets classified as spam</td>
+    <td>Useful in Fire Alarm or Medical: False Negative in Medical.<br />
+     Prediction = No Disease or Fire Actual = Opposite (Disease or Fire)<br />
+     Impact: User will not be treated for harmful disease or User will not be alert to Fire.</td>
   </tr>
 </tbody>
 </table>
