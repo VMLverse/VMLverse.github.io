@@ -28,6 +28,7 @@
   - Artificial Neural Network (MLPClassifier)
   - SVM
   - KNN. 
+
   **Tools Used:** Jupyter Notebook, Scikit Learn, Numpy & Pandas. 
   **Hardware Used:** Google Colab. 
   **Github:** [Link](https://github.com/vimvenu-rgb/ScikitLearn_Projects). 
