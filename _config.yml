@@ -1,3 +1,4 @@
 title: Vimal Venugopal's Blog
 description: Bookmark this to keep an eye on my project updates!
-include: blog_contents.md
+theme: minima
+
