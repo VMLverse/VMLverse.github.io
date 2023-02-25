@@ -1,6 +1,6 @@
 <div align="right" style="font-size: 24px;">
 <a href="https://vimvenu-rgb.github.io/">About Me</a> | 
- <a href="blog_contents.html">Blog Contents</a> | 
+ <a href="blog_contents.md">Blog Contents</a> | 
  <a href="https://vimvenu-rgb.github.io/resume.pdf">Resume</a> | 
  <a href="mailto:vimalkumar.engr@gmail.com?subject=Saw%20Your%20Github%20Blog&body=Enter%20Your%20Text.">Email me</a>
 </div>
