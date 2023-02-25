@@ -1,4 +1,4 @@
-<div align="right" style="font-size: 24px;">
+<div align="right" style="font-size: 20px;">
 <a href="https://vimvenu-rgb.github.io/">About Me</a> | 
  <a href="blog_contents.md">Blog Contents</a> | 
  <a href="https://vimvenu-rgb.github.io/resume.pdf">Resume</a> | 
