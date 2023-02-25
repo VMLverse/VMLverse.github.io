@@ -6,7 +6,7 @@
 </div>
 
 # About Me
-![Picture of Vimal Venugopal](/images/about_me_pic.jpg)
+<img src="/images/about_me_pic.jpg" alt="Picture of Vimal Venugopal" style="width:45%;">
 
 Hello, I'm Vimal Venugopal and I'm Senior Principal Professional Services Consultant at Genesys. I know that's a lot of words, but in simple terms, once our company sells their enterprise cloud software, am responsible for leading the implementation and addressing all the customer requirements from inception to production go live. Although my profession as a consultant is exciting, my interest lie in Machine Learning and Programming in General. And that leads to the reason why I undertook the [OMSCS Program](https://omscs.gatech.edu/home) at Georgia Tech.
 
