@@ -1,12 +1,8 @@
-<head>
-  <link rel="stylesheet" type="text/css" href="styles.css">
-</head>
-
 <div align="right">
-<a href="https://vimvenu-rgb.github.io/" class="header_links">About Me</a> | 
+<a href="https://vimvenu-rgb.github.io/" style="font-size: 24px;">About Me</a> | 
  <a href="blog_contents.md" style="font-size: 24px;">Blog Contents</a> | 
- <a href="https://vimvenu-rgb.github.io/resume.pdf">Resume</a> | 
- <a href="mailto:vimalkumar.engr@gmail.com?subject=Saw%20Your%20Github%20Blog&body=Enter%20Your%20Text.">Email me</a>
+ <a href="https://vimvenu-rgb.github.io/resume.pdf" style="font-size: 24px;">Resume</a> | 
+ <a href="mailto:vimalkumar.engr@gmail.com?subject=Saw%20Your%20Github%20Blog&body=Enter%20Your%20Text." style="font-size: 24px;">Email me</a>
 </div>
 
 # About Me
