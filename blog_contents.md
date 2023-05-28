@@ -9,6 +9,7 @@
 
 ## Articles
 - [Eliminating Confusing in Confusion Matrix](confusion_matrix.md)
+- [Basic Commands in git](github_commands.md)
 
 ## Projects
 - ### Semi Supervised Learning - FixMatch 
