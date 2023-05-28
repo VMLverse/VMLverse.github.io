@@ -6,19 +6,64 @@
 </div>
 
 # GitHub Commands
-- git commit: 
+## Basics
+### git commit:
+ -   commit in a git repository records a snapshot of all the (tracked) files in your directory
+ -   like a giant copy and paste, but even better!
+ -   commits as lightweight as possible though, so it doesn't just blindly copy the entire directory every time you commit
 ![Alt text](/images/github_commands/git_commit.gif)
-- git branch: simply pointers to a specific commit -- nothing more. branch early, and branch often
+ ### git branch:
+- simply pointers to a specific commit -- nothing more. branch early, and branch often
 ![Alt text](/images/github_commands/git_branch.gif)
-- git checkout <name> : put us on the new branch before committing our changes
- ![Alt text](/images/github_commands/git_checkout.gif)
-- git checkout -b [yourbranchname] : create a new branch AND check it out at the same time
- ![Alt text](/images/github_commands/git_checkout_b.gif)
-- git merge: Merging in Git creates a special commit that has two unique parents
-- rebasing: Rebasing essentially takes a set of commits, "copies" them, and plops them down somewhere else
+### git checkout <name> :
+- put us on the new branch before committing our changes
+ 
+![Alt text](/images/github_commands/git_checkout.gif)
+ 
+### git checkout -b [yourbranchname]:
+- create a new branch AND check it out at the same time
+ 
+![Alt text](/images/github_commands/git_checkout_b.gif)
+### git merge:
+- Merging in Git creates a special commit that has two unique parents
+![Alt text](/images/github_commands/git_merge.gif)
+### git rebase:
+- Rebasing essentially takes a set of commits, "copies" them, and plops them down somewhere else
+![Alt text](/images/github_commands/git_rebase.gif)
 
-- Item 3
+ ## HEAD
+- HEAD is the symbolic name for the currently checked out commit 
+- it's essentially what commit you're working on top of.
+- HEAD always points to the most recent commit which is reflected in the working tree.
+ 
+ ### detach head:
+- Detaching HEAD just means attaching it to a commit instead of a branch.
+- To detach simply specify checkout by its hash
+![Alt text](/images/github_commands/git_detach.gif)
+ 
+ ### Relative commits:
+ #### Caret (^) operator:
+- Moving upwards one commit at a time with ^
+- Each time you append that to a ref name, you are telling Git to find the parent of the specified commit.
+- saying main^ is equivalent to "the first parent of main"
+![Alt text](/images/github_commands/git_caret.gif)
+#### tilde (~) operator:
+- Moving upwards a number of times with ~<num>
+- tilde operator (optionally) takes in a trailing number that specifies the number of parents you would like to ascend
+![Alt text](/images/github_commands/git_tilde.gif)
+#### branch by force(-f):
+- You can directly reassign a branch to a commit with the -f option
+![Alt text](/images/github_commands/git_branch_f.gif)
+ 
+ ### Reversing Changes:
+ #### git reset:
+- reverses changes by moving a branch reference backwards in time to an older commit
+![Alt text](/images/github_commands/git_reset.gif)
 
+ #### git revert:
+- git reset doesn't work for remote branches that others are using.
+- In order to reverse changes and share those reversed changes with others, we need to use git revert.
+![Alt text](/images/github_commands/git_revert.gif)
 <!-- [add immage] ![Alt text](/images/positive_negative.png) -->
 <!-- [heading] ## Precision & Recall -->
 <!-- [subheading] ### Precision -->
