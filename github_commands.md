@@ -19,10 +19,12 @@
 
 ### git checkout <name> :
 - put us on the new branch before committing our changes
+
 <img src="/images/github_commands/git_checkout.gif" alt="Alt text" width="512" height="434" />
  
 ### git checkout -b [yourbranchname]:
 - create a new branch AND check it out at the same time
+
 <img src="/images/github_commands/git_checkout_b.gif" alt="Alt text" width="512" height="434" />
  
 ### git merge:
@@ -38,9 +40,10 @@
 - it's essentially what commit you're working on top of.
 - HEAD always points to the most recent commit which is reflected in the working tree.
  
- ### detach head:
+### detach head:
 - Detaching HEAD just means attaching it to a commit instead of a branch.
 - To detach simply specify checkout by its hash
+
 <img src="/images/github_commands/git_detach.gif" alt="Alt text" width="512" height="434" />
  
 ### Relative commits:
