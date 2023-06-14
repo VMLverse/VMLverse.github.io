@@ -1,4 +1,199 @@
-title: Vimal Venugopal's Blog
-description: Bookmark this to keep an eye on my project updates!
-markdown: kramdown
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+#
+# If you need help with YAML syntax, here are some quick references for you:
+# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
+# https://learnxinyminutes.com/docs/yaml/
+#
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+
+title: VMLverse
+subtitle: "Insights, Experiments and Discoveries in Machine Learning"
+
+title_separator: "|"
+email: vimalkumar.engr@gmail.com
+description: >- # this means to ignore newlines until "baseurl:"
+  "Welcome to VMLverse - Join me as I embark on a continuous learning journey into the fascinating world of Machine Learning."
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://vmlverse.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+# twitter_username: test_twitter
+github_username:  VMLverse
+linkedin_username: vimal-venugopal-1311a519
+
+#new fields not defaulted by jekyll-new with the minima theme
+name: Vimal Venugopal #assign a site author | Don’t worry, you can override the site author with different ones on specific posts, pages, or collection documents.
+copyright: "VMLverse"
+
+logo: "/assets/images/logo copy.jpeg"
+
+read_time: true # Enable estimated reading time snippets
+
+search: true #enable site-wide search
+lunr:
+  search_within_pages: true # default search uses Lunr to build a search index of all post and your documents in collections
+
+# Build settings
+# theme: minima
+# theme: minimal-mistakes-jekyll
+remote_theme: "mmistakes/minimal-mistakes@4.24.0"
+minimal_mistakes_skin: "dirt"
+
+#adding pagination setting
+paginate: 5 # amount of posts to show
+paginate_path: /my-blog/page:num/
+
+timezone: America/New_York
+
+#author details:
+author:
+  name     : "Vimal Venugopal"
+  avatar   : "/assets/images/DSC1717square.jpeg"
+  bio      : "a curious mind with a passion for machine learning, photography and travel "
+  location : "Toronto, Canada"
+  links:    
+    # - label: "Email"
+    #   icon: "fas fa-fw fa-envelope-square"
+    #   url: "mailto:vimalkumar.engr@gmail.com"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/vimal-venugopal-1311a519/"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/VMLverse"
+    - label: "Instagram"
+      icon: "fab fa-fw fa-instagram"
+      url: "https://www.instagram.com/vimstargram/"
+    - label: "Wordpress"
+      icon: "fas fa-fw fa-link"
+      url: "https://cognitivescrawls.wordpress.com/"
+
+footer:
+  links:
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/vimal-venugopal-1311a519/"
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/VMLverse"
+    - label: "Instagram"
+      icon: "fab fa-fw fa-instagram"
+      url: "https://www.instagram.com/vimstargram/"
+
+
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jekyll-include-cache
+  - jemoji
+  - jekyll-remote-theme
+
+
+# mimic GitHub Pages with --safe
+whitelist:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jekyll-include-cache
+  - jemoji
+
+#DEFINE NEW COLLECTION
+collections:
+  projects:
+    output: true
+
+# default YAML front matter
+defaults:
+  # all
+  - scope:
+      path: ""
+    values:
+      layout: single
+      mathjax: true
+      author_profile: true
+      class: wide
+      title: " "
+      title_separator: "|"
+  # _pages
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      author_profile: true
+  # posts
+  - scope:
+      type: posts
+    values:
+      # toc: true
+      # toc_label: "Contents"
+      read_time: true
+      comments: true
+      share: true
+      related: true
+  # projects
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+
+#########################
+
+
+  
+
+#configure comments:
+comments:
+  provider: "disqus"
+  disqus:
+    shortname: "vmlverse"
+
+# Exclude from processing.
+# The following items will not be processed, by default.
+# Any item listed under the `exclude:` key here will be automatically added to
+# the internal "default list".
+#
+# Excluded items can be processed by explicitly listing the directories or
+# their entries' file path in the `include:` list.
+## Reading Files
+include:
+  - _pages
+  - code
+
+exclude:
+    - notes.log
+#   - .sass-cache/
+#   - .jekyll-cache/
+#   - gemfiles/
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules/
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
+
+#TO ALLOW TAG SEARCH:
+tag_archive:
+  type: liquid
+  path: /tags/
 

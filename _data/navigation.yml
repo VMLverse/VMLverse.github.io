@@ -1,0 +1,19 @@
+main:
+  #- title: "Quick-Start Guide"
+  #  url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
+   #- title: "Data Science Reading List"
+   #  url: https://thedailygoose.com/books/data-science-reading-list/
+  - title: "About"
+    url: /about/  #_pages/about.md renders this page
+  - title: "Blog"
+    url: /blog/
+  # - title: "Articles"
+  #   url: /articles/ #_articles collection
+  - title: "Projects"
+    url: /projects/ #_c collection
+  # - title: "Sample Collections"
+  #   url: /collection-archive/
+  - title: "Resume"
+    url: /docs/resume.pdf #hardcoded page /docs/cv.pdf
+  # - title: "Archive"
+  #   url: /year-archive/

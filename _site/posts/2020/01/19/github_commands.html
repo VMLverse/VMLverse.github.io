@@ -1,0 +1,809 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Git Commands Simplified: A Beginner’s Guide | VMLverse</title>
+<meta name="description" content="In this beginner’s guide, I break down the essential Git commands into easy-to-understand explanations and practical examples. From initializing a repository to collaborating with others, this guide will help you navigate the world of Git with confidence.">
+
+
+  <meta name="author" content="Vimal Venugopal">
+  
+  <meta property="article:author" content="Vimal Venugopal">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="VMLverse">
+<meta property="og:title" content="Git Commands Simplified: A Beginner’s Guide">
+<meta property="og:url" content="http://localhost:4000/posts/2020/01/19/github_commands.html">
+
+
+  <meta property="og:description" content="In this beginner’s guide, I break down the essential Git commands into easy-to-understand explanations and practical examples. From initializing a repository to collaborating with others, this guide will help you navigate the world of Git with confidence.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-01-19T00:00:00-05:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/posts/2020/01/19/github_commands.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Vimal Venugopal",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="VMLverse Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo%20copy.jpeg" alt="VMLverse"></a>
+        
+        <a class="site-title" href="/">
+          VMLverse
+          <span class="site-subtitle">Insights, Experiments and Discoveries in Machine Learning</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/blog/">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/projects/">Projects</a>
+            </li><li class="masthead__menu-item">
+              <a href="/docs/resume.pdf">Resume</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/DSC1717square.jpeg" alt="Vimal Venugopal" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Vimal Venugopal</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>a curious mind with a passion for machine learning, photography and travel</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://cognitivescrawls.wordpress.com/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Wordpress</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Git Commands Simplified: A Beginner’s Guide">
+    <meta itemprop="description" content="In this beginner’s guide, I break down the essential Git commands into easy-to-understand explanations and practical examples. From initializing a repository to collaborating with others, this guide will help you navigate the world of Git with confidence.">
+    <meta itemprop="datePublished" content="2020-01-19T00:00:00-05:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Git Commands Simplified: A Beginner’s Guide
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> Contents</h4></header>
+              <ul class="toc__menu"><li><a href="#introduction">Introduction</a></li><li><a href="#initialization">Initialization</a><ul><li><a href="#git-init-creating-a-new-git-repository">git init: Creating a new Git repository</a></li><li><a href="#git-config-customizing-git-configuration-settings">git config: Customizing Git configuration settings</a></li></ul></li><li><a href="#basic-operations">Basic Operations</a><ul><li><a href="#git-add-adding-files-to-the-staging-area">git add: Adding files to the staging area</a></li><li><a href="#git-commit-committing-changes-to-the-repository">git commit: Committing changes to the repository</a></li><li><a href="#git-status-checking-the-status-of-files">git status: Checking the status of files</a></li><li><a href="#git-log-viewing-commit-history">git log: Viewing commit history</a></li></ul></li><li><a href="#branching-and-merging">Branching and Merging:</a><ul><li><a href="#git-branch-creating-and-managing-branches">git branch: Creating and managing branches</a></li><li><a href="#git-checkout-switching-between-branches">git checkout: Switching between branches</a></li><li><a href="#git-checkout--b-yourbranchname-creating-new-branch-and-switching-to-it">git checkout -b [yourbranchname]: Creating new branch and Switching to it</a></li><li><a href="#git-merge-combining-branches">git merge: Combining branches</a></li></ul></li><li><a href="#collaboration-and-remote-repositories">Collaboration and Remote Repositories</a><ul><li><a href="#git-clone-cloning-a-remote-repository">git clone: Cloning a remote repository</a></li><li><a href="#git-pull-updating-your-local-repository-with-remote-changes">git pull: Updating your local repository with remote changes</a></li><li><a href="#git-push-pushing-your-local-changes-to-a-remote-repository">git push: Pushing your local changes to a remote repository</a></li><li><a href="#git-remote-managing-remote-repositories">git remote: Managing remote repositories</a></li></ul></li><li><a href="#advanced-git-commands">Advanced Git Commands</a><ul><li><a href="#head">HEAD</a></li><li><a href="#git-revert">git revert:</a></li><li><a href="#git-rebase-modifying-commit-history">git rebase: Modifying commit history</a></li><li><a href="#git-reset-undoing-changes-and-moving-the-head-pointer">git reset: Undoing changes and moving the HEAD pointer</a></li><li><a href="#detach-head">detach head:</a></li><li><a href="#relative-commits">Relative commits:</a><ul><li><a href="#caret--operator">Caret (^) operator:</a></li><li><a href="#tilde--operator">tilde (~) operator:</a></li><li><a href="#branch-by-force-f">branch by force(-f):</a></li></ul></li></ul></li><li><a href="#conclusion">Conclusion</a></li><li><a href="#references">References</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="introduction">Introduction</h2>
+<p>Git, the popular version control system, is an essential tool for developers and anyone working with code. In this comprehensive guide, we will delve into the fundamental Git commands, demystifying their purpose and providing practical examples. Whether you’re new to Git or looking to enhance your understanding, this blog post will equip you with the knowledge needed to navigate your projects with confidence.</p>
+
+<p>To gain a better understanding of Git terminology, I recommend watching educational videos on YouTube. These videos provide visual explanations and demonstrations, making it easier to grasp complex concepts.</p>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dVil8e0yptQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rFtUkk-sCqw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen=""></iframe>
+
+<h2 id="initialization">Initialization</h2>
+<h3 id="git-init-creating-a-new-git-repository">git init: Creating a new Git repository</h3>
+<p>Use the git init command to create a new, empty repository in the current directory.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git init
+</code></pre></div></div>
+<p>Running this command creates a hidden .git directory. This .git directory is the brain/storage center for the repository. It holds all of the configuration files and directories and is where all of the commits are stored.</p>
+<h3 id="git-config-customizing-git-configuration-settings">git config: Customizing Git configuration settings</h3>
+<p>The “git config” command allows you to customize various Git configuration settings. These settings can be specific to your user account or applied to a particular Git repository.</p>
+
+<p>To set your name and email address for commits:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git config --global user.name "Your Name"
+$ git config --global user.email "your.email@example.com"
+</code></pre></div></div>
+<p>These global configurations will be used for all your Git repositories unless overridden at the repository level.</p>
+
+<p>To view your Git configurations:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git config --list
+</code></pre></div></div>
+<p>This will display all the configurations currently set on your system.</p>
+
+<p>To configure settings at the repository level:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git config user.name "Your Name"
+$ git config user.email "your.email@example.com"
+</code></pre></div></div>
+<p>By omitting the “–global” flag, these settings will be specific to the current repository.</p>
+
+<p>Additionally, you can configure other settings such as preferred text editors, default branch names, and merge conflict resolution tools using the “git config” command.</p>
+
+<p>Remember, customizing Git configurations can enhance your workflow and improve the accuracy of your commit information. Take advantage of these configurations to make Git work seamlessly for you.</p>
+
+<h2 id="basic-operations">Basic Operations</h2>
+
+<h3 id="git-add-adding-files-to-the-staging-area">git add: Adding files to the staging area</h3>
+<p>The git add command is used to move files from the Working Directory to the Staging Index.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git add &lt;file1&gt; &lt;file2&gt; … &lt;fileN&gt;
+</code></pre></div></div>
+<p>This command:</p>
+<ul>
+  <li>takes a space-separated list of file names</li>
+  <li>alternatively, the period . can be used in place of a list of files to tell Git to add the current directory (and all nested files)</li>
+</ul>
+
+<h3 id="git-commit-committing-changes-to-the-repository">git commit: Committing changes to the repository</h3>
+<ul>
+  <li>commit in a git repository records a snapshot of all the (tracked) files in your directory</li>
+  <li>like a giant copy and paste, but even better!</li>
+  <li>commits as lightweight as possible though, so it doesn’t just blindly copy the entire directory every time you commit
+<img src="/assets/images/github_commands/git_commit.gif" alt="Alt text" width="512" height="434" /></li>
+</ul>
+
+<h3 id="git-status-checking-the-status-of-files">git status: Checking the status of files</h3>
+<p>The git status command will display the current status of the repository.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git status
+</code></pre></div></div>
+<p>I can’t stress enough how important it is to use this command all the time as you’re first learning Git. This command will:</p>
+<ul>
+  <li>tell us about new files that have been created in the Working Directory that Git hasn’t started tracking, yet</li>
+  <li>files that Git is tracking that have been modified</li>
+  <li>and a whole bunch of other things that we’ll be learning about throughout the rest of this article ;-)</li>
+</ul>
+
+<h3 id="git-log-viewing-commit-history">git log: Viewing commit history</h3>
+<p>The git log command is used to display all of the commits of a repository.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git log
+</code></pre></div></div>
+<p>By default, this command displays:</p>
+<ul>
+  <li>the SHA</li>
+  <li>the author</li>
+  <li>the date</li>
+  <li>and the message</li>
+</ul>
+
+<p>…of every commit in the repository. I stress the “By default” part of what Git displays because the git log command can display a lot more information than just this.</p>
+
+<p>Git uses the command line pager, Less, to page through all of the information. The important keys for Less are:</p>
+<ul>
+  <li>to scroll down by a line, use j or ↓</li>
+  <li>to scroll up by a line, use k or ↑</li>
+  <li>to scroll down by a page, use the spacebar or the Page Down button</li>
+  <li>to scroll up by a page, use b or the Page Up button</li>
+  <li>to quit, use q</li>
+</ul>
+
+<h2 id="branching-and-merging">Branching and Merging:</h2>
+
+<h3 id="git-branch-creating-and-managing-branches">git branch: Creating and managing branches</h3>
+<ul>
+  <li>simply pointers to a specific commit – nothing more. branch early, and branch often
+<img src="/assets/images/github_commands/git_branch.gif" alt="Alt text" width="512" height="434" /></li>
+</ul>
+
+<h3 id="git-checkout-switching-between-branches">git checkout: Switching between branches</h3>
+<ul>
+  <li>put us on the new branch before committing our changes
+<img src="/assets/images/github_commands/git_checkout.gif" alt="Alt text" width="512" height="434" /></li>
+</ul>
+
+<h3 id="git-checkout--b-yourbranchname-creating-new-branch-and-switching-to-it">git checkout -b [yourbranchname]: Creating new branch and Switching to it</h3>
+<ul>
+  <li>create a new branch AND check it out at the same time
+<img src="/assets/images/github_commands/git_checkout_b.gif" alt="Alt text" width="512" height="434" /></li>
+</ul>
+
+<h3 id="git-merge-combining-branches">git merge: Combining branches</h3>
+<ul>
+  <li>Merging in Git creates a special commit that has two unique parents
+<img src="/assets/images/github_commands/git_merge.gif" alt="Alt text" width="512" height="434" /></li>
+</ul>
+
+<h2 id="collaboration-and-remote-repositories">Collaboration and Remote Repositories</h2>
+
+<h3 id="git-clone-cloning-a-remote-repository">git clone: Cloning a remote repository</h3>
+<p>The git clone command is used to create an identical copy of an existing repository.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git clone &lt;path-to-repository-to-clone&gt;
+</code></pre></div></div>
+<p>This command:</p>
+<ul>
+  <li>takes the path to an existing repository</li>
+  <li>by default will create a directory with the same name as the repository that’s being cloned</li>
+  <li>can be given a second argument that will be used as the name of the directory</li>
+  <li>will create the new repository inside of the current working directory</li>
+</ul>
+
+<h3 id="git-pull-updating-your-local-repository-with-remote-changes">git pull: Updating your local repository with remote changes</h3>
+<ul>
+  <li>The “git pull” command is used to update your local repository with the latest changes from a remote repository. - It combines the “git fetch” command, which retrieves the changes, and the “git merge” command, which incorporates those changes into your local branch.</li>
+</ul>
+
+<h3 id="git-push-pushing-your-local-changes-to-a-remote-repository">git push: Pushing your local changes to a remote repository</h3>
+<ul>
+  <li>The “git push” command is used to upload your local commits to a remote repository, making them accessible to others.</li>
+  <li>It updates the remote repository with your latest changes.</li>
+</ul>
+
+<h3 id="git-remote-managing-remote-repositories">git remote: Managing remote repositories</h3>
+<p>The “git remote” command allows you to manage remote repositories associated with your local repository. It helps you view, add, rename, or remove remote repositories.</p>
+
+<p>To view the remote repositories:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git remote -v
+</code></pre></div></div>
+<p>This command displays a list of remote repositories along with their URLs.</p>
+
+<p>To add a remote repository:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git remote add &lt;remote-name&gt; &lt;remote-url&gt;
+</code></pre></div></div>
+<p>This command associates a remote repository with a name and a URL.</p>
+
+<p>To rename a remote repository:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git remote rename &lt;old-name&gt; &lt;new-name&gt;
+</code></pre></div></div>
+<p>This command changes the name of an existing remote repository.</p>
+
+<p>To remove a remote repository:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git remote remove &lt;remote-name&gt;
+</code></pre></div></div>
+<p>This command removes the association of a remote repository from your local repository.
+These commands help you interact with remote repositories, facilitating collaboration and keeping your local and remote repositories in sync.</p>
+
+<h2 id="advanced-git-commands">Advanced Git Commands</h2>
+
+<h3 id="head">HEAD</h3>
+<ul>
+  <li>HEAD is the symbolic name for the currently checked out commit</li>
+  <li>it’s essentially what commit you’re working on top of.</li>
+  <li>HEAD always points to the most recent commit which is reflected in the working tree.</li>
+</ul>
+
+<h3 id="git-revert">git revert:</h3>
+<ul>
+  <li>git reset doesn’t work for remote branches that others are using.</li>
+  <li>In order to reverse changes and share those reversed changes with others, we need to use git revert.
+<img src="/assets/images/github_commands/git_revert.gif" alt="Alt text" width="512" height="434" /></li>
+</ul>
+
+<h3 id="git-rebase-modifying-commit-history">git rebase: Modifying commit history</h3>
+<ul>
+  <li>Rebasing essentially takes a set of commits, “copies” them, and plops them down somewhere else
+<img src="/assets/images/github_commands/git_rebase.gif" alt="Alt text" width="512" height="434" /></li>
+</ul>
+
+<h3 id="git-reset-undoing-changes-and-moving-the-head-pointer">git reset: Undoing changes and moving the HEAD pointer</h3>
+<ul>
+  <li>reverses changes by moving a branch reference backwards in time to an older commit
+<img src="/assets/images/github_commands/git_reset.gif" alt="Alt text" width="512" height="434" /></li>
+</ul>
+
+<h3 id="detach-head">detach head:</h3>
+<ul>
+  <li>Detaching HEAD just means attaching it to a commit instead of a branch.</li>
+  <li>To detach simply specify checkout by its hash
+<img src="/assets/images/github_commands/git_detach.gif" alt="Alt text" width="512" height="434" /></li>
+</ul>
+
+<h3 id="relative-commits">Relative commits:</h3>
+<h4 id="caret--operator">Caret (^) operator:</h4>
+<ul>
+  <li>Moving upwards one commit at a time with ^</li>
+  <li>Each time you append that to a ref name, you are telling Git to find the parent of the specified commit.</li>
+  <li>saying main^ is equivalent to “the first parent of main”
+<img src="/assets/images/github_commands/git_caret.gif" alt="Alt text" width="512" height="434" /></li>
+</ul>
+
+<h4 id="tilde--operator">tilde (~) operator:</h4>
+<ul>
+  <li>Moving upwards a number of times with ~<num></num></li>
+  <li>tilde operator (optionally) takes in a trailing number that specifies the number of parents you would like to ascend
+<img src="/assets/images/github_commands/git_tilde.gif" alt="Alt text" width="512" height="434" /></li>
+</ul>
+
+<h4 id="branch-by-force-f">branch by force(-f):</h4>
+<ul>
+  <li>You can directly reassign a branch to a commit with the -f option
+<img src="/assets/images/github_commands/git_branch_f.gif" alt="Alt text" width="512" height="434" /></li>
+</ul>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>Understanding the core Git commands is essential for efficient collaboration, version control, and project management. By familiarizing yourself with these commands, you’ll gain the confidence to navigate Git repositories, resolve conflicts, and streamline your development workflow. Embrace the power of Git and elevate your coding journey with these fundamental commands.</p>
+
+<p>Remember, practice makes perfect when it comes to Git. Don’t hesitate to experiment with these commands in a test repository to deepen your understanding and discover their full potential. Happy coding with Git!</p>
+
+<h2 id="references">References</h2>
+<ul>
+  <li><a href="https://www.udacity.com/course/version-control-with-git--ud123">Udacity’s course on Intro to Git</a></li>
+  <li><a href="https://learngitbranching.js.org/">Learn git branching</a></li>
+  <li><a href="https://githowto.com/">GitHowTo</a></li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#git" class="page__taxonomy-item" rel="tag">git</a><span class="sep">, </span>
+    
+      <a href="/tags/#github" class="page__taxonomy-item" rel="tag">github</a><span class="sep">, </span>
+    
+      <a href="/tags/#version-control" class="page__taxonomy-item" rel="tag">version control</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2020-01-19T00:00:00-05:00">January 19, 2020</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  Share On <br>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Git+Commands+Simplified%3A+A+Beginner%27s+Guide%20http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2020%2F01%2F19%2Fgithub_commands.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2020%2F01%2F19%2Fgithub_commands.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2020%2F01%2F19%2Fgithub_commands.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/posts/2017/12/20/website.html" class="pagination--pager" title="Building a Personal Site with Jekyll &amp; Minimal Mistakes
+">Previous</a>
+    
+    
+      <a href="/posts/2023/06/08/markdown-cheatsheet.html" class="pagination--pager" title="Markdown CheatSheet
+">Next</a>
+    
+  </nav>
+ TO remove previous:next-->
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/06/08/markdown-cheatsheet.html" rel="permalink">Markdown CheatSheet
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          10 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Quick reference to Markdown syntax
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2017/12/20/website.html" rel="permalink">Building a Personal Site with Jekyll &amp; Minimal Mistakes
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          9 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">A guide detailing my process for building this website using the static site generator Jekyll and the theme Minimal Mistakes
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Vimal Venugopal. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/posts/2020/01/19/github_commands.html";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/posts/2020/01/19/github_commands"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://vmlverse.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+  </body>
+</html>
