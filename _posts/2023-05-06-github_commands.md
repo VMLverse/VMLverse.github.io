@@ -1,7 +1,7 @@
 ---
 title:  "Git Commands Simplified: A Beginner's Guide"
 category: posts
-date: 2020-01-19
+date: 2023-05-06
 excerpt: "In this beginner's guide, I break down the essential Git commands into easy-to-understand explanations and practical examples. From initializing a repository to collaborating with others, this guide will help you navigate the world of Git with confidence. "
 toc: true
 toc_label: "Contents"
@@ -14,9 +14,9 @@ tags:
 ## Introduction
 Git, the popular version control system, is an essential tool for developers and anyone working with code. In this comprehensive guide, we will delve into the fundamental Git commands, demystifying their purpose and providing practical examples. Whether you're new to Git or looking to enhance your understanding, this blog post will equip you with the knowledge needed to navigate your projects with confidence.
 
-To gain a better understanding of Git terminology, I recommend watching educational videos on YouTube. These videos provide visual explanations and demonstrations, making it easier to grasp complex concepts. 
+<!-- To gain a better understanding of Git terminology, I recommend watching educational videos on YouTube. These videos provide visual explanations and demonstrations, making it easier to grasp complex concepts. 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/dVil8e0yptQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-<iframe width="560" height="315" src="https://www.youtube.com/embed/rFtUkk-sCqw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rFtUkk-sCqw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> -->
 
 ## Initialization
 ### git init: Creating a new Git repository

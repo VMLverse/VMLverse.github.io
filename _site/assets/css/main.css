@@ -149,8 +149,8 @@ a:focus, button:focus { /* Default*/ outline: thin dotted #343434; /* Webkit*/ o
 * { box-sizing: border-box; }
 
 html { /* apply a natural box layout model to all elements */ box-sizing: border-box; background-color: #f3f3f3; font-size: 15px; /* changed these three to change overall font size */ -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
-@media (min-width: 48em) { html { font-size: 16px; } }
-@media (min-width: 64em) { html { font-size: 17px; /* this one seems to do everything */ } }
+@media (min-width: 48em) { html { font-size: 17px; } }
+@media (min-width: 64em) { html { font-size: 19px; /* this one seems to do everything */ } }
 @media (min-width: 80em) { html { font-size: 19px; } }
 
 /* Remove margin */

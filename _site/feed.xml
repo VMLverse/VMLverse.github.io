@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-06-14T21:28:49-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">VMLverse</title><subtitle>&quot;Welcome to VMLverse - Join me as I embark on a continuous learning journey into the fascinating world of Machine Learning.&quot;</subtitle><author><name>Vimal Venugopal</name></author><entry><title type="html">Markdown CheatSheet</title><link href="http://localhost:4000/posts/2023/06/08/markdown-cheatsheet.html" rel="alternate" type="text/html" title="Markdown CheatSheet" /><published>2023-06-08T00:00:00-04:00</published><updated>2023-06-08T00:00:00-04:00</updated><id>http://localhost:4000/posts/2023/06/08/markdown-cheatsheet</id><content type="html" xml:base="http://localhost:4000/posts/2023/06/08/markdown-cheatsheet.html">&lt;h2 id=&quot;the-basics&quot;&gt;The Basics&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-06-19T21:28:52-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">VMLverse</title><subtitle>&quot;Welcome to VMLverse - Join me as I embark on a continuous learning journey into the fascinating world of Machine Learning.&quot;</subtitle><author><name>Vimal Venugopal</name></author><entry><title type="html">Markdown Cheatsheet: Quick Reference for Commonly Used Syntax</title><link href="http://localhost:4000/posts/2023/06/08/markdown-cheatsheet.html" rel="alternate" type="text/html" title="Markdown Cheatsheet: Quick Reference for Commonly Used Syntax" /><published>2023-06-08T00:00:00-04:00</published><updated>2023-06-08T00:00:00-04:00</updated><id>http://localhost:4000/posts/2023/06/08/markdown-cheatsheet</id><content type="html" xml:base="http://localhost:4000/posts/2023/06/08/markdown-cheatsheet.html">&lt;h2 id=&quot;the-basics&quot;&gt;The Basics&lt;/h2&gt;
 
 &lt;h3 id=&quot;newline&quot;&gt;Newline&lt;/h3&gt;
 &lt;p&gt;You can create a newline by adding two spaces at the end of a line.&lt;/p&gt;
@@ -54,325 +54,181 @@ To display a literal backslash: \&lt;br /&gt;
 To display a literal square bracket: [ or ]&lt;br /&gt;
 To display a literal hash symbol: #&lt;/p&gt;
 
-&lt;h2 id=&quot;advanced&quot;&gt;Advanced&lt;/h2&gt;
-
-&lt;h3 id=&quot;url-links&quot;&gt;URL Links&lt;/h3&gt;
-
-&lt;p&gt;I learned a lot while building this website; I hope to share it so that it might be
-helpful for anyone trying to do the same. I’m sure you’ll notice that I’m far from an
-expert in the subjects we’re going to explore here; this is my first foray into web
-development. If you have any corrections, or things I’ve misunderstood, I’d love to hear
-about it! Just post a comment.&lt;/p&gt;
-
-&lt;p&gt;The site is built using &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;, using the theme &lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/&quot;&gt;Minimal Mistakes&lt;/a&gt;. I host it on
-&lt;a href=&quot;https://pages.github.com/&quot;&gt;Github pages&lt;/a&gt;, and purchased and manage my domain through &lt;a href=&quot;https://domains.google/#/&quot;&gt;Google Domains&lt;/a&gt;. We’ll
-go through each of these steps in detail. I’ll assume that you have the up-to-date
-versions of Ruby and Jekyll on your local machine. I’m going through all this in macOS,
-which may affect some of the shell commands I give, but translating to Windows shouldn’t
-be too hard.&lt;/p&gt;
-
-&lt;h2 id=&quot;making-a-site-with-minimal-mistakes&quot;&gt;Making a site with Minimal Mistakes&lt;/h2&gt;
-
-&lt;p&gt;The website for Minimal Mistakes includes a great quick-start guide; I recommend the
-&lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#starting-from-jekyll-new&quot;&gt;Starting with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll new&lt;/code&gt;&lt;/a&gt; section as a place to start. Using this you should be
-able to establish a base site with some simple demonstration content, using the Minimal
-Mistakes theme.&lt;/p&gt;
-
-&lt;p&gt;You can always look directly at &lt;a href=&quot;https://github.com/peterewills/peterewills.github.io&quot;&gt;the source code for my site&lt;/a&gt; if you want
-to see exactly what I have in my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Gemfile&lt;/code&gt;, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;, or whatever.&lt;/p&gt;
-
-&lt;h3 id=&quot;enabling-mathjax&quot;&gt;Enabling MathJax&lt;/h3&gt;
-
-&lt;p&gt;In order to enable &lt;a href=&quot;https://www.mathjax.org&quot;&gt;MathJax&lt;/a&gt;, which renders the mathematical equations you see in my
-posts, you’ll need to edit the file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;scripts.html&lt;/code&gt; contained in the folder &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_includes/&lt;/code&gt;
-to include a line enabling MathJax. However, you’ll want to avoid overwriting the
-contents of the default &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;scripts.html&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;So, we need to find where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle&lt;/code&gt; is storing the Gem for Minimal Mistakes. To
-find this, do&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle show minimal-mistakes-jekyll 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If you just want to navigate directly to that directory, do&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd $(bundle show minimal-mistakes-jekyll)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle&lt;/code&gt; doesn’t seem to have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;minimal-mistakes-jekyll&lt;/code&gt; installed, then you should
-add the line &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gem &quot;minimal-mistakes-jekyll&quot;&lt;/code&gt; to your Gemfile, and run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle&lt;/code&gt; to
-install the Gems.&lt;/p&gt;
-
-&lt;p&gt;Now you can copy the default &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;scripts.html&lt;/code&gt; into your site:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cp _includes/scripts.html /path/to/site/_includes/scripts.html
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Open the copied &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;scripts.html&lt;/code&gt; in your editor of choice,&lt;sup id=&quot;fnref:fnote1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fnote1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; and add the
-following lines at the end:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt; 
- 
-{% if page.mathjax %}
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;async&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-{% endif %}
- &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;And you’re done!&lt;sup id=&quot;fnref:fnote2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fnote2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;  Now, you can type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$x_1$$&lt;/code&gt; to see \(x_1\), and so
-on. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$...$$&lt;/code&gt; syntax will generate inline math if used inline, and will
-generate a display equation if used on its own line. So, if one enters&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$$ f(a) = \frac{1}{2\pi i} \oint_\gamma \frac{f(z)}{z-a} dz $$
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Then the rendered equation appears as so:&lt;/p&gt;
-
-\[f(a) = \frac{1}{2\pi i} \oint_\gamma \frac{f(z)}{z-a} dz\]
-
-&lt;p&gt;You can also use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\\[&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\\]&lt;/code&gt; as delimiters for display equations, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\\(&lt;/code&gt; and
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\\)&lt;/code&gt; as delimiters for inline equations. The double slashes are only necessary in
-markdown; if you’re writing raw HTML, then a single slash will suffice.&lt;/p&gt;
-
-&lt;h3 id=&quot;customize-font-sizes&quot;&gt;Customize Font Sizes&lt;/h3&gt;
-
-&lt;p&gt;I found the fonts a bit oversized, so I wanted to change the size for the
-posts. In order to do this, you need to copy &lt;strong&gt;the entire folder&lt;/strong&gt; which
-contains all the relevant scss files. In order to do this, do&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd $(bundle show minimal-mistakes-jekyll)
-cp -r _sass /path/to/site
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now, after much digging through the GitHub issues,&lt;sup id=&quot;fnref:fnote3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fnote3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; I found that the
-file to edit here is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_sass/_reset.scss&lt;/code&gt;. In my site, the relevant chunk of text
-looks like&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;  @include breakpoint($medium) {
-    font-size: 13px;
-  }
-
-  @include breakpoint($large) {
-    font-size: 15px;
-  }
-
-  @include breakpoint($x-large) {
-    font-size: 18px;
-  }&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Once this file has been edited, you should see the font size reduced in your
-page.&lt;/p&gt;
-
-&lt;h2 id=&quot;getting-it-on-github-pages&quot;&gt;Getting it on GitHub Pages&lt;/h2&gt;
-
-&lt;p&gt;Okay, now we write a bunch of nonsense, find some beautiful pictures at
-&lt;a href=&quot;https://git-scm.com/docs/gittutorial&quot;&gt;Unsplash&lt;/a&gt; to use as headers, and we’re ready to publish the thing on GitHub
-Pages. I’ll first go through as though we don’t want to use a custom domain, so
-that the website will be exposed at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;USERNAME.github.io&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;enabling-jekyll-remote-theme&quot;&gt;Enabling &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll-remote-theme&lt;/code&gt;&lt;/h3&gt;
-
-&lt;p&gt;First of all, make sure that you’re using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remote-theme&lt;/code&gt; jekyll plugin,
-which allows you to use any jekyll theme that is GitHub hosted, rather than only
-the few that are officially supported. This process is outlined on the Minimal
-Mistakes website, but I’ll go through it here.&lt;/p&gt;
-
-&lt;p&gt;First, &lt;strong&gt;in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; file&lt;/strong&gt;, enable the plugin by including it in the
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;plugins&lt;/code&gt; list, via&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;plugins:
-  - jekyll-remote-theme
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If you have other plugins you want to use (I use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll-feed&lt;/code&gt;), then add them
-to this list as well. Designate the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remote_theme&lt;/code&gt; variable, but do so &lt;strong&gt;after
-setting the theme&lt;/strong&gt;, so that you have in your config file&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;theme: &quot;minimal-mistakes-jekyll&quot;
-remote_theme: &quot;mmistakes/minimal-mistakes&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Finally, in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Gemfile&lt;/code&gt;, add &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gem &quot;jekyll-remote-theme&quot;&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;push-it-to-the-repository&quot;&gt;Push it to the repository&lt;/h3&gt;
-
-&lt;p&gt;GitHub pages looks for a repository that follows the naming convention
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;USERNAME.github.io&lt;/code&gt;. So, for example, since my GitHub username is
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;peterewills&lt;/code&gt;, the repository for the source of this site is at
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://www.github.com/peterewills/peterewills.github.io&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Once you’ve created such a repository, initialize a git repo on your site by
-going into &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;path/to/your/site&lt;/code&gt; and doing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git init&lt;/code&gt;. Then, do&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git remote add origin https://www.github.com/USERNAME/USERNAME.github.io
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;and then commit and push. (If you’re unfamiliar with using git, I recommend &lt;a href=&quot;https://git-scm.com/docs/gittutorial&quot;&gt;either&lt;/a&gt;
-of &lt;a href=&quot;https://try.github.io/levels/1/challenges/1&quot;&gt;these&lt;/a&gt; tutorials.) You’ll get an email telling you that your page build was
-successful, but you’re “using an unsupported theme.” Don’t worry about this; it happens
-whenever you use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remote-theme&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;You now should be able to navigate to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;USERNAME.github.io&lt;/code&gt; and see your page!&lt;/p&gt;
-
-&lt;h2 id=&quot;using-a-custom-domain&quot;&gt;Using a Custom Domain&lt;/h2&gt;
-
-&lt;p&gt;Suppose you’d prefer to use a custom domain, such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mydomain.pizza&lt;/code&gt; (this is
-actually a real, and available, domain name). There are lots of ways to do this;
-I did it through &lt;a href=&quot;https://domains.google.com&quot;&gt;Google Domains&lt;/a&gt;, so I’ll go through those steps.&lt;/p&gt;
-
-&lt;p&gt;First, you go to &lt;a href=&quot;https://domains.google.com&quot;&gt;Google Domains&lt;/a&gt;, pick out the domain you want, and register
-it. For this example, we’ll assume you went with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mydomain.pizza&lt;/code&gt;. You should
-now see it appear under the &lt;strong&gt;My Domains&lt;/strong&gt; tab on the right side of the
-page. You should see a domain called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mydomain.pizza&lt;/code&gt; and a &lt;strong&gt;DNS&lt;/strong&gt; option. This
-is what we need to edit.&lt;/p&gt;
-
-&lt;p&gt;We need to configure the DNS behavior of our domain so that it points at the IP
-address where GitHub Pages is hosting it. On the DNS page, scroll down to
-&lt;strong&gt;Custom Resource Records&lt;/strong&gt;. You’ll want to add three custom resource records;
-two “host” resource records (designated by an A) and one “alias” resource record
-(designated by CNAME). GitHub pages exposes its sites at IP addresses
-192.30.252.153 and 192.30.252.154. So, you’ll want to add both of these as host
-resource records. You’ll want to add your GitHub Pages url &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;USERNAME.github.io&lt;/code&gt;
-as an alias record. By the time you’ve added the three, your list of resource
-records should look like the example below.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/custom_resource.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;So, now your url (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mydomain.pizza&lt;/code&gt;) knows that it is an alias for
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;USERNAME.github.io&lt;/code&gt;, but we still have to specify this aliasing on the GitHub
-end of things.&lt;/p&gt;
-
-&lt;p&gt;To do this, simply make a text file called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CNAME&lt;/code&gt; and include on the first line&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mydomain.pizza
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;This is the entire contents of the text file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CNAME&lt;/code&gt;. Once this is pushed to the
-repository &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;USERNAME/USERNAME.github.io&lt;/code&gt;, the appropriate settings should
-automatically update themselves. To check this, go to the respository settings,
-scroll down to the “GitHub Pages” settings, and look under “Custom domain.” You
-should see something like the following:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/github_repo.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;If the DNS record of your Google domain has not yet been updated, then you will
-see &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Your site is ready to be published mydomain.pizza&lt;/code&gt; on a yellow
-background. Note that it sometimes takes up to 48 hours for DNS records to
-update, so be patient.&lt;/p&gt;
-
-&lt;p&gt;Once the DNS records have updated, you should be able to see your site at
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mydomain.pizza&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;enabling-comments-via-disqus&quot;&gt;Enabling Comments via Disqus&lt;/h2&gt;
-
-&lt;p&gt;Minimal Mistakes has excellent support for comments built in to the theme. I chose to
-use Disqus as comments platform, but it supports others. If you choose to go another
-route, you can look on the &lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/docs/configuration/#comments&quot;&gt;minimal-mistakes
-guide&lt;/a&gt; for
-more direct assistance.&lt;/p&gt;
-
-&lt;p&gt;To get Disqus comments up and running, you should go to &lt;a href=&quot;http://disqus.com&quot;&gt;the Disqus
-homepage&lt;/a&gt; and sign up. Eventually you should have a “shortname” that
-you can use for your site. Once you have this, you just need to add the following to
-your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;comments:
-  provider: &quot;disqus&quot;
-  disqus:
-    shortname: &quot;my-shortname&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;a-caveat&quot;&gt;A Caveat&lt;/h3&gt;
-
-&lt;p&gt;Even if you include this, you will not see Disqus comments appear in your posts when you
-do &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle exec jekyll serve&lt;/code&gt; and look at the posts on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;localhost:4000&lt;/code&gt;. Why don’t they
-show up?&lt;/p&gt;
-
-&lt;p&gt;When you build locally, you are by default building in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;development&lt;/code&gt; environment. In
-minimal mistakes, comments are only active in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;production&lt;/code&gt; environment. You can test
-what environment you’re in by including the following chunk of code on a page:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt; 
- 
-{% if jekyll.environment == &quot;production&quot; %}
-   # YOU&apos;RE IN A PRODUCTION ENVIRONMENT
-{% endif %}&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;For more on environments, you can check out &lt;a href=&quot;https://jekyllrb.com/docs/configuration/environments/&quot;&gt;the official Jekyll
-docs&lt;/a&gt;. You &lt;em&gt;should&lt;/em&gt; be able to
-run your local Jekyll server in a production environment by doing&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;JEKYLL_ENV=production bundle exec jekyll serve 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;but this never worked for me, so I had to test that comments were working by pushing to
-GitHub and looking at my posts live in production.&lt;/p&gt;
-
-&lt;h2 id=&quot;customizations&quot;&gt;Customizations&lt;/h2&gt;
-&lt;h3 id=&quot;customize-avatar&quot;&gt;Customize Avatar&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;Filename:&lt;/strong&gt; _sass/minimal-mistakes/_sidebar.scss&lt;br /&gt;
-Change: Increasing border-radius makes it eclipse. 0% if you want the square shape. Frame around avatar is controlled by padding and border.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;img {
-    max-width: 200px;
-    border-radius: 0%;
-
-    @include breakpoint($large) {
-      padding: 0px;
-      border: 0px solid $border-color;
-    }
-  }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;using-google-analytics-to-monitor-traffic&quot;&gt;Using Google Analytics to Monitor Traffic&lt;/h2&gt;
-
-&lt;p&gt;Minimal mistakes also includes nice support for google analytics. Similar to Disqus
-comments, you’ll need to sign up for google analytics and follow the steps there to get
-a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tracking_id&lt;/code&gt; for your site. Then, in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;, include the following blob:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;analytics:
-  provider: &quot;google&quot;
-  google:
-    tracking_id: &quot;XB-934572345-6&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;You should then be able to use the Google Analytics dashboard to monitor traffic on your
-site. You can look at the &lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/docs/configuration/#analytics&quot;&gt;minimal mistakes documentation on
-analytics&lt;/a&gt;
-for more details, especially if you plan on using a different analytics provider.&lt;/p&gt;
-
-&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
-
-&lt;p&gt;As I said at the beginning of the post, you can check out &lt;a href=&quot;https://www.github.com/peterewills/peterewills.github.io&quot;&gt;the repository for my
-site&lt;/a&gt; to see examples of what I’ve gone through here; including my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CNAME&lt;/code&gt; file, my
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_include/scripts.html&lt;/code&gt; file that enables MathJax, and my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; file. Please let
-me know, either by email or in the comments, if you have any questions or corrections!&lt;/p&gt;
-
-&lt;!-------------------------------- FOOTER ----------------------------&gt;
-
-&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:fnote1&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Presumably emacs. &lt;a href=&quot;#fnref:fnote1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fnote2&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Some &lt;a href=&quot;http://dasonk.com/blog/2012/10/09/Using-Jekyll-and-Mathjax&quot;&gt;older blog posts&lt;/a&gt; discuss the process of adding kramdown as
-the markdown rendering engine, but this is default behavior for Jekyll 3.x,
-so there’s no need to do this step. &lt;a href=&quot;#fnref:fnote2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fnote3&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Michael, the guy who built Minimal Mistakes, is really wonderful
-about responding to issues on GitHub, which are really used as a support
-forum for people using the theme who have no experience in web development
-(such as myself). &lt;a href=&quot;#fnref:fnote3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Vimal Venugopal</name></author><category term="posts" /><category term="markdown" /><category term="jekyll" /><summary type="html">Quick reference to Markdown syntax</summary></entry><entry><title type="html">Git Commands Simplified: A Beginner’s Guide</title><link href="http://localhost:4000/posts/2020/01/19/github_commands.html" rel="alternate" type="text/html" title="Git Commands Simplified: A Beginner’s Guide" /><published>2020-01-19T00:00:00-05:00</published><updated>2020-01-19T00:00:00-05:00</updated><id>http://localhost:4000/posts/2020/01/19/github_commands</id><content type="html" xml:base="http://localhost:4000/posts/2020/01/19/github_commands.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+&lt;h3 id=&quot;links&quot;&gt;Links&lt;/h3&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Inline Links:
+    &lt;ul&gt;
+      &lt;li&gt;Syntax: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[link text](url)&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Example: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[Visit our website](https://www.example.com)&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Renders as: &lt;a href=&quot;https://www.google.com&quot;&gt;Visit our website&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Inline Links with Title Attribute:
+    &lt;ul&gt;
+      &lt;li&gt;Syntax: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[link text](url &quot;title&quot;)&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Example: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[Open in new tab](https://www.example.com &quot;Opens in a new tab&quot;)&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Renders as: &lt;a href=&quot;https://www.example.com&quot; title=&quot;Opens in a new tab Title&quot;&gt;Open in new tab&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Opens in a new tab Title&lt;/code&gt; is shown when hovering over the link.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Reference-style Links:
+    &lt;ul&gt;
+      &lt;li&gt;Syntax: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[link text][reference]&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[reference]: url &quot;title&quot;&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Example:
+        &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[Learn more][example]
+[example]: https://www.example.com &quot;Visit our website&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Inline Image Links:
+    &lt;ul&gt;
+      &lt;li&gt;Syntax: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![alt text](image url)&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Example: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![Logo](https://www.example.com/images/logo.png)&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Inline Image Links with Title Attribute:
+    &lt;ul&gt;
+      &lt;li&gt;Syntax: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![alt text](image url &quot;title&quot;)&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Example: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![Logo](https://www.example.com/images/logo.png &quot;Company Logo&quot;)&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Reference-style Image Links:
+    &lt;ul&gt;
+      &lt;li&gt;Syntax: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![alt text][reference]&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[reference]: image url &quot;title&quot;&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Example:
+        &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;![Logo][logo]
+[logo]: https://www.example.com/images/logo.png &quot;Company Logo&quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Remember to replace the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;link text&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;url&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;alt text&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;image url&lt;/code&gt; with your desired values. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;title&lt;/code&gt; attribute is optional and can be used to provide additional information when the user hovers over the link or image.&lt;/p&gt;
+
+&lt;p&gt;These Markdown link syntaxes allow you to create various types of links within your Markdown content, enabling seamless navigation and enhancing user experience. I personally found the reference-style links to be useful since you can have a footer with all your referenced URLs in your article and maintain them in one place.&lt;/p&gt;
+
+&lt;h3 id=&quot;images&quot;&gt;Images&lt;/h3&gt;
+&lt;p&gt;To add images in Markdown, you can use the following syntax:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Inline Image:
+    &lt;ul&gt;
+      &lt;li&gt;Syntax: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![alt text](image URL)&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Example: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![Example Image](https://www.example.com/images/example.jpg)&lt;/code&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Reference-style Image:
+    &lt;ul&gt;
+      &lt;li&gt;Syntax: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![alt text][reference]&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[reference]: image URL&lt;/code&gt;&lt;/li&gt;
+      &lt;li&gt;Example:
+        &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;![Example Image][image-ref]
+[image-ref]: https://www.example.com/images/example.jpg
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;In Markdown, the basic syntax does not provide direct control over image size or position. However, you can use HTML attributes within Markdown to achieve these effects. Here’s how you can size and position images using HTML attributes:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Sizing Images:
+    &lt;ul&gt;
+      &lt;li&gt;Use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;width&lt;/code&gt; attribute to specify the desired width of the image in pixels or percentage.&lt;/li&gt;
+      &lt;li&gt;Use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;height&lt;/code&gt; attribute to specify the desired height of the image in pixels or percentage.&lt;/li&gt;
+      &lt;li&gt;Example:
+        &lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image.jpg&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;alt=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Example Image&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;300&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;200&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Positioning Images:
+    &lt;ul&gt;
+      &lt;li&gt;Use CSS styling within an HTML &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;div&amp;gt;&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;figure&amp;gt;&lt;/code&gt; element to control the positioning of the image.&lt;/li&gt;
+      &lt;li&gt;Apply CSS properties like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;float&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;margin&lt;/code&gt;, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;text-align&lt;/code&gt; to position the image as desired.&lt;/li&gt;
+      &lt;li&gt;Example:
+        &lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;float: right; margin: 10px;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image.jpg&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;alt=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Example Image&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Combining Sizing and Positioning:
+    &lt;ul&gt;
+      &lt;li&gt;You can combine the sizing and positioning techniques to control both the size and position of the image.&lt;/li&gt;
+      &lt;li&gt;Example:
+        &lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;float: right; margin: 10px;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&quot;nt&quot;&gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image.jpg&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;alt=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Example Image&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;300&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;200&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;code-blocks&quot;&gt;Code Blocks&lt;/h3&gt;
+&lt;p&gt;To write code in Markdown, you can use the following techniques:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;
+    &lt;p&gt;Inline Code: Use backticks (`) to enclose the code within a sentence or paragraph. This helps differentiate code snippets from regular text. For example:&lt;/p&gt;
+
+    &lt;p&gt;Markdown code: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;`print(&quot;Hello, World!&quot;)`&lt;/code&gt;&lt;/p&gt;
+
+    &lt;p&gt;Rendered output: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;print(&quot;Hello, World!&quot;)&lt;/code&gt;&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Code Blocks: To display a larger block of code, you can use fenced code blocks. Place triple backticks (```) on a separate line above and below the code. Optionally, specify the programming language for syntax highlighting after the opening backticks. For example:&lt;/p&gt;
+
+    &lt;p&gt;Markdown code:&lt;/p&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;```python
+def greet(name):
+    print(&quot;Hello, &quot; + name + &quot;!&quot;)
+```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;Rendered output:&lt;/p&gt;
+    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;greet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Hello, &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;Note: Some Markdown processors may require a blank line before and after the fenced code block.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Syntax Highlighting: To enable syntax highlighting for the code blocks, specify the programming language after the opening backticks. This will apply appropriate color coding to improve code readability. For example:&lt;/p&gt;
+
+    &lt;p&gt;Markdown code:&lt;/p&gt;
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;```javascript
+function add(a, b) {
+    return a + b;
+}
+```
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;Rendered output:&lt;/p&gt;
+    &lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Commonly supported programming languages for syntax highlighting include JavaScript, Python, Java, C++, HTML, CSS, and more.&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.jetbrains.com/help/hub/Markdown-Syntax.html&quot;&gt;Jetbrains Markdown Syntax&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.markdownguide.org/getting-started/&quot;&gt;Markdown Guide&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Vimal Venugopal</name></author><category term="posts" /><category term="markdown" /><category term="jekyll" /><summary type="html">This cheatsheet provides a concise reference for frequently used Markdown formatting, helping you create beautiful, well-structured content with ease.</summary></entry><entry><title type="html">Git Commands Simplified: A Beginner’s Guide</title><link href="http://localhost:4000/posts/2023/05/06/github_commands.html" rel="alternate" type="text/html" title="Git Commands Simplified: A Beginner’s Guide" /><published>2023-05-06T00:00:00-04:00</published><updated>2023-05-06T00:00:00-04:00</updated><id>http://localhost:4000/posts/2023/05/06/github_commands</id><content type="html" xml:base="http://localhost:4000/posts/2023/05/06/github_commands.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;Git, the popular version control system, is an essential tool for developers and anyone working with code. In this comprehensive guide, we will delve into the fundamental Git commands, demystifying their purpose and providing practical examples. Whether you’re new to Git or looking to enhance your understanding, this blog post will equip you with the knowledge needed to navigate your projects with confidence.&lt;/p&gt;
 
-&lt;p&gt;To gain a better understanding of Git terminology, I recommend watching educational videos on YouTube. These videos provide visual explanations and demonstrations, making it easier to grasp complex concepts.&lt;/p&gt;
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/dVil8e0yptQ&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/rFtUkk-sCqw&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; allowfullscreen=&quot;&quot;&gt;&lt;/iframe&gt;
+&lt;!-- To gain a better understanding of Git terminology, I recommend watching educational videos on YouTube. These videos provide visual explanations and demonstrations, making it easier to grasp complex concepts. 
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/dVil8e0yptQ&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; allowfullscreen&gt;&lt;/iframe&gt;
+&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/rFtUkk-sCqw&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; allowfullscreen&gt;&lt;/iframe&gt; --&gt;
 
 &lt;h2 id=&quot;initialization&quot;&gt;Initialization&lt;/h2&gt;
 &lt;h3 id=&quot;git-init-creating-a-new-git-repository&quot;&gt;git init: Creating a new Git repository&lt;/h3&gt;
@@ -600,345 +456,121 @@ These commands help you interact with remote repositories, facilitating collabor
   &lt;li&gt;&lt;a href=&quot;https://www.udacity.com/course/version-control-with-git--ud123&quot;&gt;Udacity’s course on Intro to Git&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://learngitbranching.js.org/&quot;&gt;Learn git branching&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://githowto.com/&quot;&gt;GitHowTo&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Vimal Venugopal</name></author><category term="posts" /><category term="git" /><category term="github" /><category term="version control" /><summary type="html">In this beginner&apos;s guide, I break down the essential Git commands into easy-to-understand explanations and practical examples. From initializing a repository to collaborating with others, this guide will help you navigate the world of Git with confidence.</summary></entry><entry><title type="html">Building a Personal Site with Jekyll &amp;amp; Minimal Mistakes</title><link href="http://localhost:4000/posts/2017/12/20/website.html" rel="alternate" type="text/html" title="Building a Personal Site with Jekyll &amp;amp; Minimal Mistakes" /><published>2017-12-20T00:00:00-05:00</published><updated>2017-12-20T00:00:00-05:00</updated><id>http://localhost:4000/posts/2017/12/20/website</id><content type="html" xml:base="http://localhost:4000/posts/2017/12/20/website.html">&lt;p&gt;I learned a lot while building this website; I hope to share it so that it might be
-helpful for anyone trying to do the same. I’m sure you’ll notice that I’m far from an
-expert in the subjects we’re going to explore here; this is my first foray into web
-development. If you have any corrections, or things I’ve misunderstood, I’d love to hear
-about it! Just post a comment.&lt;/p&gt;
+&lt;/ul&gt;</content><author><name>Vimal Venugopal</name></author><category term="posts" /><category term="git" /><category term="github" /><category term="version control" /><summary type="html">In this beginner&apos;s guide, I break down the essential Git commands into easy-to-understand explanations and practical examples. From initializing a repository to collaborating with others, this guide will help you navigate the world of Git with confidence.</summary></entry><entry><title type="html">Building a Personal Site with Jekyll &amp;amp; Minimal Mistakes</title><link href="http://localhost:4000/posts/2023/01/06/jekyll-website.html" rel="alternate" type="text/html" title="Building a Personal Site with Jekyll &amp;amp; Minimal Mistakes" /><published>2023-01-06T00:00:00-05:00</published><updated>2023-01-06T00:00:00-05:00</updated><id>http://localhost:4000/posts/2023/01/06/jekyll-website</id><content type="html" xml:base="http://localhost:4000/posts/2023/01/06/jekyll-website.html">&lt;h2 id=&quot;prelude&quot;&gt;Prelude&lt;/h2&gt;
+&lt;p&gt;With my job as PS consultant, I had no projects to host on github. I love writing and I wanted to write about the books I read or other occassional inspirations I get from random things. Ever since I thought about having a blog, my friend has been recommending me to start a github blog over wordpress so that I can have my software projects hosted as well. I went along the easier path with wordpress and had my &lt;a href=&quot;https://cognitivescrawls.wordpress.com/&quot;&gt;wordpress site&lt;/a&gt; opened in some time in 2019 where I occassionally try to write.&lt;/p&gt;
 
-&lt;p&gt;The site is built using &lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll&lt;/a&gt;, using the theme &lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/&quot;&gt;Minimal Mistakes&lt;/a&gt;. I host it on
-&lt;a href=&quot;https://pages.github.com/&quot;&gt;Github pages&lt;/a&gt;, and purchased and manage my domain through &lt;a href=&quot;https://domains.google/#/&quot;&gt;Google Domains&lt;/a&gt;. We’ll
-go through each of these steps in detail. I’ll assume that you have the up-to-date
-versions of Ruby and Jekyll on your local machine. I’m going through all this in macOS,
-which may affect some of the shell commands I give, but translating to Windows shouldn’t
-be too hard.&lt;/p&gt;
+&lt;p&gt;Things changed when I took up &lt;a href=&quot;https://omscs.gatech.edu/&quot;&gt;OMSCS&lt;/a&gt; in 2020. I could understand why anyone would want to have their github site - to showcase their portfolio, projects, share articles they learnt. I finally wanted to build one github site for myself and been putting it off due to the MS assignments. Now that am closer to the end of my course, I googled on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;github blogs&lt;/code&gt; and started my own site. After a few articles, I understood, each person has their own journey in starting up github blogs. In this article, am documenting my journey, the struggles I faced and the changes I did to the site that represents my personality.&lt;/p&gt;
 
-&lt;h2 id=&quot;making-a-site-with-minimal-mistakes&quot;&gt;Making a site with Minimal Mistakes&lt;/h2&gt;
+&lt;h2 id=&quot;github-pages&quot;&gt;Github Pages&lt;/h2&gt;
+&lt;p&gt;The best thing about having a blog with Github pages is that it automatically hosts your pages which you can access with your own personal URL anywhere in the world. All within a few minutes. How cool is that! The instructions to host your github pages were explained pretty consicely in the &lt;a href=&quot;https://pages.github.com/&quot;&gt;github pages site&lt;/a&gt;. You cannot go wrong in that. I had my site up in a few minutes using plain markdown syntax. There was nothing fancy going on as I had no themes enabled since I didnt understand what was going on beneath the blackbox that caused different things which I didnt add in my website to popup. This is how my blog looked when I first created it in plain markdown syntax on github pages following the instructions from &lt;a href=&quot;https://docs.github.com/en/pages/quickstart&quot;&gt;github pages quickstart guide&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;The website for Minimal Mistakes includes a great quick-start guide; I recommend the
-&lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#starting-from-jekyll-new&quot;&gt;Starting with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll new&lt;/code&gt;&lt;/a&gt; section as a place to start. Using this you should be
-able to establish a base site with some simple demonstration content, using the Minimal
-Mistakes theme.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/jekyll-website/github_pages.jpeg&quot; alt=&quot;My First Github Blog&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;You can always look directly at &lt;a href=&quot;https://github.com/peterewills/peterewills.github.io&quot;&gt;the source code for my site&lt;/a&gt; if you want
-to see exactly what I have in my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Gemfile&lt;/code&gt;, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;, or whatever.&lt;/p&gt;
+&lt;h2 id=&quot;installing-jekyll&quot;&gt;Installing Jekyll&lt;/h2&gt;
 
-&lt;h3 id=&quot;enabling-mathjax&quot;&gt;Enabling MathJax&lt;/h3&gt;
+&lt;p&gt;For sometime, I kept blogging github pages with plain .md files, but wanted to have a proper workflow and add more beautification to my site like other people did. I noticed most of the blogs I follow were using &lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/&quot;&gt;Minimal Mistakes theme&lt;/a&gt;.  I realized Jekyll was the technology behind converting .md files to static html webpages and a pre-requisite for Minimal Mistakes theme. I tried installing Jekyll on my laptop by following the &lt;a href=&quot;https://jekyllrb.com/docs/installation/&quot;&gt;official Jekyll guide&lt;/a&gt;. However, I could not get past installing ruby as the preinstalled ruby on macOS kept conflicting with new install. After exhausting multiple recommendations, I finally tookup the step of upgrading macOS from BigSur to Ventura per this very helpful &lt;a href=&quot;https://www.moncefbelyamani.com/how-to-install-xcode-homebrew-git-rvm-ruby-on-mac/&quot;&gt;install ruby on MacOS&lt;/a&gt; article by Moncef. The rest of Moncef article helped resolved all my issues and I finally got Jekyll running on my laptop.&lt;/p&gt;
 
-&lt;p&gt;In order to enable &lt;a href=&quot;https://www.mathjax.org&quot;&gt;MathJax&lt;/a&gt;, which renders the mathematical equations you see in my
-posts, you’ll need to edit the file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;scripts.html&lt;/code&gt; contained in the folder &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_includes/&lt;/code&gt;
-to include a line enabling MathJax. However, you’ll want to avoid overwriting the
-contents of the default &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;scripts.html&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;So, we need to find where &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle&lt;/code&gt; is storing the Gem for Minimal Mistakes. To
-find this, do&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle show minimal-mistakes-jekyll 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If you just want to navigate directly to that directory, do&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd $(bundle show minimal-mistakes-jekyll)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle&lt;/code&gt; doesn’t seem to have &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;minimal-mistakes-jekyll&lt;/code&gt; installed, then you should
-add the line &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gem &quot;minimal-mistakes-jekyll&quot;&lt;/code&gt; to your Gemfile, and run &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle&lt;/code&gt; to
-install the Gems.&lt;/p&gt;
-
-&lt;p&gt;Now you can copy the default &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;scripts.html&lt;/code&gt; into your site:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cp _includes/scripts.html /path/to/site/_includes/scripts.html
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Open the copied &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;scripts.html&lt;/code&gt; in your editor of choice,&lt;sup id=&quot;fnref:fnote1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fnote1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; and add the
-following lines at the end:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt; 
- 
-{% if page.mathjax %}
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;script &lt;/span&gt;&lt;span class=&quot;na&quot;&gt;type=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;async&lt;/span&gt;
-  &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/script&amp;gt;&lt;/span&gt;
-{% endif %}
- &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;And you’re done!&lt;sup id=&quot;fnref:fnote2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fnote2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;  Now, you can type &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$x_1$$&lt;/code&gt; to see \(x_1\), and so
-on. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$$...$$&lt;/code&gt; syntax will generate inline math if used inline, and will
-generate a display equation if used on its own line. So, if one enters&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$$ f(a) = \frac{1}{2\pi i} \oint_\gamma \frac{f(z)}{z-a} dz $$
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Then the rendered equation appears as so:&lt;/p&gt;
-
-\[f(a) = \frac{1}{2\pi i} \oint_\gamma \frac{f(z)}{z-a} dz\]
-
-&lt;p&gt;You can also use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\\[&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\\]&lt;/code&gt; as delimiters for display equations, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\\(&lt;/code&gt; and
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;\\)&lt;/code&gt; as delimiters for inline equations. The double slashes are only necessary in
-markdown; if you’re writing raw HTML, then a single slash will suffice.&lt;/p&gt;
-
-&lt;h3 id=&quot;customize-font-sizes&quot;&gt;Customize Font Sizes&lt;/h3&gt;
-
-&lt;p&gt;I found the fonts a bit oversized, so I wanted to change the size for the
-posts. In order to do this, you need to copy &lt;strong&gt;the entire folder&lt;/strong&gt; which
-contains all the relevant scss files. In order to do this, do&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cd $(bundle show minimal-mistakes-jekyll)
-cp -r _sass /path/to/site
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now, after much digging through the GitHub issues,&lt;sup id=&quot;fnref:fnote3&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:fnote3&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;3&lt;/a&gt;&lt;/sup&gt; I found that the
-file to edit here is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_sass/_reset.scss&lt;/code&gt;. In my site, the relevant chunk of text
-looks like&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;  @include breakpoint($medium) {
-    font-size: 13px;
-  }
-
-  @include breakpoint($large) {
-    font-size: 15px;
-  }
-
-  @include breakpoint($x-large) {
-    font-size: 18px;
-  }&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Once this file has been edited, you should see the font size reduced in your
-page.&lt;/p&gt;
-
-&lt;h2 id=&quot;getting-it-on-github-pages&quot;&gt;Getting it on GitHub Pages&lt;/h2&gt;
-
-&lt;p&gt;Okay, now we write a bunch of nonsense, find some beautiful pictures at
-&lt;a href=&quot;https://git-scm.com/docs/gittutorial&quot;&gt;Unsplash&lt;/a&gt; to use as headers, and we’re ready to publish the thing on GitHub
-Pages. I’ll first go through as though we don’t want to use a custom domain, so
-that the website will be exposed at &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;USERNAME.github.io&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;enabling-jekyll-remote-theme&quot;&gt;Enabling &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll-remote-theme&lt;/code&gt;&lt;/h3&gt;
-
-&lt;p&gt;First of all, make sure that you’re using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remote-theme&lt;/code&gt; jekyll plugin,
-which allows you to use any jekyll theme that is GitHub hosted, rather than only
-the few that are officially supported. This process is outlined on the Minimal
-Mistakes website, but I’ll go through it here.&lt;/p&gt;
-
-&lt;p&gt;First, &lt;strong&gt;in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; file&lt;/strong&gt;, enable the plugin by including it in the
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;plugins&lt;/code&gt; list, via&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;plugins:
-  - jekyll-remote-theme
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If you have other plugins you want to use (I use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jekyll-feed&lt;/code&gt;), then add them
-to this list as well. Designate the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remote_theme&lt;/code&gt; variable, but do so &lt;strong&gt;after
-setting the theme&lt;/strong&gt;, so that you have in your config file&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;theme: &quot;minimal-mistakes-jekyll&quot;
-remote_theme: &quot;mmistakes/minimal-mistakes&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Finally, in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Gemfile&lt;/code&gt;, add &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;gem &quot;jekyll-remote-theme&quot;&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;push-it-to-the-repository&quot;&gt;Push it to the repository&lt;/h3&gt;
-
-&lt;p&gt;GitHub pages looks for a repository that follows the naming convention
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;USERNAME.github.io&lt;/code&gt;. So, for example, since my GitHub username is
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;peterewills&lt;/code&gt;, the repository for the source of this site is at
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;https://www.github.com/peterewills/peterewills.github.io&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Once you’ve created such a repository, initialize a git repo on your site by
-going into &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;path/to/your/site&lt;/code&gt; and doing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;git init&lt;/code&gt;. Then, do&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;git remote add origin https://www.github.com/USERNAME/USERNAME.github.io
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;and then commit and push. (If you’re unfamiliar with using git, I recommend &lt;a href=&quot;https://git-scm.com/docs/gittutorial&quot;&gt;either&lt;/a&gt;
-of &lt;a href=&quot;https://try.github.io/levels/1/challenges/1&quot;&gt;these&lt;/a&gt; tutorials.) You’ll get an email telling you that your page build was
-successful, but you’re “using an unsupported theme.” Don’t worry about this; it happens
-whenever you use &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;remote-theme&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;You now should be able to navigate to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;USERNAME.github.io&lt;/code&gt; and see your page!&lt;/p&gt;
-
-&lt;h2 id=&quot;using-a-custom-domain&quot;&gt;Using a Custom Domain&lt;/h2&gt;
-
-&lt;p&gt;Suppose you’d prefer to use a custom domain, such as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mydomain.pizza&lt;/code&gt; (this is
-actually a real, and available, domain name). There are lots of ways to do this;
-I did it through &lt;a href=&quot;https://domains.google.com&quot;&gt;Google Domains&lt;/a&gt;, so I’ll go through those steps.&lt;/p&gt;
-
-&lt;p&gt;First, you go to &lt;a href=&quot;https://domains.google.com&quot;&gt;Google Domains&lt;/a&gt;, pick out the domain you want, and register
-it. For this example, we’ll assume you went with &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mydomain.pizza&lt;/code&gt;. You should
-now see it appear under the &lt;strong&gt;My Domains&lt;/strong&gt; tab on the right side of the
-page. You should see a domain called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mydomain.pizza&lt;/code&gt; and a &lt;strong&gt;DNS&lt;/strong&gt; option. This
-is what we need to edit.&lt;/p&gt;
-
-&lt;p&gt;We need to configure the DNS behavior of our domain so that it points at the IP
-address where GitHub Pages is hosting it. On the DNS page, scroll down to
-&lt;strong&gt;Custom Resource Records&lt;/strong&gt;. You’ll want to add three custom resource records;
-two “host” resource records (designated by an A) and one “alias” resource record
-(designated by CNAME). GitHub pages exposes its sites at IP addresses
-192.30.252.153 and 192.30.252.154. So, you’ll want to add both of these as host
-resource records. You’ll want to add your GitHub Pages url &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;USERNAME.github.io&lt;/code&gt;
-as an alias record. By the time you’ve added the three, your list of resource
-records should look like the example below.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/custom_resource.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;So, now your url (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mydomain.pizza&lt;/code&gt;) knows that it is an alias for
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;USERNAME.github.io&lt;/code&gt;, but we still have to specify this aliasing on the GitHub
-end of things.&lt;/p&gt;
-
-&lt;p&gt;To do this, simply make a text file called &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CNAME&lt;/code&gt; and include on the first line&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;mydomain.pizza
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;This is the entire contents of the text file &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CNAME&lt;/code&gt;. Once this is pushed to the
-repository &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;USERNAME/USERNAME.github.io&lt;/code&gt;, the appropriate settings should
-automatically update themselves. To check this, go to the respository settings,
-scroll down to the “GitHub Pages” settings, and look under “Custom domain.” You
-should see something like the following:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/images/github_repo.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;If the DNS record of your Google domain has not yet been updated, then you will
-see &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Your site is ready to be published mydomain.pizza&lt;/code&gt; on a yellow
-background. Note that it sometimes takes up to 48 hours for DNS records to
-update, so be patient.&lt;/p&gt;
-
-&lt;p&gt;Once the DNS records have updated, you should be able to see your site at
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mydomain.pizza&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;enabling-comments-via-disqus&quot;&gt;Enabling Comments via Disqus&lt;/h2&gt;
-
-&lt;p&gt;Minimal Mistakes has excellent support for comments built in to the theme. I chose to
-use Disqus as comments platform, but it supports others. If you choose to go another
-route, you can look on the &lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/docs/configuration/#comments&quot;&gt;minimal-mistakes
-guide&lt;/a&gt; for
-more direct assistance.&lt;/p&gt;
-
-&lt;p&gt;To get Disqus comments up and running, you should go to &lt;a href=&quot;http://disqus.com&quot;&gt;the Disqus
-homepage&lt;/a&gt; and sign up. Eventually you should have a “shortname” that
-you can use for your site. Once you have this, you just need to add the following to
-your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;comments:
-  provider: &quot;disqus&quot;
-  disqus:
-    shortname: &quot;my-shortname&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;a-caveat&quot;&gt;A Caveat&lt;/h3&gt;
-
-&lt;p&gt;Even if you include this, you will not see Disqus comments appear in your posts when you
-do &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle exec jekyll serve&lt;/code&gt; and look at the posts on &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;localhost:4000&lt;/code&gt;. Why don’t they
-show up?&lt;/p&gt;
-
-&lt;p&gt;When you build locally, you are by default building in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;development&lt;/code&gt; environment. In
-minimal mistakes, comments are only active in the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;production&lt;/code&gt; environment. You can test
-what environment you’re in by including the following chunk of code on a page:&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt; 
- 
-{% if jekyll.environment == &quot;production&quot; %}
-   # YOU&apos;RE IN A PRODUCTION ENVIRONMENT
-{% endif %}&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;For more on environments, you can check out &lt;a href=&quot;https://jekyllrb.com/docs/configuration/environments/&quot;&gt;the official Jekyll
-docs&lt;/a&gt;. You &lt;em&gt;should&lt;/em&gt; be able to
-run your local Jekyll server in a production environment by doing&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;JEKYLL_ENV=production bundle exec jekyll serve 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;but this never worked for me, so I had to test that comments were working by pushing to
-GitHub and looking at my posts live in production.&lt;/p&gt;
-
-&lt;h2 id=&quot;customizations&quot;&gt;Customizations&lt;/h2&gt;
-&lt;h3 id=&quot;customize-avatar&quot;&gt;Customize Avatar&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;Filename:&lt;/strong&gt; _sass/minimal-mistakes/_sidebar.scss&lt;br /&gt;
-&lt;strong&gt;Border &amp;amp; Shape:&lt;/strong&gt; Increasing border-radius makes it eclipse. 0% if you want the square shape. Frame around avatar is controlled by padding and border.&lt;/p&gt;
-&lt;div class=&quot;language-css highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;img&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;max-width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;200px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;border-radius&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-    &lt;span class=&quot;err&quot;&gt;@include&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;breakpoint($large)&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;padding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0px&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;nl&quot;&gt;border&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;0px&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;solid&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;border-color&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-  &lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;Profile Opacity:&lt;/strong&gt; I also didn&apos;t like the reduced opacity on the author profile when not hovering over it. So I turned it off.&lt;/p&gt;
-&lt;div class=&quot;language-css highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;@include&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;breakpoint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;large&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nl&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;calc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;#{$&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;right-sidebar-width-narrow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;em&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;//&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;opacity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;75&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;#&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;original&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;value&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;opacity&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;00&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;-webkit-transition&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;opacity&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;ease-in-out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;nt&quot;&gt;transition&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;opacity&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;ease-in-out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;h3 id=&quot;move-tags-and-date-to-title&quot;&gt;Move Tags and Date to Title&lt;/h3&gt;
+&lt;p&gt;Some of the instructions require you to update the system’s bash file. There are multiple bashes and I had trouble deciding which bash to update. You may find the following commands helpful.&lt;/p&gt;
 &lt;ul&gt;
-  &lt;li&gt;Filename: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_layout/single.html&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Move the lines `&lt;/li&gt;
+  &lt;li&gt;To determine the shell you are currently using in a terminal or command prompt, you can use the following command:
+    &lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$SHELL&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;This command will display the path to the shell executable that is currently being used as your default shell. The output will typically be the absolute path to the shell, such as /bin/bash, /bin/zsh, or /bin/sh.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;To update Bash file
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;nano ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+    &lt;p&gt;If you run into “Permission denied” error message indicates that you do not have the necessary permissions to edit the .bash_profile file. In this case, you can try using the sudo command to edit the file with elevated privileges.&lt;/p&gt;
+  &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;` &amp;amp; `&lt;/p&gt;
+&lt;p&gt;Here’s an example command to open the .bash_profile file with sudo and the Nano editor:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;sudo nano ~/.bash_profile
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Choose either ~/.bashrc or ~/.bash_profile based on your preference and the one that is being sourced by your Bash shell.&lt;/p&gt;
 
-&lt;p class=&quot;page__date&quot;&gt;&lt;strong&gt;&lt;i class=&quot;fas fa-fw fa-calendar-alt&quot; aria-hidden=&quot;true&quot;&gt;&lt;/i&gt; Updated:&lt;/strong&gt; &lt;time datetime=&quot;2017-12-20T00:00:00-05:00&quot;&gt;December 20, 2017&lt;/time&gt;&lt;/p&gt;
+&lt;h2 id=&quot;understanding-github--jekyll&quot;&gt;Understanding Github &amp;amp; Jekyll&lt;/h2&gt;
+&lt;p&gt;Once I had Jekyll, I was in search of an article that best explained what was going on. After searching multiple resources, I hit upon &lt;a href=&quot;https://www.youtube.com/watch?v=EvYs1idcGnM&amp;amp;list=PLWzwUIYZpnJuT0sH4BN56P5oWTdHJiTNq&amp;amp;index=4&amp;amp;ab_channel=BillRaymond&quot;&gt;Bill’s awesome 6 part Youtube series&lt;/a&gt; (Thank you Bill Raymond!). He takes it slow and clearly explains how github pages work, Jekyll theme is setup, how github’s remote Jekyll works and more. If you are following this article, I sincerely urge you to watch &lt;a href=&quot;https://www.youtube.com/watch?v=EvYs1idcGnM&amp;amp;list=PLWzwUIYZpnJuT0sH4BN56P5oWTdHJiTNq&amp;amp;index=4&amp;amp;ab_channel=BillRaymond&quot;&gt;Bill’s videos&lt;/a&gt;. Bill covers exactly what I wanted. Understanding the basics, Customizing the theme and setting up a workflow with Visual Studio Code. Below are some of the useful commands I learnt from Bill’s videos.&lt;/p&gt;
 
-&lt;p&gt;` to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;header&amp;gt;&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;language-css highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;footer&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&quot;page__meta&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-        
-        
+&lt;p&gt;To create a new Jekyll site in the working folder, you can use the following command:&lt;/p&gt;
 
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jekyll new &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This command will generate a new Jekyll site in the current directory.&lt;br /&gt;
+If you already have files in the working folder and want to force the creation of a new site, you can use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--force&lt;/code&gt; option. This will overwrite any existing files that conflict with the Jekyll site structure. Here’s the command:&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jekyll new &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--force&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;To test your site with the Live Reload option, you can use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle exec jekyll serve --livereload&lt;/code&gt; command. This command starts a local Jekyll server and automatically refreshes the browser whenever you make changes to your site files. Here’s the command:&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;jekyll serve &lt;span class=&quot;nt&quot;&gt;--livereload&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;If you want to run your local Jekyll server in a production environment, you can set the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;JEKYLL_ENV&lt;/code&gt; environment variable to “production” before starting the server. This will enable optimizations and configurations specific to production. Here’s the command:&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;JEKYLL_ENV&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;production bundle &lt;span class=&quot;nb&quot;&gt;exec &lt;/span&gt;jekyll serve
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;By running the above command, Jekyll will start the server in a production environment, using the appropriate settings and configurations for that environment.&lt;br /&gt;
+To manage dependencies in a Jekyll project, you can use Bundler. Bundler helps install and update the required gems (Ruby libraries) specified in your project’s Gemfile.&lt;br /&gt;
+To install the required gems for your Jekyll project, use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle install&lt;/code&gt; command. This command reads the Gemfile in your project’s root directory and installs the specified gems. Here’s the command:&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;If you have already installed the gems and want to update them to their latest versions, you can use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle update&lt;/code&gt; command. This command updates the gems specified in your Gemfile to their latest versions. Here’s the command:&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;bundle update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Both &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle install&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle update&lt;/code&gt; should be run in the root directory of your Jekyll project, where the Gemfile is located. These commands ensure that your project has the necessary dependencies installed and up to date.&lt;br /&gt;
+To open the Minima theme in macOS, you can use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;open&lt;/code&gt; command followed by the path to the theme. Here are the commands for opening the Minima theme and the Minimal Mistakes Jekyll theme:&lt;br /&gt;
+To open the Minima theme:&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;open &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;bundle info &lt;span class=&quot;nt&quot;&gt;--path&lt;/span&gt; minima&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This command uses &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle info --path minima&lt;/code&gt; to get the path to the Minima theme and then opens it using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;open&lt;/code&gt; command.&lt;br /&gt;
+To open the Minimal Mistakes Jekyll theme:&lt;/p&gt;
+&lt;div class=&quot;language-shell highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;open &lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;bundle info &lt;span class=&quot;nt&quot;&gt;--path&lt;/span&gt; minimal-mistakes-jekyll&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;This command uses &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle info --path minimal-mistakes-jekyll&lt;/code&gt; to get the path to the Minimal Mistakes Jekyll theme and then opens it using the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;open&lt;/code&gt; command.&lt;/p&gt;
 
-        
+&lt;h2 id=&quot;running-locally&quot;&gt;Running Locally&lt;/h2&gt;
 
-  &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&quot;page__date&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;class&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&quot;fas fa-fw fa-calendar-alt&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;aria-hidden&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&quot;true&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;Updated&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;strong&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&quot;2017-12-20T00:00:00-05:00&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;December&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;2017&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
-
-
-&lt;span class=&quot;o&quot;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;footer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;p&gt;I found it extremely convenient to do &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle update&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;bundle exec jekyll serve&lt;/code&gt; from Visual Studio, so I can render my blog from my local without having to publish it each time on github. However, one problem I often ran into was the local port kept being occupied and failed my exec jekyll serve commands.&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jekyll 3.9.3 | Error:  Address already in use - bind(2) for 127.0.0.1:4000
+/Users/vimal/.rubies/ruby-3.1.3/lib/ruby/3.1.0/socket.rb:201:in `bind&apos;: Address already in use - bind(2) for 127.0.0.1:4000 (Errno::EADDRINUSE)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;You can get around the issue by finding out the Process ID used by the local port (4000) and then killing the process by Process ID. I ended up using the below two commands often.
+To show what is using port 4000:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;lsof -wni tcp:4000 
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;using-google-analytics-to-monitor-traffic&quot;&gt;Using Google Analytics to Monitor Traffic&lt;/h2&gt;
-
-&lt;p&gt;Minimal mistakes also includes nice support for google analytics. Similar to Disqus
-comments, you’ll need to sign up for google analytics and follow the steps there to get
-a &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tracking_id&lt;/code&gt; for your site. Then, in your &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;, include the following blob:&lt;/p&gt;
-
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;analytics:
-  provider: &quot;google&quot;
-  google:
-    tracking_id: &quot;XB-934572345-6&quot;
+&lt;p&gt;Then use the PID that comes with the result to run the kill process:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;kill -9 3366
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;h2 id=&quot;mimimal-mistakes&quot;&gt;Mimimal Mistakes&lt;/h2&gt;
 
-&lt;p&gt;You should then be able to use the Google Analytics dashboard to monitor traffic on your
-site. You can look at the &lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/docs/configuration/#analytics&quot;&gt;minimal mistakes documentation on
-analytics&lt;/a&gt;
-for more details, especially if you plan on using a different analytics provider.&lt;/p&gt;
+&lt;p&gt;To get to know the &lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/&quot;&gt;minimal mistakes theme&lt;/a&gt;, I would recommend going through the excellent &lt;a href=&quot;https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/&quot;&gt;quick-start-guide&lt;/a&gt; put together by Michael. This is better over forking since you can keep track of the exact changes you are applying. The customization section help you setup the basics and getting to know your config.yaml file.&lt;/p&gt;
+
+&lt;h2 id=&quot;customizations&quot;&gt;Customizations&lt;/h2&gt;
+&lt;p&gt;Some of the customizations are not exposed through the config file. In those cases you can copy over the theme files and edit the source files directly. &lt;a href=&quot;https://www.youtube.com/watch?v=EvYs1idcGnM&amp;amp;list=PLWzwUIYZpnJuT0sH4BN56P5oWTdHJiTNq&amp;amp;index=4&amp;amp;ab_channel=BillRaymond&quot;&gt;Bill’s video series&lt;/a&gt; already covers this in detail. In addition, I hugely benefited from these series of articles by Katerina on her &lt;a href=&quot;https://www.cross-validated.com/Personal-Website-Mission-accomplished/&quot;&gt;website cross-validated&lt;/a&gt;. (Thanks Katerina!) Once you get a hang of making these changes, you can explore on your own and customize your site as you wish.&lt;/p&gt;
 
 &lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;Building your own blog site can be a hugely rewarding experience. I also realized how far web development has come and how various technologies can interact and work together. I know I did not go into the specifics but the people in the articles I have linked have already covered this in great detail. I also did not go far into building my custom domain since I dont see the need for it yet. Feel free to comment if you have any specific question. Enjoy building your website!&lt;/p&gt;
 
-&lt;p&gt;As I said at the beginning of the post, you can check out &lt;a href=&quot;https://www.github.com/peterewills/peterewills.github.io&quot;&gt;the repository for my
-site&lt;/a&gt; to see examples of what I’ve gone through here; including my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;CNAME&lt;/code&gt; file, my
-&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_include/scripts.html&lt;/code&gt; file that enables MathJax, and my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; file. Please let
-me know, either by email or in the comments, if you have any questions or corrections!&lt;/p&gt;
+&lt;!-- 
+### Customize Avatar
+**Filename:** _sass/minimal-mistakes/_sidebar.scss  
+**Border &amp; Shape:** Increasing border-radius makes it eclipse. 0% if you want the square shape. Frame around avatar is controlled by padding and border.
+```css
+img {
+    max-width: 200px;
+    border-radius: 0%;
 
-&lt;!-------------------------------- FOOTER ----------------------------&gt;
-
-&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
-  &lt;ol&gt;
-    &lt;li id=&quot;fn:fnote1&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Presumably emacs. &lt;a href=&quot;#fnref:fnote1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fnote2&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Some &lt;a href=&quot;http://dasonk.com/blog/2012/10/09/Using-Jekyll-and-Mathjax&quot;&gt;older blog posts&lt;/a&gt; discuss the process of adding kramdown as
-the markdown rendering engine, but this is default behavior for Jekyll 3.x,
-so there’s no need to do this step. &lt;a href=&quot;#fnref:fnote2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;fn:fnote3&quot; role=&quot;doc-endnote&quot;&gt;
-      &lt;p&gt;Michael, the guy who built Minimal Mistakes, is really wonderful
-about responding to issues on GitHub, which are really used as a support
-forum for people using the theme who have no experience in web development
-(such as myself). &lt;a href=&quot;#fnref:fnote3&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
-    &lt;/li&gt;
-  &lt;/ol&gt;
-&lt;/div&gt;</content><author><name>Vimal Venugopal</name></author><category term="posts" /><summary type="html">A guide detailing my process for building this website using the static site generator Jekyll and the theme Minimal Mistakes</summary></entry></feed>
+    @include breakpoint($large) {
+      padding: 0px;
+      border: 0px solid $border-color;
+    }
+  }
+```
+**Profile Opacity:** I also didn\&apos;t like the reduced opacity on the author profile when not hovering over it. So I turned it off.  
+```css
+@include breakpoint($large) {
+    float: left;
+    width: calc(#{$right-sidebar-width-narrow} - 1em);
+    // opacity: 0.75; # original value
+    opacity: 1.00;
+    -webkit-transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
+``` --&gt;</content><author><name>Vimal Venugopal</name></author><category term="posts" /><summary type="html">A guide detailing my process for building this website using the static site generator Jekyll and the theme Minimal Mistakes</summary></entry></feed>

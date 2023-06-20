@@ -1,0 +1,672 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Building a Personal Site with Jekyll &amp; Minimal Mistakes | VMLverse</title>
+<meta name="description" content="A guide detailing my process for building this website using the static site generator Jekyll and the theme Minimal Mistakes">
+
+
+  <meta name="author" content="Vimal Venugopal">
+  
+  <meta property="article:author" content="Vimal Venugopal">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="VMLverse">
+<meta property="og:title" content="Building a Personal Site with Jekyll &amp; Minimal Mistakes">
+<meta property="og:url" content="http://localhost:4000/posts/2023/01/06/jekyll-website.html">
+
+
+  <meta property="og:description" content="A guide detailing my process for building this website using the static site generator Jekyll and the theme Minimal Mistakes">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-01-06T00:00:00-05:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/posts/2023/01/06/jekyll-website.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Vimal Venugopal",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="VMLverse Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo_plain_blck_bg.png" alt="VMLverse"></a>
+        
+        <a class="site-title" href="/">
+          VMLverse
+          <span class="site-subtitle">Insights, Experiments and Discoveries in Machine Learning</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/blog/">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/projects/">Projects</a>
+            </li><li class="masthead__menu-item">
+              <a href="/docs/resume.pdf">Resume</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/DSC1717square.jpeg" alt="Vimal Venugopal" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Vimal Venugopal</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>a curious mind with a passion for machine learning, photography and travel</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://cognitivescrawls.wordpress.com/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Wordpress</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Building a Personal Site with Jekyll &amp; Minimal Mistakes">
+    <meta itemprop="description" content="A guide detailing my process for building this website using the static site generator Jekyll and the theme Minimal Mistakes">
+    <meta itemprop="datePublished" content="2023-01-06T00:00:00-05:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Building a Personal Site with Jekyll &amp; Minimal Mistakes
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> Contents</h4></header>
+              <ul class="toc__menu"><li><a href="#prelude">Prelude</a></li><li><a href="#github-pages">Github Pages</a></li><li><a href="#installing-jekyll">Installing Jekyll</a></li><li><a href="#understanding-github--jekyll">Understanding Github &amp; Jekyll</a></li><li><a href="#running-locally">Running Locally</a></li><li><a href="#mimimal-mistakes">Mimimal Mistakes</a></li><li><a href="#customizations">Customizations</a></li><li><a href="#conclusion">Conclusion</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="prelude">Prelude</h2>
+<p>With my job as PS consultant, I had no projects to host on github. I love writing and I wanted to write about the books I read or other occassional inspirations I get from random things. Ever since I thought about having a blog, my friend has been recommending me to start a github blog over wordpress so that I can have my software projects hosted as well. I went along the easier path with wordpress and had my <a href="https://cognitivescrawls.wordpress.com/">wordpress site</a> opened in some time in 2019 where I occassionally try to write.</p>
+
+<p>Things changed when I took up <a href="https://omscs.gatech.edu/">OMSCS</a> in 2020. I could understand why anyone would want to have their github site - to showcase their portfolio, projects, share articles they learnt. I finally wanted to build one github site for myself and been putting it off due to the MS assignments. Now that am closer to the end of my course, I googled on <code class="language-plaintext highlighter-rouge">github blogs</code> and started my own site. After a few articles, I understood, each person has their own journey in starting up github blogs. In this article, am documenting my journey, the struggles I faced and the changes I did to the site that represents my personality.</p>
+
+<h2 id="github-pages">Github Pages</h2>
+<p>The best thing about having a blog with Github pages is that it automatically hosts your pages which you can access with your own personal URL anywhere in the world. All within a few minutes. How cool is that! The instructions to host your github pages were explained pretty consicely in the <a href="https://pages.github.com/">github pages site</a>. You cannot go wrong in that. I had my site up in a few minutes using plain markdown syntax. There was nothing fancy going on as I had no themes enabled since I didnt understand what was going on beneath the blackbox that caused different things which I didnt add in my website to popup. This is how my blog looked when I first created it in plain markdown syntax on github pages following the instructions from <a href="https://docs.github.com/en/pages/quickstart">github pages quickstart guide</a>.</p>
+
+<p><img src="/assets/images/jekyll-website/github_pages.jpeg" alt="My First Github Blog" /></p>
+
+<h2 id="installing-jekyll">Installing Jekyll</h2>
+
+<p>For sometime, I kept blogging github pages with plain .md files, but wanted to have a proper workflow and add more beautification to my site like other people did. I noticed most of the blogs I follow were using <a href="https://mmistakes.github.io/minimal-mistakes/">Minimal Mistakes theme</a>.  I realized Jekyll was the technology behind converting .md files to static html webpages and a pre-requisite for Minimal Mistakes theme. I tried installing Jekyll on my laptop by following the <a href="https://jekyllrb.com/docs/installation/">official Jekyll guide</a>. However, I could not get past installing ruby as the preinstalled ruby on macOS kept conflicting with new install. After exhausting multiple recommendations, I finally tookup the step of upgrading macOS from BigSur to Ventura per this very helpful <a href="https://www.moncefbelyamani.com/how-to-install-xcode-homebrew-git-rvm-ruby-on-mac/">install ruby on MacOS</a> article by Moncef. The rest of Moncef article helped resolved all my issues and I finally got Jekyll running on my laptop.</p>
+
+<p>Some of the instructions require you to update the system’s bash file. There are multiple bashes and I had trouble deciding which bash to update. You may find the following commands helpful.</p>
+<ul>
+  <li>To determine the shell you are currently using in a terminal or command prompt, you can use the following command:
+    <div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="nv">$SHELL</span>
+</code></pre></div>    </div>
+    <p>This command will display the path to the shell executable that is currently being used as your default shell. The output will typically be the absolute path to the shell, such as /bin/bash, /bin/zsh, or /bin/sh.</p>
+  </li>
+  <li>To update Bash file
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nano ~/.bash_profile
+</code></pre></div>    </div>
+    <p>If you run into “Permission denied” error message indicates that you do not have the necessary permissions to edit the .bash_profile file. In this case, you can try using the sudo command to edit the file with elevated privileges.</p>
+  </li>
+</ul>
+
+<p>Here’s an example command to open the .bash_profile file with sudo and the Nano editor:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo nano ~/.bash_profile
+</code></pre></div></div>
+<p>Choose either ~/.bashrc or ~/.bash_profile based on your preference and the one that is being sourced by your Bash shell.</p>
+
+<h2 id="understanding-github--jekyll">Understanding Github &amp; Jekyll</h2>
+<p>Once I had Jekyll, I was in search of an article that best explained what was going on. After searching multiple resources, I hit upon <a href="https://www.youtube.com/watch?v=EvYs1idcGnM&amp;list=PLWzwUIYZpnJuT0sH4BN56P5oWTdHJiTNq&amp;index=4&amp;ab_channel=BillRaymond">Bill’s awesome 6 part Youtube series</a> (Thank you Bill Raymond!). He takes it slow and clearly explains how github pages work, Jekyll theme is setup, how github’s remote Jekyll works and more. If you are following this article, I sincerely urge you to watch <a href="https://www.youtube.com/watch?v=EvYs1idcGnM&amp;list=PLWzwUIYZpnJuT0sH4BN56P5oWTdHJiTNq&amp;index=4&amp;ab_channel=BillRaymond">Bill’s videos</a>. Bill covers exactly what I wanted. Understanding the basics, Customizing the theme and setting up a workflow with Visual Studio Code. Below are some of the useful commands I learnt from Bill’s videos.</p>
+
+<p>To create a new Jekyll site in the working folder, you can use the following command:</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll new <span class="nb">.</span>
+</code></pre></div></div>
+<p>This command will generate a new Jekyll site in the current directory.<br />
+If you already have files in the working folder and want to force the creation of a new site, you can use the <code class="language-plaintext highlighter-rouge">--force</code> option. This will overwrite any existing files that conflict with the Jekyll site structure. Here’s the command:</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll new <span class="nb">.</span> <span class="nt">--force</span>
+</code></pre></div></div>
+<p>To test your site with the Live Reload option, you can use the <code class="language-plaintext highlighter-rouge">bundle exec jekyll serve --livereload</code> command. This command starts a local Jekyll server and automatically refreshes the browser whenever you make changes to your site files. Here’s the command:</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">exec </span>jekyll serve <span class="nt">--livereload</span>
+</code></pre></div></div>
+<p>If you want to run your local Jekyll server in a production environment, you can set the <code class="language-plaintext highlighter-rouge">JEKYLL_ENV</code> environment variable to “production” before starting the server. This will enable optimizations and configurations specific to production. Here’s the command:</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">JEKYLL_ENV</span><span class="o">=</span>production bundle <span class="nb">exec </span>jekyll serve
+</code></pre></div></div>
+<p>By running the above command, Jekyll will start the server in a production environment, using the appropriate settings and configurations for that environment.<br />
+To manage dependencies in a Jekyll project, you can use Bundler. Bundler helps install and update the required gems (Ruby libraries) specified in your project’s Gemfile.<br />
+To install the required gems for your Jekyll project, use the <code class="language-plaintext highlighter-rouge">bundle install</code> command. This command reads the Gemfile in your project’s root directory and installs the specified gems. Here’s the command:</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">install</span>
+</code></pre></div></div>
+<p>If you have already installed the gems and want to update them to their latest versions, you can use the <code class="language-plaintext highlighter-rouge">bundle update</code> command. This command updates the gems specified in your Gemfile to their latest versions. Here’s the command:</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle update
+</code></pre></div></div>
+<p>Both <code class="language-plaintext highlighter-rouge">bundle install</code> and <code class="language-plaintext highlighter-rouge">bundle update</code> should be run in the root directory of your Jekyll project, where the Gemfile is located. These commands ensure that your project has the necessary dependencies installed and up to date.<br />
+To open the Minima theme in macOS, you can use the <code class="language-plaintext highlighter-rouge">open</code> command followed by the path to the theme. Here are the commands for opening the Minima theme and the Minimal Mistakes Jekyll theme:<br />
+To open the Minima theme:</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="si">$(</span>bundle info <span class="nt">--path</span> minima<span class="si">)</span>
+</code></pre></div></div>
+<p>This command uses <code class="language-plaintext highlighter-rouge">bundle info --path minima</code> to get the path to the Minima theme and then opens it using the <code class="language-plaintext highlighter-rouge">open</code> command.<br />
+To open the Minimal Mistakes Jekyll theme:</p>
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>open <span class="si">$(</span>bundle info <span class="nt">--path</span> minimal-mistakes-jekyll<span class="si">)</span>
+</code></pre></div></div>
+<p>This command uses <code class="language-plaintext highlighter-rouge">bundle info --path minimal-mistakes-jekyll</code> to get the path to the Minimal Mistakes Jekyll theme and then opens it using the <code class="language-plaintext highlighter-rouge">open</code> command.</p>
+
+<h2 id="running-locally">Running Locally</h2>
+
+<p>I found it extremely convenient to do <code class="language-plaintext highlighter-rouge">bundle update</code> and <code class="language-plaintext highlighter-rouge">bundle exec jekyll serve</code> from Visual Studio, so I can render my blog from my local without having to publish it each time on github. However, one problem I often ran into was the local port kept being occupied and failed my exec jekyll serve commands.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll 3.9.3 | Error:  Address already in use - bind(2) for 127.0.0.1:4000
+/Users/vimal/.rubies/ruby-3.1.3/lib/ruby/3.1.0/socket.rb:201:in `bind': Address already in use - bind(2) for 127.0.0.1:4000 (Errno::EADDRINUSE)
+</code></pre></div></div>
+<p>You can get around the issue by finding out the Process ID used by the local port (4000) and then killing the process by Process ID. I ended up using the below two commands often.
+To show what is using port 4000:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lsof -wni tcp:4000 
+</code></pre></div></div>
+
+<p>Then use the PID that comes with the result to run the kill process:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>kill -9 3366
+</code></pre></div></div>
+<h2 id="mimimal-mistakes">Mimimal Mistakes</h2>
+
+<p>To get to know the <a href="https://mmistakes.github.io/minimal-mistakes/">minimal mistakes theme</a>, I would recommend going through the excellent <a href="https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/">quick-start-guide</a> put together by Michael. This is better over forking since you can keep track of the exact changes you are applying. The customization section help you setup the basics and getting to know your config.yaml file.</p>
+
+<h2 id="customizations">Customizations</h2>
+<p>Some of the customizations are not exposed through the config file. In those cases you can copy over the theme files and edit the source files directly. <a href="https://www.youtube.com/watch?v=EvYs1idcGnM&amp;list=PLWzwUIYZpnJuT0sH4BN56P5oWTdHJiTNq&amp;index=4&amp;ab_channel=BillRaymond">Bill’s video series</a> already covers this in detail. In addition, I hugely benefited from these series of articles by Katerina on her <a href="https://www.cross-validated.com/Personal-Website-Mission-accomplished/">website cross-validated</a>. (Thanks Katerina!) Once you get a hang of making these changes, you can explore on your own and customize your site as you wish.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>Building your own blog site can be a hugely rewarding experience. I also realized how far web development has come and how various technologies can interact and work together. I know I did not go into the specifics but the people in the articles I have linked have already covered this in great detail. I also did not go far into building my custom domain since I dont see the need for it yet. Feel free to comment if you have any specific question. Enjoy building your website!</p>
+
+<!-- 
+### Customize Avatar
+**Filename:** _sass/minimal-mistakes/_sidebar.scss  
+**Border & Shape:** Increasing border-radius makes it eclipse. 0% if you want the square shape. Frame around avatar is controlled by padding and border.
+```css
+img {
+    max-width: 200px;
+    border-radius: 0%;
+
+    @include breakpoint($large) {
+      padding: 0px;
+      border: 0px solid $border-color;
+    }
+  }
+```
+**Profile Opacity:** I also didn\'t like the reduced opacity on the author profile when not hovering over it. So I turned it off.  
+```css
+@include breakpoint($large) {
+    float: left;
+    width: calc(#{$right-sidebar-width-narrow} - 1em);
+    // opacity: 0.75; # original value
+    opacity: 1.00;
+    -webkit-transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
+``` -->
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-01-06T00:00:00-05:00">January 6, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  Share On <br>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Building+a+Personal+Site+with+Jekyll+%26+Minimal+Mistakes%20http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F01%2F06%2Fjekyll-website.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F01%2F06%2Fjekyll-website.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F01%2F06%2Fjekyll-website.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">Previous</a>
+    
+    
+      <a href="/posts/2023/05/06/github_commands.html" class="pagination--pager" title="Git Commands Simplified: A Beginner’s Guide
+">Next</a>
+    
+  </nav>
+ TO remove previous:next-->
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/06/08/markdown-cheatsheet.html" rel="permalink">Markdown Cheatsheet: Quick Reference for Commonly Used Syntax
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">This cheatsheet provides a concise reference for frequently used Markdown formatting, helping you create beautiful, well-structured content with ease.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/05/06/github_commands.html" rel="permalink">Git Commands Simplified: A Beginner’s Guide
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">In this beginner’s guide, I break down the essential Git commands into easy-to-understand explanations and practical examples. From initializing a repository...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Vimal Venugopal. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/posts/2023/01/06/jekyll-website.html";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/posts/2023/01/06/jekyll-website"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://vmlverse.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+  </body>
+</html>
