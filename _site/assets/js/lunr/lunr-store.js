@@ -16,4 +16,10 @@ var store = [{
         "tags": ["markdown","jekyll"],
         "url": "/posts/2023/06/08/markdown-cheatsheet.html",
         "teaser": null
+      },{
+        "title": "Pandas: Data Analysis Essentials",
+        "excerpt":"A significant portion of working on real-world projects, around 70-80%, is actually spent on preparing and cleaning the data. This is where Pandas comes in handy: Pandas is a powerful tool that empowers analysts to efficiently manipulate, analyze, and visualize data. Here’s a brief overview of how you can perform...","categories": ["posts"],
+        "tags": ["pandas","data analysis"],
+        "url": "/posts/2023/06/08/Data_Analysis_With_Pandas.html",
+        "teaser": null
       },]
