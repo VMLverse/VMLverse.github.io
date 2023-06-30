@@ -1,5 +1,5 @@
 var store = [{
-        "title": "Building a Personal Site with Jekyll & Minimal Mistakes",
+        "title": "Building my Personal Site with Jekyll & Minimal Mistakes",
         "excerpt":"Prelude With my job as PS consultant, I had no projects to host on github. I love writing and I wanted to write about the books I read or other occassional inspirations I get from random things. Ever since I thought about having a blog, my friend has been recommending...","categories": ["posts"],
         "tags": [],
         "url": "/posts/2023/01/06/jekyll-website.html",
@@ -21,5 +21,11 @@ var store = [{
         "excerpt":"A significant portion of working on real-world projects, around 70-80%, is actually spent on preparing and cleaning the data. This is where Pandas comes in handy: Pandas is a powerful tool that empowers analysts to efficiently manipulate, analyze, and visualize data. Here’s a brief overview of how you can perform...","categories": ["posts"],
         "tags": ["pandas","data analysis"],
         "url": "/posts/2023/06/08/Data_Analysis_With_Pandas.html",
+        "teaser": null
+      },{
+        "title": "Machine Learning Fundamentals: Linear Algebra: Part 1-Vectors",
+        "excerpt":"Introduction: Linear algebra serves as the foundation for many machine learning algorithms and techniques. Linear Algebra is the branch of mathematics that studies vector spaces and linear transformations between vector spaces, such as rotating a shape, scaling it up or down, translating it (i.e. moving it), etc. Vectors: Vectors are...","categories": ["posts"],
+        "tags": ["linear algebra","machine learning fundamentals","vectors","mathematics"],
+        "url": "/posts/2023/06/29/Maths_LinearAlgebra.html",
         "teaser": null
       },]

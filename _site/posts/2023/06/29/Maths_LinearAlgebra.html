@@ -1,0 +1,1302 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Machine Learning Fundamentals: Linear Algebra: Part 1-Vectors | VMLverse</title>
+<meta name="description" content="In this blog post, we will try to understand vectors from their base representation, their properties and the various operations we can perform on vectors.">
+
+
+  <meta name="author" content="Vimal Venugopal">
+  
+  <meta property="article:author" content="Vimal Venugopal">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="VMLverse">
+<meta property="og:title" content="Machine Learning Fundamentals: Linear Algebra: Part 1-Vectors">
+<meta property="og:url" content="http://localhost:4000/posts/2023/06/29/Maths_LinearAlgebra.html">
+
+
+  <meta property="og:description" content="In this blog post, we will try to understand vectors from their base representation, their properties and the various operations we can perform on vectors.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-06-29T00:00:00-04:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/posts/2023/06/29/Maths_LinearAlgebra.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Vimal Venugopal",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="VMLverse Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo_plain_blck_bg.png" alt="VMLverse"></a>
+        
+        <a class="site-title" href="/">
+          VMLverse
+          <span class="site-subtitle">Explore | Experiment | Expand</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/blog/">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/projects/">Projects</a>
+            </li><li class="masthead__menu-item">
+              <a href="/docs/resume.pdf">Resume</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/DSC1717square.jpeg" alt="Vimal Venugopal" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Vimal Venugopal</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>a curious mind with a passion for machine learning, photography and travel</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://cognitivescrawls.wordpress.com/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Wordpress</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Machine Learning Fundamentals: Linear Algebra: Part 1-Vectors">
+    <meta itemprop="description" content="In this blog post, we will try to understand vectors from their base representation, their properties and the various operations we can perform on vectors.">
+    <meta itemprop="datePublished" content="2023-06-29T00:00:00-04:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Machine Learning Fundamentals: Linear Algebra: Part 1-Vectors
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          14 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> Contents</h4></header>
+              <ul class="toc__menu"><li><a href="#introduction">Introduction:</a></li><li><a href="#1-representation">1. Representation</a></li><li><a href="#2-plotting-2d-vectors">2. Plotting 2D vectors</a></li><li><a href="#3-plotting-3d-vectors">3. Plotting 3D vectors</a></li><li><a href="#4-norm">4. Norm</a></li><li><a href="#5-addition">5. Addition</a><ul><li><a href="#properties">Properties</a></li></ul></li><li><a href="#6-multiplication-by-a-scalar">6. Multiplication by a scalar</a><ul><li><a href="#properties-1">Properties</a></li></ul></li><li><a href="#7-zero-unit-and-normalized-vectors">7. Zero, unit and normalized vectors</a></li><li><a href="#8-dot-product">8. Dot Product</a><ul><li><a href="#properties-2">Properties</a></li></ul></li><li><a href="#9-angle-between-vectors">9. Angle between vectors</a></li><li><a href="#10-projecting-a-point-onto-an-axis">10. Projecting a point onto an axis</a></li><li><a href="#references">References</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="introduction">Introduction:</h2>
+<ul>
+  <li>Linear algebra serves as the foundation for many machine learning algorithms and techniques.</li>
+  <li>Linear Algebra is the branch of mathematics that studies vector spaces and linear transformations between vector spaces, such as rotating a shape, scaling it up or down, translating it (i.e. moving it), etc.</li>
+</ul>
+
+<p>Vectors:</p>
+<ul>
+  <li>Vectors are used in machine learning to represent features, observations, and data points.</li>
+  <li>For example, let’s consider a simple machine learning problem of classifying flowers based on their petal length and width. We can represent each flower as a feature vector, where the length and width of the petal are the features. A flower observation could be represented as a 2-dimensional vector, such as [1.5, 0.8], where the first element represents the petal length and the second element represents the petal width.</li>
+  <li>vectors are not limited to representing individual data points in machine learning. They are also used to represent parameters, weights, gradients, and other entities within machine learning models. These vectors allow for efficient computations and transformations, enabling learning and inference processes.</li>
+</ul>
+
+<h2 id="1-representation">1. Representation</h2>
+<p>Vector can be represented simply by a regular python list of numbers.</p>
+
+<p>1) Lists:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vector</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>  <span class="c1"># Represents a 3-dimensional vector [1, 2, 3]
+</span></code></pre></div></div>
+
+<p>2)  NumPy arrays:</p>
+
+<p>It is much better to use NumPy’s ndarray, which provides a lot of convenient and optimized implementations of essential mathematical operations on vectors</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="n">vector</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>  <span class="c1"># Represents a 3-dimensional vector [1, 2, 3]
+</span></code></pre></div></div>
+
+<p>size of a vector</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vector</span><span class="p">.</span><span class="n">size</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3
+</code></pre></div></div>
+
+<p>\(i^{th}\) element (also called <em>entry</em> or <em>item</em>) of a vector \(\textbf{v}\) is noted \(\textbf{v}_i\).<br />
+Example: \(\textbf{v}_3\):</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vector</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="c1">#3rd element
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>3
+</code></pre></div></div>
+
+<h2 id="2-plotting-2d-vectors">2. Plotting 2D vectors</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="c1"># creates two NumPy 2D arrays
+</span><span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+<span class="c1"># Unpacks the x-coordinates of u and v into x_coords and the y-coordinates into y_coords, resulting in two tuples:
+# x_coords = (2, 3): Contains the x-coordinates of u and v.
+# y_coords = (5, 1): Contains the y-coordinates of u and v.
+</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s">"r"</span><span class="p">,</span><span class="s">"b"</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span> <span class="c1">#Sets the limits of the x-axis [0,9] and y-axis [0,6] for a plot
+</span><span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-06-29-Maths_LinearAlgebra_files/2023-06-29-Maths_LinearAlgebra_10_0.png" alt="png" /></p>
+
+<p>Vectors can also be represented as arrows.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">plot_vector2d</span><span class="p">(</span><span class="n">vector2d</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+   <span class="c1"># Use plt.arrow to plot a 2D vector
+</span>    <span class="k">return</span> <span class="n">plt</span><span class="p">.</span><span class="n">arrow</span><span class="p">(</span>
+        <span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>         <span class="c1"># Start point coordinates (origin)
+</span>        <span class="n">vector2d</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vector2d</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>     <span class="c1"># Vector components
+</span>        <span class="n">head_width</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>               <span class="c1"># Width of the arrowhead
+</span>        <span class="n">head_length</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>              <span class="c1"># Length of the arrowhead
+</span>        <span class="n">length_includes_head</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>    <span class="c1"># Include the arrowhead in the total length
+</span>        <span class="o">**</span><span class="n">options</span>                     <span class="c1"># Additional customization options
+</span>    <span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_vector2d</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span> <span class="c1">#Sets the limits of the x-axis [0,9] and y-axis [0,6] for a plot
+</span><span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-06-29-Maths_LinearAlgebra_files/2023-06-29-Maths_LinearAlgebra_13_0.png" alt="png" /></p>
+
+<h2 id="3-plotting-3d-vectors">3. Plotting 3D vectors</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">subplot3d</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s">'3d'</span><span class="p">)</span>
+<span class="c1">#Creates a subplot with a 3D projection.
+# 111 specifies the grid parameters for the subplot. Here, it indicates a single subplot in a 1x1 grid.
+# projection='3d' sets the projection of the subplot to 3D, enabling three-dimensional plotting.
+</span>
+<span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">,</span> <span class="n">z_coords</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="n">subplot3d</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">,</span> <span class="n">z_coords</span><span class="p">)</span>
+<span class="n">subplot3d</span><span class="p">.</span><span class="n">set_zlim3d</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+<span class="c1"># subplot3d: Represents the 3D subplot created using plt.subplot(111, projection='3d').
+# set_zlim3d([0, 9]): Sets the minimum and maximum values for the z-axis.
+# 0 and 9 represent the minimum and maximum values for the z-axis, respectively.
+</span><span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-06-29-Maths_LinearAlgebra_files/2023-06-29-Maths_LinearAlgebra_15_0.png" alt="png" /></p>
+
+<p>Using custom functions to plot 3D vectors</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">plot_vectors3d</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="n">vectors3d</span><span class="p">,</span> <span class="n">z0</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vectors3d</span><span class="p">:</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="n">ax</span><span class="p">.</span><span class="n">plot</span><span class="p">([</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">],</span> <span class="p">[</span><span class="n">y</span><span class="p">,</span><span class="n">y</span><span class="p">],</span> <span class="p">[</span><span class="n">z0</span><span class="p">,</span> <span class="n">z</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"gray"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'dotted'</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s">"."</span><span class="p">)</span>
+    <span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">,</span> <span class="n">z_coords</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">vectors3d</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">,</span> <span class="n">z_coords</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+
+<span class="n">subplot3d</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s">'3d'</span><span class="p">)</span>
+<span class="n">subplot3d</span><span class="p">.</span><span class="n">set_zlim</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+<span class="n">plot_vectors3d</span><span class="p">(</span><span class="n">subplot3d</span><span class="p">,</span> <span class="p">[</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="s">"r"</span><span class="p">,</span><span class="s">"b"</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-06-29-Maths_LinearAlgebra_files/2023-06-29-Maths_LinearAlgebra_17_0.png" alt="png" /></p>
+
+<h2 id="4-norm">4. Norm</h2>
+<ul>
+  <li>The norm of a vector \(\textbf{u}\), noted \(\left \Vert \textbf{u} \right \|\), is a measure of the length (a.k.a. the magnitude) of \(\textbf{u}\).</li>
+  <li>There are multiple possible norms, but the most common one (and the only one we will discuss here) is the Euclidian norm, which is defined as:
+\(\left \Vert \textbf{u} \right \| = \sqrt{\sum_{i}{\textbf{u}_i}^2}\)</li>
+  <li>That’s the square root of the sum of all the squares of the components of \(\textbf{u}\). We could implement this easily in pure python, recalling that \(\sqrt x = x^{\frac{1}{2}}\)</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">vector_norm</span><span class="p">(</span><span class="n">vector</span><span class="p">):</span>
+    <span class="n">squares</span> <span class="o">=</span> <span class="p">[</span><span class="n">element</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">vector</span><span class="p">]</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">squares</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">"||"</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="s">"|| ="</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"sqrt("</span><span class="p">,</span><span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="s">"x"</span><span class="p">,</span><span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s">" + "</span><span class="p">,</span><span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s">"x"</span><span class="p">,</span><span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s">")="</span><span class="p">)</span>
+<span class="n">vector_norm</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>|| [2 5] || =
+sqrt( 2 x 2  +  5 x 5 )=
+5.385164807134504
+</code></pre></div></div>
+
+<p>However, it is much more efficient to use NumPy’s <code class="language-plaintext highlighter-rouge">norm</code> function, available in the <code class="language-plaintext highlighter-rouge">linalg</code> (<strong>Lin</strong>ear <strong>Alg</strong>ebra) module:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy.linalg</span> <span class="k">as</span> <span class="n">LA</span>
+
+<span class="n">LA</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>5.385164807134504
+</code></pre></div></div>
+
+<p>Let’s plot a little diagram to confirm that the length of vector \(\textbf{u}\) is indeed \(\approx5.4\):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#Computes the magnitude of vector u using the LA.norm() function from NumPy's Linear Algebra module.
+</span><span class="n">radius</span> <span class="o">=</span> <span class="n">LA</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+<span class="c1">#Adds a circle to the plot with the origin (0, 0) as the center and the computed radius.
+# The circle is colored with the hexadecimal color code "#DDDDDD" (a shade of gray).
+</span><span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">add_artist</span><span class="p">(</span><span class="n">plt</span><span class="p">.</span><span class="n">Circle</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">radius</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"#DDDDDD"</span><span class="p">))</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"red"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">8.7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="n">radius</span><span class="o">+</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="c1">#Sets the aspect ratio of the plot to be equal, ensuring that the scale is consistent in both x and y directions.
+</span><span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">"equal"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-06-29-Maths_LinearAlgebra_files/2023-06-29-Maths_LinearAlgebra_23_0.png" alt="png" /></p>
+
+<h2 id="5-addition">5. Addition</h2>
+<ul>
+  <li>Vectors of same size can be added together.</li>
+  <li>Addition is performed elementwise:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">" "</span><span class="p">,</span> <span class="n">u</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"+"</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"-"</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">u</span> <span class="o">+</span> <span class="n">v</span>
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  [2 5]
++ [3 1]
+----------
+array([5, 6])
+</code></pre></div></div>
+
+<p>Look at what vector addition looks like graphically:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_vector2d</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">u</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">"dotted"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">"dotted"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">u</span><span class="o">+</span><span class="n">v</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"g"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">"equal"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">"u"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">"u"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">1.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s">"v"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">3.1</span><span class="p">,</span> <span class="mf">5.6</span><span class="p">,</span> <span class="s">"v"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">2.4</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">,</span> <span class="s">"u+v"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"g"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+<p><img src="/assets/images/2023-06-29-Maths_LinearAlgebra_files/2023-06-29-Maths_LinearAlgebra_27_0.png" alt="png" /></p>
+
+<h3 id="properties">Properties</h3>
+<ul>
+  <li>Vector addition is <strong>commutative</strong>, meaning that \(\textbf{u} + \textbf{v} = \textbf{v} + \textbf{u}\).</li>
+  <li>You can see it on the previous image: following \(\textbf{u}\) <em>then</em> \(\textbf{v}\) leads to the same point as following \(\textbf{v}\) <em>then</em> \(\textbf{u}\).</li>
+  <li>Vector addition is also <strong>associative</strong>, meaning that \(\textbf{u} + (\textbf{v} + \textbf{w}) = (\textbf{u} + \textbf{v}) + \textbf{w}\).</li>
+</ul>
+
+<p>If you have a shape defined by a number of points (vectors), and you add a vector \(\textbf{v}\) to all of these points, then the whole shape gets shifted by \(\textbf{v}\).</p>
+<ul>
+  <li>This is called a <a href="https://en.wikipedia.org/wiki/Translation_%28geometry%29">geometric translation</a>:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">t1</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">])</span>
+<span class="n">t2</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">])</span>
+<span class="n">t3</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+
+<span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">t3</span><span class="p">,</span> <span class="n">t1</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">,</span> <span class="s">"c--"</span><span class="p">,</span> <span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">,</span> <span class="s">"co"</span><span class="p">)</span>
+
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">t1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">":"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">t2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">":"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">t3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">":"</span><span class="p">)</span>
+
+<span class="n">t1b</span> <span class="o">=</span> <span class="n">t1</span> <span class="o">+</span> <span class="n">v</span>
+<span class="n">t2b</span> <span class="o">=</span> <span class="n">t2</span> <span class="o">+</span> <span class="n">v</span>
+<span class="n">t3b</span> <span class="o">=</span> <span class="n">t3</span> <span class="o">+</span> <span class="n">v</span>
+
+<span class="n">x_coords_b</span><span class="p">,</span> <span class="n">y_coords_b</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">t1b</span><span class="p">,</span> <span class="n">t2b</span><span class="p">,</span> <span class="n">t3b</span><span class="p">,</span> <span class="n">t1b</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_coords_b</span><span class="p">,</span> <span class="n">y_coords_b</span><span class="p">,</span> <span class="s">"b-"</span><span class="p">,</span> <span class="n">x_coords_b</span><span class="p">,</span> <span class="n">y_coords_b</span><span class="p">,</span> <span class="s">"bo"</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mf">4.2</span><span class="p">,</span> <span class="s">"v"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mf">2.3</span><span class="p">,</span> <span class="s">"v"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">3.5</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="s">"v"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">"equal"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-06-29-Maths_LinearAlgebra_files/2023-06-29-Maths_LinearAlgebra_30_0.png" alt="png" /></p>
+
+<p>Finally, subtracting a vector is like adding the opposite vector.</p>
+
+<h2 id="6-multiplication-by-a-scalar">6. Multiplication by a scalar</h2>
+<ul>
+  <li>Vectors can be multiplied by scalars.</li>
+  <li>All elements in the vector are multiplied by that number, for example:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"1.5 *"</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="s">"="</span><span class="p">)</span>
+<span class="mf">1.5</span> <span class="o">*</span> <span class="n">u</span>
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.5 * [2 5] =
+array([3. , 7.5])
+</code></pre></div></div>
+
+<ul>
+  <li>Graphically, scalar multiplication results in changing the scale of a figure, hence the name <em>scalar</em>.</li>
+  <li>The distance from the origin (the point at coordinates equal to zero) is also multiplied by the scalar.</li>
+  <li>For example, let’s scale up by a factor of <code class="language-plaintext highlighter-rouge">k = 2.5</code>:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">k</span> <span class="o">=</span> <span class="mf">2.5</span>
+<span class="n">t1c</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">t1</span>
+<span class="n">t2c</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">t2</span>
+<span class="n">t3c</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">t3</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">,</span> <span class="s">"c--"</span><span class="p">,</span> <span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">,</span> <span class="s">"co"</span><span class="p">)</span>
+
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">t1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">t2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">t3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+
+<span class="n">x_coords_c</span><span class="p">,</span> <span class="n">y_coords_c</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">t1c</span><span class="p">,</span> <span class="n">t2c</span><span class="p">,</span> <span class="n">t3c</span><span class="p">,</span> <span class="n">t1c</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_coords_c</span><span class="p">,</span> <span class="n">y_coords_c</span><span class="p">,</span> <span class="s">"b-"</span><span class="p">,</span> <span class="n">x_coords_c</span><span class="p">,</span> <span class="n">y_coords_c</span><span class="p">,</span> <span class="s">"bo"</span><span class="p">)</span>
+
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">t1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">":"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">t2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">":"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">k</span> <span class="o">*</span> <span class="n">t3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">":"</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">"equal"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-06-29-Maths_LinearAlgebra_files/2023-06-29-Maths_LinearAlgebra_35_0.png" alt="png" /></p>
+
+<ul>
+  <li>Dividing a vector by a scalar is equivalent to multiplying by its multiplicative inverse (reciprocal):
+\(\dfrac{\textbf{u}}{\lambda} = \dfrac{1}{\lambda} \times \textbf{u}\)</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">k</span> <span class="o">=</span> <span class="mf">0.6</span>
+<span class="n">t1d</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">t1c</span>
+<span class="n">t2d</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">t2c</span>
+<span class="n">t3d</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">t3c</span>
+
+<span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">t1c</span><span class="p">,</span> <span class="n">t2c</span><span class="p">,</span> <span class="n">t3c</span><span class="p">,</span> <span class="n">t1c</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">,</span> <span class="s">"c--"</span><span class="p">,</span> <span class="n">x_coords</span><span class="p">,</span> <span class="n">y_coords</span><span class="p">,</span> <span class="s">"co"</span><span class="p">)</span>
+
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">t1c</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">t2c</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">t3c</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+
+<span class="n">x_coords_d</span><span class="p">,</span> <span class="n">y_coords_d</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="n">t1d</span><span class="p">,</span> <span class="n">t2d</span><span class="p">,</span> <span class="n">t3d</span><span class="p">,</span> <span class="n">t1d</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_coords_d</span><span class="p">,</span> <span class="n">y_coords_d</span><span class="p">,</span> <span class="s">"b-"</span><span class="p">,</span> <span class="n">x_coords_d</span><span class="p">,</span> <span class="n">y_coords_d</span><span class="p">,</span> <span class="s">"bo"</span><span class="p">)</span>
+
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">t1d</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">":"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">t2d</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">":"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">t3d</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">":"</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">9</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">"equal"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-06-29-Maths_LinearAlgebra_files/2023-06-29-Maths_LinearAlgebra_37_0.png" alt="png" /></p>
+
+<h3 id="properties-1">Properties</h3>
+<ul>
+  <li>Scalar multiplication is <strong>commutative</strong>: \(\lambda \times \textbf{u} = \textbf{u} \times \lambda\).</li>
+  <li>It is also <strong>associative</strong>: \(\lambda_1 \times (\lambda_2 \times \textbf{u}) = (\lambda_1 \times \lambda_2) \times \textbf{u}\).</li>
+  <li>Finally, it is <strong>distributive</strong> over addition of vectors: \(\lambda \times (\textbf{u} + \textbf{v}) = \lambda \times \textbf{u} + \lambda \times \textbf{v}\).</li>
+</ul>
+
+<h2 id="7-zero-unit-and-normalized-vectors">7. Zero, unit and normalized vectors</h2>
+<ul>
+  <li>A <strong>zero-vector</strong> is a vector full of 0s. Eg: (0,0) - basically the origin in a Cartesian coordinate system</li>
+  <li>A <strong>unit vector</strong> is a vector with a norm equal to 1.</li>
+  <li>The <strong>normalized vector</strong> of a non-null vector \(\textbf{v}\), noted \(\hat{\textbf{v}}\), is the unit vector that points in the same direction as \(\textbf{v}\).</li>
+  <li>It is equal to: \(\hat{\textbf{v}} = \dfrac{\textbf{v}}{\left \Vert \textbf{v} \right \|}\)</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Add a circle centered at (0, 0) with radius 1 and color 'c'
+</span><span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">add_artist</span><span class="p">(</span><span class="n">plt</span><span class="p">.</span><span class="n">Circle</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'c'</span><span class="p">))</span>
+
+<span class="c1"># Plot a black dot at the origin (0, 0) - "k" is short for black. - "o" marker style represents a circular marker.
+</span><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">"ko"</span><span class="p">)</span>
+
+<span class="c1"># Plot the normalized vector v / ||v|| as a black solid line with zorder 10
+# zorder value is a numerical value, where higher values indicate that the element should be drawn on top of elements with lower values.
+</span><span class="n">plot_vector2d</span><span class="p">(</span><span class="n">v</span> <span class="o">/</span> <span class="n">LA</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">"k"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Plot the vector v as a blue dashed line with zorder 15
+</span><span class="n">plot_vector2d</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">":"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+
+<span class="c1"># Add the text label for the normalized vector at position (0.3, 0.3) with black color and fontsize 18
+</span><span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="sa">r</span><span class="s">"$$\hat{v}$$"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"k"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+
+<span class="c1"># Add the text label for the normalized vector at position (0.3, 0.3) with black color and fontsize 18
+</span><span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="sa">r</span><span class="s">"$$||\hat{v}||=1$$"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"k"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+
+<span class="c1"># Add the text label for the vector v at position (1.5, 0.7) with blue color and fontsize 18
+</span><span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="s">"$$v$$"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+
+<span class="c1"># Set the axis limits
+</span><span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">])</span>
+<span class="c1"># Set the aspect ratio of the plot to be equal
+</span><span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">"equal"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-06-29-Maths_LinearAlgebra_files/2023-06-29-Maths_LinearAlgebra_40_0.png" alt="png" /></p>
+
+<h2 id="8-dot-product">8. Dot Product</h2>
+<ul>
+  <li>Also called <em>scalar product</em> or <em>inner product</em> in the context of the Euclidian space.</li>
+  <li>The dot product is a mathematical operation defined between two vectors that results in a scalar (a single number). (and that is why it is called as scalar product)</li>
+  <li>dot product of two vectors \(\textbf{u}\) and \(\textbf{v}\) is denoted \(\textbf{u} \cdot \textbf{v}\), or sometimes \(⟨\textbf{u}|\textbf{v}⟩\) or \((\textbf{u}|\textbf{v})\), and it is defined as:<br />
+\(\textbf{u} \cdot \textbf{v} = \left \Vert \textbf{u} \right \| \times \left \Vert \textbf{v} \right \| \times cos(\theta)\)<br />
+where \(\theta\) is the angle between \(\textbf{u}\) and \(\textbf{v}\).</li>
+</ul>
+
+<p>Geometric Intuition:</p>
+<ul>
+  <li>The dot product measures the degree of alignment or similarity between two vectors.</li>
+  <li>Geometrically, it calculates the projection of one vector onto another and then multiplies the magnitudes of the two vectors.</li>
+  <li>The resulting scalar value indicates how much the two vectors point in the same direction. (aka the magnitude or norm of the resulting projection).</li>
+</ul>
+
+<p>To better understand this equation, \</p>
+<ul>
+  <li>𝜃 = 0° =&gt; cos(𝜃) = 1.0 \</li>
+  <li>𝜃 = 90° =&gt; cos(𝜃) = 0.0 \</li>
+  <li>𝜃 = 180° =&gt; cos(𝜃) = -1.0 \</li>
+  <li>𝜃 = 270° =&gt; cos(𝜃) = 0.0 \</li>
+  <li>𝜃 = 360° =&gt; cos(𝜃) = 1.0 \</li>
+</ul>
+
+<p>i.e., cos(𝜃) is max when same direction, <br />
+cos(𝜃) is min when opposite direction <br />
+cos(𝜃) is 0 when perpendicular direction,</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Generate angles from 0 to 360 degrees in increments of 1 degree
+</span><span class="n">angles</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">361</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Calculate cosine values for each angle
+</span><span class="n">cos_values</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">radians</span><span class="p">(</span><span class="n">angles</span><span class="p">))</span>
+
+<span class="c1"># Plot the cosine values
+</span><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">angles</span><span class="p">,</span> <span class="n">cos_values</span><span class="p">)</span>
+
+<span class="c1"># Set plot limits and labels
+</span><span class="n">plt</span><span class="p">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'Angle (degrees)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'Cosine'</span><span class="p">)</span>
+
+<span class="c1"># Add a gridline
+</span><span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Show the plot
+</span><span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-06-29-Maths_LinearAlgebra_files/2023-06-29-Maths_LinearAlgebra_42_0.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">plot_geometric_dot_product2D</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
+  <span class="c1">#calc dot product
+</span>  <span class="n">dot_product</span> <span class="o">=</span> <span class="n">u</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+  <span class="c1">#draw circle to indicate dot product magnitude
+</span>  <span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">add_artist</span><span class="p">(</span><span class="n">plt</span><span class="p">.</span><span class="n">Circle</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">dot_product</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"#DDDDDD"</span><span class="p">))</span>
+  <span class="c1">#plot u and v
+</span>  <span class="n">plot_vector2d</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+  <span class="n">plot_vector2d</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">)</span>
+
+  <span class="c1"># Calculate the magnitude of u and v
+</span>  <span class="n">magnitude_u</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+  <span class="n">magnitude_v</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linalg</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+  <span class="c1"># Calculate the projection of u onto v
+</span>  <span class="n">projection</span> <span class="o">=</span> <span class="n">dot_product</span> <span class="o">/</span> <span class="n">magnitude_v</span>
+  <span class="n">projected_vector</span> <span class="o">=</span> <span class="n">projection</span> <span class="o">*</span> <span class="n">v</span>
+
+  <span class="c1"># Plot the vectors u, v, and the projected vector
+</span>  <span class="n">plot_vector2d</span><span class="p">(</span><span class="n">projected_vector</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">'green'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">'dashed'</span><span class="p">)</span>
+
+  <span class="c1">#calculate the nearest whole number
+</span>  <span class="n">max_axis</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">dot_product</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+
+
+  <span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_axis</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">max_axis</span><span class="p">])</span> <span class="c1">#Sets the limits of the x-axis [0,9] and y-axis [0,6] for a plot
+</span>  <span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">"equal"</span><span class="p">)</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_geometric_dot_product2D</span><span class="p">(</span><span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-06-29-Maths_LinearAlgebra_files/2023-06-29-Maths_LinearAlgebra_44_0.png" alt="png" /></p>
+
+<ul>
+  <li>Another way to calculate the dot product is:<br />
+\(\textbf{u} \cdot \textbf{v} = \sum_i{\textbf{u}_i \times \textbf{v}_i}\)</li>
+</ul>
+
+<p>Algebraic Intuition:</p>
+<ul>
+  <li>This equation represents the algebraic definition of the dot product.</li>
+  <li>It states that the dot product of two vectors, 𝐮 and 𝐯, is equal to the sum of the products of their corresponding components.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Calculate the dot product manually
+</span><span class="n">dot_product</span> <span class="o">=</span> <span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">+</span> <span class="p">(</span><span class="n">u</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="c1"># Print the result
+</span><span class="k">print</span><span class="p">(</span><span class="n">dot_product</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>11
+</code></pre></div></div>
+
+<p>More efficient implementation:</p>
+<ul>
+  <li>is provided by NumPy with the <code class="language-plaintext highlighter-rouge">np.dot()</code> function:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>11
+</code></pre></div></div>
+
+<p>Equivalently, you can use the <code class="language-plaintext highlighter-rouge">dot</code> method of <code class="language-plaintext highlighter-rouge">ndarray</code>s:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>11
+</code></pre></div></div>
+
+<p><strong>Caution</strong>: the <code class="language-plaintext highlighter-rouge">*</code> operator will perform an <em>elementwise</em> multiplication, <em>NOT</em> a dot product:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">"  "</span><span class="p">,</span><span class="n">u</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"* "</span><span class="p">,</span><span class="n">v</span><span class="p">,</span> <span class="s">"(NOT a dot product)"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"-"</span><span class="o">*</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="n">u</span> <span class="o">*</span> <span class="n">v</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   [2 5]
+*  [3 1] (NOT a dot product)
+----------
+array([6, 5])
+</code></pre></div></div>
+
+<h3 id="properties-2">Properties</h3>
+<ul>
+  <li>The dot product is <strong>commutative</strong>: \(\textbf{u} \cdot \textbf{v} = \textbf{v} \cdot \textbf{u}\).<br />
+(projecting u onto v or v onto u is same.)</li>
+  <li>The dot product is only defined between two vectors, not between a scalar and a vector. This means that we cannot chain dot products: for example, the expression \(\textbf{u} \cdot \textbf{v} \cdot \textbf{w}\) is not defined since \(\textbf{u} \cdot \textbf{v}\) is a scalar and \(\textbf{w}\) is a vector.</li>
+  <li>This also means that the dot product is <strong>NOT associative</strong>: \((\textbf{u} \cdot \textbf{v}) \cdot \textbf{w} ≠ \textbf{u} \cdot (\textbf{v} \cdot \textbf{w})\) since neither are defined.</li>
+  <li>However, the dot product is <strong>associative with regards to scalar multiplication</strong>: \(\lambda \times (\textbf{u} \cdot \textbf{v}) = (\lambda \times \textbf{u}) \cdot \textbf{v} = \textbf{u} \cdot (\lambda \times \textbf{v})\)</li>
+  <li>Finally, the dot product is <strong>distributive</strong> over addition of vectors: \(\textbf{u} \cdot (\textbf{v} + \textbf{w}) = \textbf{u} \cdot \textbf{v} + \textbf{u} \cdot \textbf{w}\).</li>
+</ul>
+
+<h2 id="9-angle-between-vectors">9. Angle between vectors</h2>
+<p>One of the many uses of the dot product is to calculate the angle between two non-zero vectors. Looking at the dot product definition, we can deduce the following formula:</p>
+
+\[\theta = \arccos{\left ( \dfrac{\textbf{u} \cdot \textbf{v}}{\left \Vert \textbf{u} \right \| \times \left \Vert \textbf{v} \right \|} \right ) }\]
+
+<p>Note that if \(\textbf{u} \cdot \textbf{v} = 0\), it follows that \(\theta = \dfrac{π}{2}\) (aka 180/2 = 90deg). In other words, if the dot product of two non-null vectors is zero, it means that they are orthogonal (90deg apart).</p>
+
+<p>Note:</p>
+<ul>
+  <li>The cos() function calculates the cosine of an angle.</li>
+  <li>It takes an angle (in radians) as input and returns the corresponding cosine value between -1 and 1.</li>
+  <li>The arccos() function, also known as the inverse cosine function or arc cosine function, is the inverse operation of the cosine function.</li>
+  <li>It takes a value between -1 and 1 as input and returns the corresponding angle (in radians) whose cosine is the input value.</li>
+</ul>
+
+<p>Let’s use this formula to calculate the angle between \(\textbf{u}\) and \(\textbf{v}\) (in radians):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">vector_angle</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+    <span class="n">cos_theta</span> <span class="o">=</span> <span class="n">u</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="n">LA</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">/</span> <span class="n">LA</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">cos_theta</span><span class="p">.</span><span class="n">clip</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">theta</span> <span class="o">=</span> <span class="n">vector_angle</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Angle ="</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="s">"radians"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"      ="</span><span class="p">,</span> <span class="n">theta</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="p">,</span> <span class="s">"degrees"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Angle = 0.8685393952858895 radians
+      = 49.76364169072618 degrees
+</code></pre></div></div>
+
+<p>Note: due to small floating point errors, <code class="language-plaintext highlighter-rouge">cos_theta</code> may be very slightly outside the \([-1, 1]\) interval, which would make <code class="language-plaintext highlighter-rouge">arccos</code> fail. This is why we clipped the value within the range, using NumPy’s <code class="language-plaintext highlighter-rouge">clip</code> function.</p>
+
+<h2 id="10-projecting-a-point-onto-an-axis">10. Projecting a point onto an axis</h2>
+<p>The dot product is also very useful to project points onto an axis. The projection of vector \(\textbf{v}\) onto \(\textbf{u}\)’s axis is given by this formula:</p>
+
+\[\textbf{proj}_{\textbf{u}}{\textbf{v}} = \dfrac{\textbf{u} \cdot \textbf{v}}{\left \Vert \textbf{u} \right \| ^2} \times \textbf{u}\]
+
+<p>Which is equivalent to:</p>
+
+\[\textbf{proj}_{\textbf{u}}{\textbf{v}} = (\textbf{v} \cdot \hat{\textbf{u}}) \times \hat{\textbf{u}}\]
+
+<ul>
+  <li>The formula calculates the dot product of 𝐯 and 𝐮̂, which is a scalar (aka magnitude) that gives the component of 𝐯 vector in the direction of 𝐮̂.</li>
+  <li>This value is then multiplied by 𝐮̂, which gives the scalar value from previous point, a vector projection (aka direction) onto the axis defined by 𝐮.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u_normalized</span> <span class="o">=</span> <span class="n">u</span> <span class="o">/</span> <span class="n">LA</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+<span class="n">proj</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u_normalized</span><span class="p">)</span> <span class="o">*</span> <span class="n">u_normalized</span>
+
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">)</span>
+
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">proj</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"k"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">":"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">proj</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">proj</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">"ko"</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">([</span><span class="n">proj</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">proj</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s">"b:"</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">"$$proj_u v$$"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"k"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">1.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s">"$$v$$"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">"$$u$$"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">"equal"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-06-29-Maths_LinearAlgebra_files/2023-06-29-Maths_LinearAlgebra_58_0.png" alt="png" /></p>
+
+<p>As we can see in the below example, \(\textbf{proj}_{\textbf{u}}{\textbf{v}}\) (projection of v on u vector) diminishes to miniscule norm (aka magnitude) value.</p>
+
+<p>This is because:</p>
+<ul>
+  <li>the angle between \(\textbf{u}\) and \(\textbf{v}\) is approaching orthogonal (90 degree) angle.</li>
+  <li>As a result, the scalar (aka magnitude) result of the product \((\textbf{v} \cdot \hat{\textbf{u}})\) becomes miniscule since \(cos(90) = 0\).</li>
+  <li>Finally when the small magnitude from \((\textbf{v} \cdot \hat{\textbf{u}})\) is projected \(\hat{\textbf{u}}\) with \((\textbf{v} \cdot \hat{\textbf{u}}) \times \hat{\textbf{u}}\), the resultant vector also ends up being tiny.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+<span class="n">u_normalized</span> <span class="o">=</span> <span class="n">u</span> <span class="o">/</span> <span class="n">LA</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">u</span><span class="p">)</span>
+<span class="n">proj</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u_normalized</span><span class="p">)</span> <span class="o">*</span> <span class="n">u_normalized</span>
+
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">)</span>
+
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">proj</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"k"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">":"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">proj</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">proj</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">"ko"</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">([</span><span class="n">proj</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">proj</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="s">"b:"</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="s">"$$proj_u v$$"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"k"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">1.8</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s">"$$v$$"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s">"$$u$$"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mf">5.5</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">"equal"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-06-29-Maths_LinearAlgebra_files/2023-06-29-Maths_LinearAlgebra_60_0.png" alt="png" /></p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><a href="https://www.deeplearningbook.org/">Book: Deep Learning Book - Ian Goodfellow and Yoshua Bengio and Aaron Courville</a></li>
+  <li>Book: Hands-On Machine Learning with Scikit-Learn and TensorFlow - Aurélien Géron</li>
+  <li><a href="https://github.com/ageron/handson-ml3/blob/main/math_linear_algebra.ipynb">ageron github - handson-ml3</a></li>
+  <li><a href="https://www.khanacademy.org/math/linear-algebra">Khan Academy - Linear Algebra</a></li>
+  <li><a href="https://www.youtube.com/watch?v=fNk_zzaMoSs&amp;list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&amp;ab_channel=3Blue1Brown">Essence of linear algebra - 3Blue1Brown YouTube Series</a></li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#linear-algebra" class="page__taxonomy-item" rel="tag">linear algebra</a><span class="sep">, </span>
+    
+      <a href="/tags/#machine-learning-fundamentals" class="page__taxonomy-item" rel="tag">machine learning fundamentals</a><span class="sep">, </span>
+    
+      <a href="/tags/#mathematics" class="page__taxonomy-item" rel="tag">mathematics</a><span class="sep">, </span>
+    
+      <a href="/tags/#vectors" class="page__taxonomy-item" rel="tag">vectors</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-06-29T00:00:00-04:00">June 29, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  Share On <br>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Machine+Learning+Fundamentals%3A+Linear+Algebra%3A+Part+1-Vectors%20http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F06%2F29%2FMaths_LinearAlgebra.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F06%2F29%2FMaths_LinearAlgebra.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F06%2F29%2FMaths_LinearAlgebra.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/posts/2023/06/08/Data_Analysis_With_Pandas.html" class="pagination--pager" title="Pandas: Data Analysis Essentials
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+ TO remove previous:next-->
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/06/08/Data_Analysis_With_Pandas.html" rel="permalink">Pandas: Data Analysis Essentials
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          35 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">This article outlines the essential Pandas methods for preliminary data analysis.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/06/08/markdown-cheatsheet.html" rel="permalink">Markdown Cheatsheet: Quick Reference for Commonly Used Syntax
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">This cheatsheet provides a concise reference for frequently used Markdown formatting, helping you create beautiful, well-structured content with ease.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/05/06/github_commands.html" rel="permalink">Git Commands Simplified: A Beginner’s Guide
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">In this beginner’s guide, I break down the essential Git commands into easy-to-understand explanations and practical examples. From initializing a repository...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/01/06/jekyll-website.html" rel="permalink">Building my Personal Site with Jekyll &amp; Minimal Mistakes
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          7 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">A guide detailing my process for building this website using the static site generator Jekyll and the theme Minimal Mistakes
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Vimal Venugopal. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/posts/2023/06/29/Maths_LinearAlgebra.html";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/posts/2023/06/29/Maths_LinearAlgebra"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://vmlverse.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+  </body>
+</html>

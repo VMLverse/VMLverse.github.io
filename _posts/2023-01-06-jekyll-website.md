@@ -1,5 +1,5 @@
 ---
-title:  "Building a Personal Site with Jekyll & Minimal Mistakes"
+title:  "Building my Personal Site with Jekyll & Minimal Mistakes"
 category: posts
 date: 2023-01-06
 excerpt: "A guide detailing my process for building this website using the static site generator Jekyll and the theme Minimal Mistakes"
