@@ -1,0 +1,2331 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Machine Learning Fundamentals: Linear Algebra: Part 2-Matrices | VMLverse</title>
+<meta name="description" content="In this blog post, we will try to understand matrices, their representation, properties and the various operations we can perform on them.">
+
+
+  <meta name="author" content="Vimal Venugopal">
+  
+  <meta property="article:author" content="Vimal Venugopal">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="VMLverse">
+<meta property="og:title" content="Machine Learning Fundamentals: Linear Algebra: Part 2-Matrices">
+<meta property="og:url" content="http://localhost:4000/posts/2023/07/08/Maths_LinearAlgebra_Matrices.html">
+
+
+  <meta property="og:description" content="In this blog post, we will try to understand matrices, their representation, properties and the various operations we can perform on them.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-07-08T00:00:00-04:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/posts/2023/07/08/Maths_LinearAlgebra_Matrices.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Vimal Venugopal",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="VMLverse Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo_plain_blck_bg.png" alt="VMLverse"></a>
+        
+        <a class="site-title" href="/">
+          VMLverse
+          <span class="site-subtitle">Explore | Experiment | Expand</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/blog/">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/projects/">Projects</a>
+            </li><li class="masthead__menu-item">
+              <a href="/docs/resume.pdf">Resume</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/DSC1717square.jpeg" alt="Vimal Venugopal" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Vimal Venugopal</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>a curious mind with a passion for machine learning, photography and travel</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://cognitivescrawls.wordpress.com/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Wordpress</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Machine Learning Fundamentals: Linear Algebra: Part 2-Matrices">
+    <meta itemprop="description" content="In this blog post, we will try to understand matrices, their representation, properties and the various operations we can perform on them.">
+    <meta itemprop="datePublished" content="2023-07-08T00:00:00-04:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Machine Learning Fundamentals: Linear Algebra: Part 2-Matrices
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          39 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> Contents</h4></header>
+              <ul class="toc__menu"><li><a href="#introduction">Introduction</a></li><li><a href="#matrices">Matrices</a></li><li><a href="#1-representation">1. Representation</a></li><li><a href="#2-element-indexing">2. Element indexing</a></li><li><a href="#3-square-triangular-diagonal-and-identity-matrices">3. Square, triangular, diagonal and identity matrices</a></li><li><a href="#4-adding-matrices">4. Adding matrices</a></li><li><a href="#5-scalar-multiplication">5. Scalar multiplication</a></li><li><a href="#6-matrix-multiplication">6. Matrix multiplication</a></li><li><a href="#7-matrix-transpose">7. Matrix transpose</a></li><li><a href="#8-converting-1d-arrays-to-2d-arrays-in-numpy">8. Converting 1D arrays to 2D arrays in NumPy</a></li><li><a href="#9-plotting-a-matrix">9. Plotting a matrix</a></li><li><a href="#10-geometric-applications-of-matrix-operations">10. Geometric applications of matrix operations</a><ul><li><a href="#a-addition--multiple-geometric-translations">a. Addition = multiple geometric translations</a></li><li><a href="#b-scalar-multiplication">b. Scalar multiplication</a></li><li><a href="#c-matrix-multiplication--projection-onto-an-axis">c. Matrix multiplication – Projection onto an axis</a></li><li><a href="#d-matrix-multiplication--rotation">d. Matrix multiplication – Rotation</a></li><li><a href="#e-matrix-multiplication--other-linear-transformations">e. Matrix multiplication – Other linear transformations</a></li></ul></li><li><a href="#11-matrix-inverse">11. Matrix inverse</a><ul><li><a href="#singular-or-degenerate-matrix">Singular or Degenerate Matrix</a></li><li><a href="#involution">Involution</a></li><li><a href="#orthogonal-matrix">Orthogonal Matrix</a></li></ul></li><li><a href="#12-determinant">12. Determinant</a></li><li><a href="#13-composing-linear-transformations">13. Composing linear transformations</a></li><li><a href="#14-singular-value-decomposition">14. Singular Value Decomposition</a></li><li><a href="#15-eigenvectors-and-eigenvalues">15. Eigenvectors and eigenvalues</a></li><li><a href="#16-trace">16. Trace</a></li><li><a href="#references">References</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="introduction">Introduction</h2>
+<ul>
+  <li>Linear algebra serves as the foundation for many machine learning algorithms and techniques.</li>
+  <li>Linear Algebra is the branch of mathematics that studies vector spaces and linear transformations between vector spaces, such as rotating a shape, scaling it up or down, translating it (i.e. moving it), etc.</li>
+  <li>In this blog post, we will try to understand vectors from their base representation, their properties and the various operations we can perform on vectors.</li>
+  <li>This is a continuation of my two part article on linear alegebra. <a href="/posts/2023/06/29/Maths_LinearAlgebra.html">Part-1</a> covers vectors, while the below part two will cover Matrices. You can read the part-1 post on Vectors <a href="/posts/2023/06/29/Maths_LinearAlgebra.html">here</a>.</li>
+</ul>
+
+<h2 id="matrices">Matrices</h2>
+<p>A matrix is a rectangular array of scalars (i.e. any number: integer, real or complex) arranged in rows and columns, for example:</p>
+
+<p>\begin{bmatrix} 10 &amp; 20 &amp; 30 \ 40 &amp; 50 &amp; 60 \end{bmatrix}</p>
+
+<ul>
+  <li>
+    <p>You can also think of a matrix as a list of vectors: the previous matrix contains either 2 horizontal 3D vectors or 3 vertical 2D vectors.</p>
+  </li>
+  <li>Matrices are convenient and very efficient to run operations on many vectors at a time.</li>
+  <li>We will also see that they are great at representing and performing linear transformations such rotations, translations and scaling.</li>
+</ul>
+
+<h2 id="1-representation">1. Representation</h2>
+<p>In python, a matrix can be represented in various ways. The simplest is just a list of python lists:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span>
+    <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">]</span>
+<span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[[10, 20, 30], [40, 50, 60]]
+</code></pre></div></div>
+
+<p>A much more efficient way is to use the NumPy library which provides optimized implementations of many matrix operations:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+
+<span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">,</span><span class="mi">30</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">40</span><span class="p">,</span><span class="mi">50</span><span class="p">,</span><span class="mi">60</span><span class="p">]</span>
+<span class="p">])</span>
+<span class="n">A</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[10, 20, 30],
+       [40, 50, 60]])
+</code></pre></div></div>
+
+<p>By convention matrices generally have uppercase names, such as \(A\).</p>
+
+<p>In the rest of this tutorial, we will assume that we are using NumPy arrays (type <code class="language-plaintext highlighter-rouge">ndarray</code>) to represent matrices.</p>
+
+<p>Size:</p>
+
+<ul>
+  <li>The size of a matrix is defined by its number of rows and number of columns.</li>
+  <li>It is denoted as \(rows \times columns\). For example, the matrix \(A\) mentioned above is a \(2 \times 3\) matrix, indicating 2 rows and 3 columns.</li>
+  <li>Similarly, a \(3 \times 2\) matrix would have 3 rows and 2 columns.</li>
+</ul>
+
+<p>To determine the size of a matrix in NumPy:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(2, 3)
+</code></pre></div></div>
+
+<p>the <code class="language-plaintext highlighter-rouge">size</code> attribute represents the number of elements in the <code class="language-plaintext highlighter-rouge">ndarray</code>, not the matrix’s size:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span><span class="p">.</span><span class="n">size</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>6
+</code></pre></div></div>
+
+<h2 id="2-element-indexing">2. Element indexing</h2>
+<p>The number located in the \(i^{th}\) row and \(j^{th}\) column of a matrix \(X\) is sometimes denoted as \(X_{i,j}\) or \(X_{ij}\). However, since there is no standard notation, people often prefer to explicitly name the elements. For example, “<em>let \(X = (x_{i,j})_{1 ≤ i ≤ m, 1 ≤ j ≤ n}\)</em>” means that \(X\) is equal to:</p>
+
+\[X = \begin{bmatrix}
+  x_{1,1} &amp; x_{1,2} &amp; x_{1,3} &amp; \cdots &amp; x_{1,n}\\
+  x_{2,1} &amp; x_{2,2} &amp; x_{2,3} &amp; \cdots &amp; x_{2,n}\\
+  x_{3,1} &amp; x_{3,2} &amp; x_{3,3} &amp; \cdots &amp; x_{3,n}\\
+  \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+  x_{m,1} &amp; x_{m,2} &amp; x_{m,3} &amp; \cdots &amp; x_{m,n}\\
+\end{bmatrix}\]
+
+<p>However, in this notebook, we will use the \(X_{i,j}\) notation, as it aligns well with NumPy’s notation.</p>
+<ul>
+  <li>It is important to note that in mathematics, indices generally start at 1, while in programming, they usually start at 0.</li>
+  <li>Therefore, to access \(A_{2,3}\) programmatically, we would write the following:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># 2nd row, 3rd column
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>60
+</code></pre></div></div>
+
+<p>To access \(A_{2,*}\) (i.e. \(A\)’s 2nd row vector):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>  <span class="c1"># 2nd row vector (as a 1D array)
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([40, 50, 60])
+</code></pre></div></div>
+
+<p>To access \(A_{*,3}\) (i.e. \(A\)’s 3rd column vector):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>  <span class="c1"># 3rd column vector (as a 1D array)
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([30, 60])
+</code></pre></div></div>
+
+<ul>
+  <li>Note that the result is actually a one-dimensional NumPy array: there is no such thing as a <em>vertical</em> or <em>horizontal</em> one-dimensional array.</li>
+  <li>If you need to actually represent a row vector as a one-row matrix (i.e. a 2D NumPy array), or a column vector as a one-column matrix, then you need to use a slice instead of an integer when accessing the row or column, for example:</li>
+</ul>
+
+<p>To access \(A_{2,*}\) (i.e. \(A\)’s 2nd row vector) as a 2D Numpy Array:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="p">:]</span>  <span class="c1"># rows 2 to 3 (excluded): this returns row 2 as a one-row matrix
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[40, 50, 60]])
+</code></pre></div></div>
+
+<p>To access \(A_{*,3}\) (i.e. \(A\)’s 3rd column vector) as a 2D Numpy Array:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">3</span><span class="p">]</span>  <span class="c1"># columns 3 to 4 (excluded): this returns column 3 as a one-column matrix
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[30],
+       [60]])
+</code></pre></div></div>
+
+<h2 id="3-square-triangular-diagonal-and-identity-matrices">3. Square, triangular, diagonal and identity matrices</h2>
+<p>A <strong>square matrix</strong> is a matrix that has the same number of rows and columns, for example a \(3 \times 3\) matrix:</p>
+
+<p>\begin{bmatrix}
+  4 &amp; 9 &amp; 2 <br />
+  3 &amp; 5 &amp; 7 <br />
+  8 &amp; 1 &amp; 6
+\end{bmatrix}</p>
+
+<p>An <strong>upper triangular matrix</strong> is a special kind of square matrix where all the elements <em>below</em> the main diagonal (top-left to bottom-right) are zero, for example:</p>
+
+<p>\begin{bmatrix}
+  4 &amp; 9 &amp; 2 <br />
+  0 &amp; 5 &amp; 7 <br />
+  0 &amp; 0 &amp; 6
+\end{bmatrix}</p>
+
+<p>Similarly, a <strong>lower triangular matrix</strong> is a square matrix where all elements <em>above</em> the main diagonal are zero, for example:</p>
+
+<p>\begin{bmatrix}
+  4 &amp; 0 &amp; 0 <br />
+  3 &amp; 5 &amp; 0 <br />
+  8 &amp; 1 &amp; 6
+\end{bmatrix}</p>
+
+<p>A <strong>triangular matrix</strong> is one that is either lower triangular or upper triangular.</p>
+
+<p>A matrix that is both upper and lower triangular is called a <strong>diagonal matrix</strong>, for example:</p>
+
+<p>\begin{bmatrix}
+  4 &amp; 0 &amp; 0 <br />
+  0 &amp; 5 &amp; 0 <br />
+  0 &amp; 0 &amp; 6
+\end{bmatrix}</p>
+
+<p>You can construct a diagonal matrix using NumPy’s <code class="language-plaintext highlighter-rouge">diag</code> function:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">diag</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[4, 0, 0],
+       [0, 5, 0],
+       [0, 0, 6]])
+</code></pre></div></div>
+
+<p>If you pass a matrix to the <code class="language-plaintext highlighter-rouge">diag</code> function, it will happily extract the diagonal values:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span>
+    <span class="p">])</span>
+<span class="n">np</span><span class="p">.</span><span class="n">diag</span><span class="p">(</span><span class="n">D</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([1, 5, 9])
+</code></pre></div></div>
+
+<p>Finally, the <strong>identity matrix</strong> of size \(n\), noted \(I_n\), is a diagonal matrix of size \(n \times n\) with \(1\)’s in the main diagonal, for example \(I_3\):</p>
+
+<p>\begin{bmatrix}
+  1 &amp; 0 &amp; 0 <br />
+  0 &amp; 1 &amp; 0 <br />
+  0 &amp; 0 &amp; 1
+\end{bmatrix}</p>
+
+<p>Numpy’s <code class="language-plaintext highlighter-rouge">eye</code> function returns the identity matrix of the desired size:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[1., 0., 0.],
+       [0., 1., 0.],
+       [0., 0., 1.]])
+</code></pre></div></div>
+
+<p>The identity matrix is often noted simply \(I\) (instead of \(I_n\)) when its size is clear given the context. It is called the <em>identity</em> matrix because multiplying a matrix with it leaves the matrix unchanged as we will see below.</p>
+
+<h2 id="4-adding-matrices">4. Adding matrices</h2>
+<p>If two matrices \(Q\) and \(R\) have the same size \(m \times n\), they can be added together. Addition is performed <em>elementwise</em>: the result is also an \(m \times n\) matrix \(S\) where each element is the sum of the elements at the corresponding position: \(S_{i,j} = Q_{i,j} + R_{i,j}\)</p>
+
+\[S =
+\begin{bmatrix}
+  Q_{11} + R_{11} &amp; Q_{12} + R_{12} &amp; Q_{13} + R_{13} &amp; \cdots &amp; Q_{1n} + R_{1n} \\
+  Q_{21} + R_{21} &amp; Q_{22} + R_{22} &amp; Q_{23} + R_{23} &amp; \cdots &amp; Q_{2n} + R_{2n}  \\
+  Q_{31} + R_{31} &amp; Q_{32} + R_{32} &amp; Q_{33} + R_{33} &amp; \cdots &amp; Q_{3n} + R_{3n}  \\
+  \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+  Q_{m1} + R_{m1} &amp; Q_{m2} + R_{m2} &amp; Q_{m3} + R_{m3} &amp; \cdots &amp; Q_{mn} + R_{mn}  \\
+\end{bmatrix}\]
+
+<p>For example, let’s create a \(2 \times 3\) matrix \(B\) and compute \(A + B\):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="n">B</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[1, 2, 3],
+       [4, 5, 6]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[10, 20, 30],
+       [40, 50, 60]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">+</span> <span class="n">B</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[11, 22, 33],
+       [44, 55, 66]])
+</code></pre></div></div>
+
+<p><strong>Addition is <em>commutative</em></strong>, meaning that \(A + B = B + A\):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">B</span> <span class="o">+</span> <span class="n">A</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[11, 22, 33],
+       [44, 55, 66]])
+</code></pre></div></div>
+
+<p><strong>It is also <em>associative</em></strong>, meaning that \(A + (B + C) = (A + B) + C\):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">C</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">],</span> <span class="p">[</span><span class="mi">400</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">600</span><span class="p">]])</span>
+
+<span class="n">A</span> <span class="o">+</span> <span class="p">(</span><span class="n">B</span> <span class="o">+</span> <span class="n">C</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[111, 222, 333],
+       [444, 555, 666]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="n">B</span><span class="p">)</span> <span class="o">+</span> <span class="n">C</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[111, 222, 333],
+       [444, 555, 666]])
+</code></pre></div></div>
+
+<h2 id="5-scalar-multiplication">5. Scalar multiplication</h2>
+<p>A matrix \(M\) can be multiplied by a scalar \(\lambda\). The result is noted \(\lambda M\), and it is a matrix of the same size as \(M\) with all elements multiplied by \(\lambda\):</p>
+
+\[\lambda M =
+\begin{bmatrix}
+  \lambda \times M_{11} &amp; \lambda \times M_{12} &amp; \lambda \times M_{13} &amp; \cdots &amp; \lambda \times M_{1n} \\
+  \lambda \times M_{21} &amp; \lambda \times M_{22} &amp; \lambda \times M_{23} &amp; \cdots &amp; \lambda \times M_{2n} \\
+  \lambda \times M_{31} &amp; \lambda \times M_{32} &amp; \lambda \times M_{33} &amp; \cdots &amp; \lambda \times M_{3n} \\
+  \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+  \lambda \times M_{m1} &amp; \lambda \times M_{m2} &amp; \lambda \times M_{m3} &amp; \cdots &amp; \lambda \times M_{mn} \\
+\end{bmatrix}\]
+
+<p>A more concise way of writing this is:</p>
+
+\[(\lambda M)_{i,j} = \lambda (M)_{i,j}\]
+
+<p>In NumPy, simply use the <code class="language-plaintext highlighter-rouge">*</code> operator to multiply a matrix by a scalar. For example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">2</span> <span class="o">*</span> <span class="n">A</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 20,  40,  60],
+       [ 80, 100, 120]])
+</code></pre></div></div>
+
+<p>Scalar multiplication is also defined on the right-hand side, and gives the same result: \(M \lambda = \lambda M\). For example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">*</span> <span class="mi">2</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 20,  40,  60],
+       [ 80, 100, 120]])
+</code></pre></div></div>
+
+<p>This makes scalar multiplication <strong>commutative</strong>.</p>
+
+<p>It is also <strong>associative</strong>, meaning that \(\alpha (\beta M) = (\alpha \times \beta) M\), where \(\alpha\) and \(\beta\) are scalars. For example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">A</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 60, 120, 180],
+       [240, 300, 360]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">A</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 60, 120, 180],
+       [240, 300, 360]])
+</code></pre></div></div>
+
+<p>Finally, it is <strong>distributive over addition</strong> of matrices, meaning that \(\lambda (Q + R) = \lambda Q + \lambda R\):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="n">B</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 22,  44,  66],
+       [ 88, 110, 132]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">2</span> <span class="o">*</span> <span class="n">A</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">B</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 22,  44,  66],
+       [ 88, 110, 132]])
+</code></pre></div></div>
+
+<h2 id="6-matrix-multiplication">6. Matrix multiplication</h2>
+<p>So far, matrix operations have been rather intuitive. But multiplying matrices is a bit more involved.</p>
+
+<p>A matrix \(Q\) of size \(m \times n\) can be multiplied by a matrix \(R\) of size \(n \times q\). It is noted simply \(QR\) without multiplication sign or dot. The result \(P\) is an \(m \times q\) matrix where each element is computed as a <strong>sum of products</strong>:</p>
+
+\[P_{i,j} = \sum_{k=1}^n{Q_{i,k} \times R_{k,j}}\]
+
+<p>The element at position \(i,j\) in the resulting matrix is the sum of the products of elements in row \(i\) of matrix \(Q\) by the elements in column \(j\) of matrix \(R\).</p>
+
+\[P =
+\begin{bmatrix}
+Q_{11} R_{11} + Q_{12} R_{21} + \cdots + Q_{1n} R_{n1} &amp;
+  Q_{11} R_{12} + Q_{12} R_{22} + \cdots + Q_{1n} R_{n2} &amp;
+    \cdots &amp;
+      Q_{11} R_{1q} + Q_{12} R_{2q} + \cdots + Q_{1n} R_{nq} \\
+Q_{21} R_{11} + Q_{22} R_{21} + \cdots + Q_{2n} R_{n1} &amp;
+  Q_{21} R_{12} + Q_{22} R_{22} + \cdots + Q_{2n} R_{n2} &amp;
+    \cdots &amp;
+      Q_{21} R_{1q} + Q_{22} R_{2q} + \cdots + Q_{2n} R_{nq} \\
+  \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+Q_{m1} R_{11} + Q_{m2} R_{21} + \cdots + Q_{mn} R_{n1} &amp;
+  Q_{m1} R_{12} + Q_{m2} R_{22} + \cdots + Q_{mn} R_{n2} &amp;
+    \cdots &amp;
+      Q_{m1} R_{1q} + Q_{m2} R_{2q} + \cdots + Q_{mn} R_{nq}
+\end{bmatrix}\]
+
+<p>You may notice that each element \(P_{i,j}\) is the <strong>dot product</strong> of the row vector \(Q_{i,*}\) and the column vector \(R_{*,j}\):</p>
+
+\[P_{i,j} = Q_{i,*} \cdot R_{*,j}\]
+
+<p>So we can rewrite \(P\) more concisely as:</p>
+
+\[P =
+\begin{bmatrix}
+Q_{1,*} \cdot R_{*,1} &amp; Q_{1,*} \cdot R_{*,2} &amp; \cdots &amp; Q_{1,*} \cdot R_{*,q} \\
+Q_{2,*} \cdot R_{*,1} &amp; Q_{2,*} \cdot R_{*,2} &amp; \cdots &amp; Q_{2,*} \cdot R_{*,q} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+Q_{m,*} \cdot R_{*,1} &amp; Q_{m,*} \cdot R_{*,2} &amp; \cdots &amp; Q_{m,*} \cdot R_{*,q}
+\end{bmatrix}\]
+
+<p>Let’s multiply two matrices in NumPy, using <code class="language-plaintext highlighter-rouge">ndarray</code>’s <code class="language-plaintext highlighter-rouge">np.matmul()</code> function:</p>
+
+\[E = AD = \begin{bmatrix}
+  10 &amp; 20 &amp; 30 \\
+  40 &amp; 50 &amp; 60
+\end{bmatrix}
+\begin{bmatrix}
+  2 &amp; 3 &amp; 5 &amp; 7 \\
+  11 &amp; 13 &amp; 17 &amp; 19 \\
+  23 &amp; 29 &amp; 31 &amp; 37
+\end{bmatrix} =
+\begin{bmatrix}
+  930 &amp; 1160 &amp; 1320 &amp; 1560 \\
+  2010 &amp; 2510 &amp; 2910 &amp; 3450
+\end{bmatrix}\]
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span> <span class="mi">2</span><span class="p">,</span>  <span class="mi">3</span><span class="p">,</span>  <span class="mi">5</span><span class="p">,</span>  <span class="mi">7</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">19</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">23</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">31</span><span class="p">,</span> <span class="mi">37</span><span class="p">]</span>
+    <span class="p">])</span>
+<span class="n">E</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">D</span><span class="p">)</span>
+<span class="n">E</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 930, 1160, 1320, 1560],
+       [2010, 2510, 2910, 3450]])
+</code></pre></div></div>
+
+<p>Python 3.5 <a href="https://docs.python.org/3/whatsnew/3.5.html#pep-465-a-dedicated-infix-operator-for-matrix-multiplication">introduced</a> the <code class="language-plaintext highlighter-rouge">@</code> infix operator for matrix multiplication, and NumPy 1.10 added support for it. <code class="language-plaintext highlighter-rouge">A @ D</code> is equivalent to <code class="language-plaintext highlighter-rouge">np.matmul(A, D)</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">@</span> <span class="n">D</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 930, 1160, 1320, 1560],
+       [2010, 2510, 2910, 3450]])
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">@</code> operator also works for vectors. <code class="language-plaintext highlighter-rouge">u @ v</code> computes the dot product of <code class="language-plaintext highlighter-rouge">u</code> and <code class="language-plaintext highlighter-rouge">v</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">u</span> <span class="o">@</span> <span class="n">v</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>11
+</code></pre></div></div>
+
+<p>Let’s check this result by looking at one element, just to be sure. To calculate \(E_{2,3}\) for example, we need to multiply elements in \(A\)’s \(2^{nd}\) row by elements in \(D\)’s \(3^{rd}\) column, and sum up these products:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="mi">40</span><span class="o">*</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">50</span><span class="o">*</span><span class="mi">17</span> <span class="o">+</span> <span class="mi">60</span><span class="o">*</span><span class="mi">31</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2910
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">E</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># row 2, column 3
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2910
+</code></pre></div></div>
+
+<p>Looks good! You can check the other elements until you get used to the algorithm.</p>
+
+<p>We multiplied a \(2 \times 3\) matrix by a \(3 \times 4\) matrix, so the result is a \(2 \times 4\) matrix. The first matrix’s number of columns has to be equal to the second matrix’s number of rows. If we try to multiply \(D\) by \(A\), we get an error because D has 4 columns while A has 2 rows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">D</span> <span class="o">@</span> <span class="n">A</span>
+<span class="k">except</span> <span class="nb">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"ValueError:"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ValueError: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)-&gt;(n?,m?) (size 2 is different from 4)
+</code></pre></div></div>
+
+<p>This illustrates the fact that <strong>matrix multiplication is <em>NOT</em> commutative</strong>: in general \(QR ≠ RQ\).</p>
+
+<p>In fact, \(QR\) and \(RQ\) are only <em>both</em> defined if \(Q\) has size \(m \times n\) and \(R\) has size \(n \times m\). Let’s look at an example where both <em>are</em> defined and show that they are (in general) <em>NOT</em> equal:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">9</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+    <span class="p">])</span>
+<span class="n">A</span> <span class="o">@</span> <span class="n">F</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[400, 130],
+       [940, 310]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F</span> <span class="o">@</span> <span class="n">A</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[130, 200, 270],
+       [ 80, 130, 180],
+       [210, 330, 450]])
+</code></pre></div></div>
+
+<p>On the other hand, <strong>matrix multiplication <em>is</em> associative</strong>, meaning that \(Q(RS) = (QR)S\). Let’s create a \(4 \times 5\) matrix \(G\) to illustrate this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">G</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mi">8</span><span class="p">,</span>  <span class="mi">7</span><span class="p">,</span>  <span class="mi">4</span><span class="p">,</span>  <span class="mi">2</span><span class="p">,</span>  <span class="mi">5</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">2</span><span class="p">,</span>  <span class="mi">5</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">5</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">17</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span>  <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">0</span><span class="p">,</span>  <span class="mi">1</span><span class="p">,</span>  <span class="mi">2</span><span class="p">]])</span>
+<span class="p">(</span><span class="n">A</span> <span class="o">@</span> <span class="n">D</span><span class="p">)</span> <span class="o">@</span> <span class="n">G</span>     <span class="c1"># (AD)G
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[21640, 28390, 27320, 31140, 13570],
+       [47290, 62080, 60020, 68580, 29500]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">@</span> <span class="p">(</span><span class="n">D</span> <span class="o">@</span> <span class="n">G</span><span class="p">)</span>     <span class="c1"># A(DG)
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[21640, 28390, 27320, 31140, 13570],
+       [47290, 62080, 60020, 68580, 29500]])
+</code></pre></div></div>
+
+<p>It is also <strong><em>distributive</em> over addition</strong> of matrices, meaning that \((Q + R)S = QS + RS\). For example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="n">B</span><span class="p">)</span> <span class="o">@</span> <span class="n">D</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[1023, 1276, 1452, 1716],
+       [2211, 2761, 3201, 3795]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">@</span> <span class="n">D</span> <span class="o">+</span> <span class="n">B</span> <span class="o">@</span> <span class="n">D</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[1023, 1276, 1452, 1716],
+       [2211, 2761, 3201, 3795]])
+</code></pre></div></div>
+
+<p>The product of a matrix \(M\) by the identity matrix (of matching size) results in the same matrix \(M\). More formally, if \(M\) is an \(m \times n\) matrix, then:</p>
+
+\[M I_n = I_m M = M\]
+
+<p>This is generally written more concisely (since the size of the identity matrices is unambiguous given the context):</p>
+
+\[MI = IM = M\]
+
+<p>For example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">@</span> <span class="n">np</span><span class="p">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[10., 20., 30.],
+       [40., 50., 60.]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">np</span><span class="p">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">@</span> <span class="n">A</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[10., 20., 30.],
+       [40., 50., 60.]])
+</code></pre></div></div>
+
+<p><strong>Caution</strong>: NumPy’s <code class="language-plaintext highlighter-rouge">*</code> operator performs elementwise multiplication, <em>NOT</em> a matrix multiplication:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span> <span class="o">*</span> <span class="n">B</span>   <span class="c1"># NOT a matrix multiplication
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 10,  40,  90],
+       [160, 250, 360]])
+</code></pre></div></div>
+
+<h2 id="7-matrix-transpose">7. Matrix transpose</h2>
+<p>The transpose of a matrix \(M\) is a matrix noted \(M^T\) such that the \(i^{th}\) row in \(M^T\) is equal to the \(i^{th}\) column in \(M\):</p>
+
+\[A^T =
+\begin{bmatrix}
+  10 &amp; 20 &amp; 30 \\
+  40 &amp; 50 &amp; 60
+\end{bmatrix}^T =
+\begin{bmatrix}
+  10 &amp; 40 \\
+  20 &amp; 50 \\
+  30 &amp; 60
+\end{bmatrix}\]
+
+<p>In other words, (\(A^T)_{i,j}\) = \(A_{j,i}\)</p>
+
+<p>Obviously, if \(M\) is an \(m \times n\) matrix, then \(M^T\) is an \(n \times m\) matrix.</p>
+
+<p>Note: there are a few other notations, such as \(M^t\), \(M′\), or \({^t}M\).</p>
+
+<p>In NumPy, a matrix’s transpose can be obtained simply using the <code class="language-plaintext highlighter-rouge">T</code> attribute:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[10, 20, 30],
+       [40, 50, 60]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span><span class="p">.</span><span class="n">T</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[10, 40],
+       [20, 50],
+       [30, 60]])
+</code></pre></div></div>
+
+<p>As you might expect, transposing a matrix twice returns the original matrix:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span><span class="p">.</span><span class="n">T</span><span class="p">.</span><span class="n">T</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[10, 20, 30],
+       [40, 50, 60]])
+</code></pre></div></div>
+
+<p>Transposition is distributive over addition of matrices, meaning that \((Q + R)^T = Q^T + R^T\). For example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="n">A</span> <span class="o">+</span> <span class="n">B</span><span class="p">).</span><span class="n">T</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[11, 44],
+       [22, 55],
+       [33, 66]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">A</span><span class="p">.</span><span class="n">T</span> <span class="o">+</span> <span class="n">B</span><span class="p">.</span><span class="n">T</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[11, 44],
+       [22, 55],
+       [33, 66]])
+</code></pre></div></div>
+
+<p>Moreover, \((Q \cdot R)^T = R^T \cdot Q^T\). Note that the order is reversed. For example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="n">A</span> <span class="o">@</span> <span class="n">D</span><span class="p">).</span><span class="n">T</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 930, 2010],
+       [1160, 2510],
+       [1320, 2910],
+       [1560, 3450]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">D</span><span class="p">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">A</span><span class="p">.</span><span class="n">T</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 930, 2010],
+       [1160, 2510],
+       [1320, 2910],
+       [1560, 3450]])
+</code></pre></div></div>
+
+<p>A <strong>symmetric matrix</strong> \(M\) is defined as a matrix that is equal to its transpose: \(M^T = M\). This definition implies that it must be a square matrix whose elements are symmetric relative to the main diagonal, for example:</p>
+
+<p>\begin{bmatrix}
+  17 &amp; 22 &amp; 27 &amp; 49 <br />
+  22 &amp; 29 &amp; 36 &amp; 0 <br />
+  27 &amp; 36 &amp; 45 &amp; 2 <br />
+  49 &amp; 0 &amp; 2 &amp; 99
+\end{bmatrix}</p>
+
+<p>The product of a matrix by its transpose is always a symmetric matrix, for example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">D</span> <span class="o">@</span> <span class="n">D</span><span class="p">.</span><span class="n">T</span>  <span class="c1">#results in symmetric matrix
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[  87,  279,  547],
+       [ 279,  940, 1860],
+       [ 547, 1860, 3700]])
+</code></pre></div></div>
+
+<h2 id="8-converting-1d-arrays-to-2d-arrays-in-numpy">8. Converting 1D arrays to 2D arrays in NumPy</h2>
+<p>As mentioned earlier, in NumPy (as opposed to Matlab, for example), 1D really means 1D: there is no such thing as a vertical 1D-array or a horizontal 1D-array. So you should not be surprised to see that transposing a 1D array does not do anything:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([2, 5])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u</span><span class="p">.</span><span class="n">T</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([2, 5])
+</code></pre></div></div>
+
+<p>We want to convert \(\textbf{u}\) into a row vector before transposing it. There are a few ways to do this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u_row</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">u</span><span class="p">])</span>
+<span class="n">u_row</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[2, 5]])
+</code></pre></div></div>
+
+<p>Notice the extra square brackets: this is a 2D array with just one row (i.e. a \(1 \times 2\) matrix). In other words, it really is a <strong>row vector</strong>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[2, 5]])
+</code></pre></div></div>
+
+<p>This is quite explicit: we are asking for a new vertical axis, keeping the existing data as the horizontal axis.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u</span><span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">newaxis</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[2, 5]])
+</code></pre></div></div>
+
+<p>This is equivalent, but a little less explicit.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u</span><span class="p">[</span><span class="bp">None</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[2, 5]])
+</code></pre></div></div>
+
+<p>This is the shortest version, but you probably want to avoid it because it is unclear. The reason it works is that <code class="language-plaintext highlighter-rouge">np.newaxis</code> is actually equal to <code class="language-plaintext highlighter-rouge">None</code>, so this is equivalent to the previous version.</p>
+
+<p>Ok, now let’s transpose our row vector:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u_row</span><span class="p">.</span><span class="n">T</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[2],
+       [5]])
+</code></pre></div></div>
+
+<p>Great! We now have a nice <strong>column vector</strong>.</p>
+
+<p>Rather than creating a row vector then transposing it, it is also possible to convert a 1D array directly into a column vector:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">u</span><span class="p">[:,</span> <span class="n">np</span><span class="p">.</span><span class="n">newaxis</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[2],
+       [5]])
+</code></pre></div></div>
+
+<p>The above means:</p>
+<ul>
+  <li>keep existing elements <code class="language-plaintext highlighter-rouge">:</code> on the row axis. We have two elements in <code class="language-plaintext highlighter-rouge">u</code> so we will end up with 2 rows.</li>
+  <li>create a <code class="language-plaintext highlighter-rouge">np.newaxis</code> for the column axis. We will end up with 1 new column axis.</li>
+  <li>In the end, the reuslt is a 2D column vector with 2 rows x 1 column.</li>
+</ul>
+
+<h2 id="9-plotting-a-matrix">9. Plotting a matrix</h2>
+<p>We have already seen that vectors can be represented as points or arrows in N-dimensional space. Is there a good graphical representation of matrices? Well you can simply see a matrix as a list of vectors, so plotting a matrix results in many points or arrows. For example, let’s create a \(2 \times 4\) matrix <code class="language-plaintext highlighter-rouge">P</code> and plot it as points:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">4.6</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+    <span class="p">])</span>
+<span class="n">x_coords_P</span><span class="p">,</span> <span class="n">y_coords_P</span> <span class="o">=</span> <span class="n">P</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_coords_P</span><span class="p">,</span> <span class="n">y_coords_P</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">"equal"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_108_0.png" alt="png" /></p>
+
+<p>Of course, we could also have stored the same 4 vectors as row vectors instead of column vectors, resulting in a \(4 \times 2\) matrix (the transpose of \(P\), in fact). It is really an arbitrary choice.</p>
+
+<p>Since the vectors are ordered, you can see the matrix as a path and represent it with connected dots:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_coords_P</span><span class="p">,</span> <span class="n">y_coords_P</span><span class="p">,</span> <span class="s">"bo"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_coords_P</span><span class="p">,</span> <span class="n">y_coords_P</span><span class="p">,</span> <span class="s">"b--"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">"equal"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_110_0.png" alt="png" /></p>
+
+<p>Or you can represent it as a polygon: matplotlib’s <code class="language-plaintext highlighter-rouge">Polygon</code> class expects an \(n \times 2\) NumPy array, not a \(2 \times n\) array, so we just need to give it \(P^T\):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Polygon</span>  <span class="c1"># Importing the Polygon class from matplotlib.patches module
+</span><span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">add_artist</span><span class="p">(</span><span class="n">Polygon</span><span class="p">(</span><span class="n">P</span><span class="p">.</span><span class="n">T</span><span class="p">))</span>  <span class="c1"># Adding the Polygon to the current axes (gca) with its transpose (P.T)
+</span><span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>  <span class="c1"># Setting the x-axis and y-axis limits to define the plot boundaries
+</span><span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">"equal"</span><span class="p">)</span>  <span class="c1"># Setting the aspect ratio of the plot to equal, ensuring equal scaling in x and y directions
+</span><span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>  <span class="c1"># Adding grid lines to the plot
+</span><span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># Displaying the plot
+</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_112_0.png" alt="png" /></p>
+
+<h2 id="10-geometric-applications-of-matrix-operations">10. Geometric applications of matrix operations</h2>
+<p>Earlier in <a href="https://vmlverse.github.io/posts/2023/06/29/Maths_LinearAlgebra.html">part1 vector series</a> we saw that vector addition results in a geometric translation, vector multiplication by a scalar results in rescaling (zooming in or out, centered on the origin), and vector dot product results in projecting a vector onto another vector, rescaling and measuring the resulting coordinate.</p>
+
+<p>Similarly, matrix operations have very useful geometric applications.</p>
+
+<h3 id="a-addition--multiple-geometric-translations">a. Addition = multiple geometric translations</h3>
+<p>First, adding two matrices together is equivalent to adding all their vectors together. For example, let’s create a \(2 \times 4\) matrix \(H\) and add it to \(P\), and look at the result:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">plot_vector2d</span><span class="p">(</span><span class="n">vector2d</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">plt</span><span class="p">.</span><span class="n">arrow</span><span class="p">(</span><span class="n">origin</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">origin</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">vector2d</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">vector2d</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+              <span class="n">head_width</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">head_length</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">length_includes_head</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+              <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">H</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span> <span class="mf">0.5</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.1</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mf">0.4</span><span class="p">,</span>  <span class="mf">0.4</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">]</span>
+    <span class="p">])</span>
+<span class="n">P_moved</span> <span class="o">=</span> <span class="n">P</span> <span class="o">+</span> <span class="n">H</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">add_artist</span><span class="p">(</span><span class="n">Polygon</span><span class="p">(</span><span class="n">P</span><span class="p">.</span><span class="n">T</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">))</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">add_artist</span><span class="p">(</span><span class="n">Polygon</span><span class="p">(</span><span class="n">P_moved</span><span class="p">.</span><span class="n">T</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">vector</span><span class="p">,</span> <span class="n">origin</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">H</span><span class="p">.</span><span class="n">T</span><span class="p">,</span> <span class="n">P</span><span class="p">.</span><span class="n">T</span><span class="p">):</span>
+    <span class="n">plot_vector2d</span><span class="p">(</span><span class="n">vector</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="n">origin</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">2.2</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">,</span> <span class="s">"$$P$$"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">,</span> <span class="s">"$$P+H$$"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s">"$$H_{*,1}$$"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"k"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">4.1</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">,</span> <span class="s">"$$H_{*,2}$$"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"k"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">2.6</span><span class="p">,</span> <span class="s">"$$H_{*,3}$$"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"k"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="mf">4.3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="s">"$$H_{*,4}$$"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"k"</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">"equal"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_116_0.png" alt="png" /></p>
+
+<h3 id="b-scalar-multiplication">b. Scalar multiplication</h3>
+<p>Multiplying a matrix by a scalar results in all its vectors being multiplied by that scalar, so unsurprisingly, the geometric result is a rescaling of the entire figure. For example, let’s rescale our polygon by a factor of 60% (zooming out, centered on the origin):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">plot_transformation</span><span class="p">(</span><span class="n">P_before</span><span class="p">,</span> <span class="n">P_after</span><span class="p">,</span> <span class="n">text_before</span><span class="p">,</span> <span class="n">text_after</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">arrows</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">arrows</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">vector_before</span><span class="p">,</span> <span class="n">vector_after</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">P_before</span><span class="p">.</span><span class="n">T</span><span class="p">,</span> <span class="n">P_after</span><span class="p">.</span><span class="n">T</span><span class="p">):</span>
+            <span class="n">plot_vector2d</span><span class="p">(</span><span class="n">vector_before</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"blue"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">"--"</span><span class="p">)</span>
+            <span class="n">plot_vector2d</span><span class="p">(</span><span class="n">vector_after</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"red"</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s">"-"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">add_artist</span><span class="p">(</span><span class="n">Polygon</span><span class="p">(</span><span class="n">P_before</span><span class="p">.</span><span class="n">T</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">))</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">add_artist</span><span class="p">(</span><span class="n">Polygon</span><span class="p">(</span><span class="n">P_after</span><span class="p">.</span><span class="n">T</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">))</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">P_before</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">P_before</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">"b--"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">P_after</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">P_after</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">"r--"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="n">P_before</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">mean</span><span class="p">(),</span> <span class="n">P_before</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">mean</span><span class="p">(),</span> <span class="n">text_before</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"blue"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">text</span><span class="p">(</span><span class="n">P_after</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">mean</span><span class="p">(),</span> <span class="n">P_after</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">mean</span><span class="p">(),</span> <span class="n">text_after</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">"red"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">"equal"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+
+<span class="n">P_rescaled</span> <span class="o">=</span> <span class="mf">0.60</span> <span class="o">*</span> <span class="n">P</span>
+<span class="n">plot_transformation</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">P_rescaled</span><span class="p">,</span> <span class="s">"$$P$$"</span><span class="p">,</span> <span class="s">"$$0.6 P$$"</span><span class="p">,</span> <span class="n">arrows</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_118_0.png" alt="png" /></p>
+
+<h3 id="c-matrix-multiplication--projection-onto-an-axis">c. Matrix multiplication – Projection onto an axis</h3>
+<p>Matrix multiplication is more complex to visualize, but it is also the most powerful tool in the box.</p>
+
+<p>Let’s start simple, by defining a \(1 \times 2\) matrix \(U = \begin{bmatrix} 1 &amp; 0 \end{bmatrix}\). This row vector is just the horizontal unit vector.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+</code></pre></div></div>
+
+<p>Now let’s look at the dot product \(U \cdot P\):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">P</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[3. , 4. , 1. , 4.6],
+       [0.2, 3.5, 2. , 0.5]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U</span> <span class="o">@</span> <span class="n">P</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[3. , 4. , 1. , 4.6]])
+</code></pre></div></div>
+
+<p>These are the horizontal coordinates of the vectors in \(P\). In other words, we just projected \(P\) onto the horizontal axis:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">plot_projection</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">]):</span>
+    <span class="n">U_P</span> <span class="o">=</span> <span class="n">U</span> <span class="o">@</span> <span class="n">P</span>  <span class="c1"># Calculate the projection of P onto U using matrix multiplication
+</span>
+    <span class="n">axis_end</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">U</span>  <span class="c1"># Determine the end point of the axis for visualization purposes
+</span>    <span class="n">plot_vector2d</span><span class="p">(</span><span class="n">axis_end</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"black"</span><span class="p">)</span>  <span class="c1"># Plot the axis represented by the vector axis_end
+</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">add_artist</span><span class="p">(</span><span class="n">Polygon</span><span class="p">(</span><span class="n">P</span><span class="p">.</span><span class="n">T</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.2</span><span class="p">))</span>  <span class="c1"># Add a polygon representing P to the plot with transparency
+</span>
+    <span class="c1"># Iterate over the columns of P and U_P simultaneously
+</span>    <span class="k">for</span> <span class="n">vector</span><span class="p">,</span> <span class="n">proj_coordinate</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">P</span><span class="p">.</span><span class="n">T</span><span class="p">,</span> <span class="n">U_P</span><span class="p">.</span><span class="n">T</span><span class="p">):</span>
+        <span class="n">proj_point</span> <span class="o">=</span> <span class="n">proj_coordinate</span> <span class="o">*</span> <span class="n">U</span>  <span class="c1"># Calculate the projected point by scaling U with the projection coordinate
+</span>        <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">proj_point</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">proj_point</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span> <span class="s">"ro"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Plot the projected point as a red dot
+</span>        <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">([</span><span class="n">vector</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">proj_point</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]],</span> <span class="p">[</span><span class="n">vector</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">proj_point</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]],</span>
+                 <span class="s">"r--"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>  <span class="c1"># Plot a dashed line connecting the original point to the projected point
+</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>  <span class="c1"># Set the x-axis and y-axis limits for the plot
+</span>    <span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">"equal"</span><span class="p">)</span>  <span class="c1"># Set the aspect ratio of the plot to ensure equal scaling in x and y directions
+</span>    <span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>  <span class="c1"># Add grid lines to the plot
+</span>    <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>  <span class="c1"># Display the plot
+</span>
+
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_projection</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">P</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_125_0.png" alt="png" /></p>
+
+<p>We can actually project on any other axis by just replacing \(U\) with any other unit vector. For example, let’s project on the axis that is at a 30° angle above the horizontal axis:</p>
+
+<p>First, we are calculating the angle <code class="language-plaintext highlighter-rouge">angle30</code> in radians.</p>
+
+<p>Then, we are creating a 2-dimensional NumPy array <code class="language-plaintext highlighter-rouge">U_30</code> that represents a vector with a magnitude of <code class="language-plaintext highlighter-rouge">1</code> and an angle of <code class="language-plaintext highlighter-rouge">30</code> degrees (or <code class="language-plaintext highlighter-rouge">angle30</code> in radians). Here’s how it works:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">np.cos(angle30)</code> returns the cosine of <code class="language-plaintext highlighter-rouge">angle30</code>. This gives us the x-component of the unit vector.</li>
+  <li><code class="language-plaintext highlighter-rouge">np.sin(angle30)</code> returns the sine of <code class="language-plaintext highlighter-rouge">angle30</code>. This gives us the y-component of the unit vector.</li>
+  <li><code class="language-plaintext highlighter-rouge">[[np.cos(angle30), np.sin(angle30)]]</code> creates a 2-dimensional array with the x-component as the first element and the y-component as the second element.</li>
+  <li>Finally, the whole array is assigned to the variable <code class="language-plaintext highlighter-rouge">U_30</code>.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">angle30</span> <span class="o">=</span> <span class="mi">30</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>  <span class="c1"># calculate 30 degree angle in radians
+</span><span class="n">U_30</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([[</span><span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle30</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle30</span><span class="p">)]])</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">U_30</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_projection</span><span class="p">(</span><span class="n">U_30</span><span class="p">,</span> <span class="n">P</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_127_0.png" alt="png" /></p>
+
+<p>Good! Remember that the dot product of a unit vector and a matrix basically performs a projection on an axis and gives us the coordinates of the resulting points on that axis.</p>
+
+<h3 id="d-matrix-multiplication--rotation">d. Matrix multiplication – Rotation</h3>
+<p>Now let’s create a \(2 \times 2\) matrix \(V\) containing two unit vectors that make 30° and 120° angles with the horizontal axis:</p>
+
+\[V = \begin{bmatrix} \cos(30°) &amp; \sin(30°) \\ \cos(120°) &amp; \sin(120°) \end{bmatrix}\]
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">angle120</span> <span class="o">=</span> <span class="mi">120</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+<span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle30</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle30</span><span class="p">)],</span>
+        <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle120</span><span class="p">),</span> <span class="n">np</span><span class="p">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle120</span><span class="p">)]</span>
+    <span class="p">])</span>
+<span class="n">V</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 0.8660254,  0.5      ],
+       [-0.5      ,  0.8660254]])
+</code></pre></div></div>
+
+<p>Let’s look at the product \(VP\):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">V</span> <span class="o">@</span> <span class="n">P</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 2.69807621,  5.21410162,  1.8660254 ,  4.23371686],
+       [-1.32679492,  1.03108891,  1.23205081, -1.8669873 ]])
+</code></pre></div></div>
+
+<ul>
+  <li>The first row is equal to \(V_{1,*} P\), which is the coordinates of the projection of \(P\) onto the 30° axis, as we have seen above.</li>
+  <li>The second row is \(V_{2,*} P\), which is the coordinates of the projection of \(P\) onto the 120° axis.</li>
+  <li>So basically we obtained the coordinates of \(P\) after rotating the horizontal and vertical axes by 30° (or equivalently after rotating the polygon by -30° around the origin)! Let’s plot \(VP\) to see this:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_projection</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">V</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]]),</span> <span class="n">P</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_134_0.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_projection</span><span class="p">(</span><span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span><span class="n">V</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]]),</span> <span class="n">P</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_135_0.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">P_rotated</span> <span class="o">=</span> <span class="n">V</span> <span class="o">@</span> <span class="n">P</span>
+
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">V</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">color</span><span class="o">=</span><span class="s">"black"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">V</span><span class="p">[</span><span class="mi">1</span><span class="p">,:],</span> <span class="n">color</span><span class="o">=</span><span class="s">"black"</span><span class="p">)</span>
+<span class="n">plot_transformation</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">P_rotated</span><span class="p">,</span> <span class="s">"$$P$$"</span><span class="p">,</span> <span class="s">"$$VP$$"</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span> <span class="n">arrows</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_136_0.png" alt="png" /></p>
+
+<p>Matrix \(V\) is called a <strong>rotation matrix</strong>.</p>
+
+<h3 id="e-matrix-multiplication--other-linear-transformations">e. Matrix multiplication – Other linear transformations</h3>
+<p>More generally, any linear transformation \(f\) that maps n-dimensional vectors to m-dimensional vectors can be represented as an \(m \times n\) matrix. For example, say \(\textbf{u}\) is a 3-dimensional vector:</p>
+
+\[\textbf{u} = \begin{pmatrix} x \\ y \\ z \end{pmatrix}\]
+
+<p>and \(f\) is defined as:</p>
+
+\[f(\textbf{u}) = \begin{pmatrix}
+ax + by + cz \\
+dx + ey + fz
+\end{pmatrix}\]
+
+<p>This transformation \(f\) maps 3-dimensional vectors to 2-dimensional vectors in a linear way (i.e. the resulting coordinates only involve sums of multiples of the original coordinates). We can represent this transformation as matrix \(F\):</p>
+
+\[F = \begin{bmatrix}
+a &amp; b &amp; c \\
+d &amp; e &amp; f
+\end{bmatrix}\]
+
+<p>Now, to compute \(f(\textbf{u})\) we can simply do a matrix multiplication:</p>
+
+\[f(\textbf{u}) = F \textbf{u}\]
+
+<p>If we have a matrix \(G = \begin{bmatrix}\textbf{u}_1 &amp; \textbf{u}_2 &amp; \cdots &amp; \textbf{u}_q \end{bmatrix}\), where each \(\textbf{u}_i\) is a 3-dimensional column vector, then \(FG\) results in the linear transformation of all vectors \(\textbf{u}_i\) as defined by the matrix \(F\):</p>
+
+\[FG = \begin{bmatrix}f(\textbf{u}_1) &amp; f(\textbf{u}_2) &amp; \cdots &amp; f(\textbf{u}_q) \end{bmatrix}\]
+
+<p>To summarize, the matrix on the left-hand side of a dot product specifies what linear transformation to apply to the right-hand side vectors. We have already shown that this can be used to perform projections and rotations, but any other linear transformation is possible. For example, here is a transformation known as a <em>shear mapping</em>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F_shear</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="p">])</span>
+
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">F_shear</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">F_shear</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_transformation</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">F_shear</span> <span class="o">@</span> <span class="n">P</span><span class="p">,</span> <span class="s">"$$P$$"</span><span class="p">,</span> <span class="s">"$$F_{shear} P$$"</span><span class="p">,</span>
+                    <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_139_0.png" alt="png" /></p>
+
+<p>Let’s look at how this transformation affects the <strong>unit square</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Square</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="p">])</span>
+
+<span class="c1">#Note P is represented as a 2x4 matrix where row1 contains x-values and row2 contains Y values.
+#To align with P, we want our transformataion matrix setup the same way. i.e., row1-x-values and row2-y values.
+#This is the reason why we are plotting F_shear[:,0] - column1 with row1 (x-values) and row2 (y-values).
+#Therefore F_shear[:,0] (column 1) is the first transformation axis instead of original x-axis.
+#Therefore F_shear[:,1] (column 2) is the second transformation axis instead of original x-axis.
+</span><span class="n">plot_vector2d</span><span class="p">(</span><span class="n">F_shear</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">F_shear</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_transformation</span><span class="p">(</span><span class="n">Square</span><span class="p">,</span> <span class="n">F_shear</span> <span class="o">@</span> <span class="n">Square</span><span class="p">,</span> <span class="s">"$$Square$$"</span><span class="p">,</span> <span class="s">"$$F_{shear} Square$$"</span><span class="p">,</span>
+                    <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2.6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_141_0.png" alt="png" /></p>
+
+<p>Now let’s look at a <strong>squeeze mapping</strong>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F_squeeze</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mf">1.4</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="mf">1.4</span><span class="p">]</span>
+    <span class="p">])</span>
+
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">F_squeeze</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">F_squeeze</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_transformation</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">F_squeeze</span> <span class="o">@</span> <span class="n">P</span><span class="p">,</span> <span class="s">"$$P$$"</span><span class="p">,</span> <span class="s">"$$F_{squeeze} P$$"</span><span class="p">,</span>
+                    <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_143_0.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_vector2d</span><span class="p">(</span><span class="n">F_squeeze</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">F_squeeze</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_transformation</span><span class="p">(</span><span class="n">Square</span><span class="p">,</span> <span class="n">F_squeeze</span> <span class="o">@</span> <span class="n">Square</span><span class="p">,</span> <span class="s">"$$Square$$"</span><span class="p">,</span> <span class="s">"$$F_{squeeze} Square$$"</span><span class="p">,</span>
+                    <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_144_0.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F_reflect</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="p">])</span>
+
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">F_reflect</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">F_reflect</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_transformation</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">F_reflect</span> <span class="o">@</span> <span class="n">P</span><span class="p">,</span> <span class="s">"$$P$$"</span><span class="p">,</span> <span class="s">"$$F_{reflect} P$$"</span><span class="p">,</span>
+                    <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">7</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_145_0.png" alt="png" /></p>
+
+<h2 id="11-matrix-inverse">11. Matrix inverse</h2>
+<ul>
+  <li>Now that we understand that a matrix can represent any linear transformation, a natural question is: can we find a transformation matrix that reverses the effect of a given transformation matrix \(F\)? The answer is yes… sometimes! When it exists, such a matrix is called the <strong>inverse</strong> of \(F\), and it is noted \(F^{-1}\).</li>
+</ul>
+
+<p>For example, the rotation, the shear mapping and the squeeze mapping above all have inverse transformations. Let’s demonstrate this on the shear mapping:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F_inv_shear</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="p">])</span>
+<span class="n">P_sheared</span> <span class="o">=</span> <span class="n">F_shear</span> <span class="o">@</span> <span class="n">P</span>
+<span class="n">P_unsheared</span> <span class="o">=</span> <span class="n">F_inv_shear</span> <span class="o">@</span> <span class="n">P_sheared</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">P_sheared</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"blue"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">P_sheared</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"blue"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">P_unsheared</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"red"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">P_unsheared</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"red"</span><span class="p">)</span>
+<span class="n">plot_transformation</span><span class="p">(</span><span class="n">P_sheared</span><span class="p">,</span> <span class="n">P_unsheared</span><span class="p">,</span> <span class="s">"$$P_{sheared}$$"</span><span class="p">,</span> <span class="s">"$$P_{unsheared}$$"</span><span class="p">,</span>
+                    <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">P</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">P</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">"b--"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_147_0.png" alt="png" /></p>
+
+<p>We applied a shear mapping on \(P\), just like we did before, but then we applied a second transformation to the result, and <em>lo and behold</em> this had the effect of coming back to the original \(P\) (I’ve plotted the original \(P\)’s outline to double-check). The second transformation is the inverse of the first one.</p>
+
+<p>We defined the inverse matrix \(F_{shear}^{-1}\) manually this time, but NumPy provides an <code class="language-plaintext highlighter-rouge">inv</code> function to compute a matrix’s inverse, so we could have written instead:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy.linalg</span> <span class="k">as</span> <span class="n">LA</span>
+<span class="n">F_inv_shear</span> <span class="o">=</span> <span class="n">LA</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">F_shear</span><span class="p">)</span>
+<span class="n">F_inv_shear</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 1. , -1.5],
+       [ 0. ,  1. ]])
+</code></pre></div></div>
+
+<p>Only square matrices can be inversed. This makes sense when you think about it: if you have a transformation that reduces the number of dimensions, then some information is lost and there is no way that you can get it back. For example say you use a \(2 \times 3\) matrix to project a 3D object onto a plane. The result may look like this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
+         <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
+         <span class="s">"r-"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">2.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">gca</span><span class="p">().</span><span class="n">set_aspect</span><span class="p">(</span><span class="s">"equal"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_151_0.png" alt="png" /></p>
+
+<p>Looking at this image, it is impossible to tell whether this is the projection of a cube or the projection of a narrow rectangular object. Some information has been lost in the projection.</p>
+
+<h3 id="singular-or-degenerate-matrix">Singular or Degenerate Matrix</h3>
+<p>Even square transformation matrices can lose information. For example, consider this transformation matrix:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F_project</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="p">])</span>
+<span class="n">plot_transformation</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">F_project</span> <span class="o">@</span> <span class="n">P</span><span class="p">,</span> <span class="s">"$$P$$"</span><span class="p">,</span> <span class="sa">r</span><span class="s">"$$F_{project} \cdot P$$"</span><span class="p">,</span>
+                    <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_153_0.png" alt="png" /></p>
+
+<p>This transformation matrix performs a projection onto the horizontal axis. Our polygon gets entirely flattened out so some information is entirely lost, and it is impossible to go back to the original polygon using a linear transformation. In other words, \(F_{project}\) has no inverse. Such a square matrix that cannot be inversed is called a <strong>singular matrix</strong> (aka degenerate matrix). If we ask NumPy to calculate its inverse, it raises an exception:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span><span class="p">:</span>
+    <span class="n">LA</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">F_project</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">LA</span><span class="p">.</span><span class="n">LinAlgError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"LinAlgError:"</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LinAlgError: Singular matrix
+</code></pre></div></div>
+
+<p>Here is another example of a singular matrix. This one performs a projection onto the axis at a 30° angle above the horizontal axis:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">angle30</span> <span class="o">=</span> <span class="mi">30</span> <span class="o">*</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">180</span>
+<span class="n">F_project_30</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+               <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle30</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">angle30</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">],</span>
+               <span class="p">[</span><span class="n">np</span><span class="p">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">angle30</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="p">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle30</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">]</span>
+         <span class="p">])</span>
+<span class="n">plot_transformation</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">F_project_30</span> <span class="o">@</span> <span class="n">P</span><span class="p">,</span> <span class="s">"$$P$$"</span><span class="p">,</span> <span class="sa">r</span><span class="s">"$$F_{project\_30} \cdot P$$"</span><span class="p">,</span>
+                    <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_157_0.png" alt="png" /></p>
+
+<p>But this time, due to floating point rounding errors, NumPy manages to calculate an inverse (notice how large the elements are, though):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">LA</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">F_project_30</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 1.20095990e+16, -2.08012357e+16],
+       [-2.08012357e+16,  3.60287970e+16]])
+</code></pre></div></div>
+
+<p>As you might expect, the dot product of a matrix by its inverse results in the identity matrix:</p>
+
+\[M \cdot M^{-1} = M^{-1} \cdot M = I\]
+
+<p>This makes sense since doing a linear transformation followed by the inverse transformation results in no change at all.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">LA</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">LA</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">F_shear</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[1. , 1.5],
+       [0. , 1. ]])
+</code></pre></div></div>
+
+<p>Also, the inverse of scaling by a factor of \(\lambda\) is of course scaling by a factor of \(\frac{1}{\lambda}\):</p>
+
+\[(\lambda \times M)^{-1} = \frac{1}{\lambda} \times M^{-1}\]
+
+<p>Once you understand the geometric interpretation of matrices as linear transformations, most of these properties seem fairly intuitive.</p>
+
+<h3 id="involution">Involution</h3>
+<p>A matrix that is its own inverse is called an <strong>involution</strong>. The simplest examples are reflection matrices, or a rotation by 180°, but there are also more complex involutions, for example imagine a transformation that squeezes horizontally, then  reflects over the vertical axis and finally rotates by 90° clockwise. Pick up a napkin and try doing that twice: you will end up in the original position. Here is the corresponding involutory matrix:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F_involution</span>  <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="p">])</span>
+<span class="n">plot_transformation</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">F_involution</span> <span class="o">@</span> <span class="n">P</span><span class="p">,</span> <span class="s">"$$P$$"</span><span class="p">,</span> <span class="sa">r</span><span class="s">"$$F_{involution} \cdot P$$"</span><span class="p">,</span>
+                    <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_163_0.png" alt="png" /></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#inverse of an involution is itself
+</span><span class="n">LA</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">F_involution</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[-0. , -2. ],
+       [-0.5, -0. ]])
+</code></pre></div></div>
+
+<h3 id="orthogonal-matrix">Orthogonal Matrix</h3>
+<p>Finally, a square matrix \(H\) whose inverse is its own transpose is an <strong>orthogonal matrix</strong>:</p>
+
+\[H^{-1} = H^T\]
+
+<p>Therefore:</p>
+
+\[H \cdot H^T = H^T \cdot H = I\]
+
+<p>It corresponds to a transformation that preserves distances, such as rotations and reflections, and combinations of these, but not rescaling, shearing or squeezing.  Let’s check that \(F_{reflect}\) is indeed orthogonal:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F_reflect</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 1,  0],
+       [ 0, -1]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># matrix with transpose matrix results in identity matrix
+</span><span class="n">F_reflect</span> <span class="o">@</span> <span class="n">F_reflect</span><span class="p">.</span><span class="n">T</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[1, 0],
+       [0, 1]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#inverse of a matrix is equal to transpose of the matrix - orthogonal
+</span><span class="n">LA</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">F_reflect</span><span class="p">)</span> <span class="o">==</span> <span class="n">F_reflect</span><span class="p">.</span><span class="n">T</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ True,  True],
+       [ True,  True]])
+</code></pre></div></div>
+
+<p>An orthogonal matrix satisfies two key properties: orthogonality and normalization.</p>
+
+<p>Orthogonality: The columns (or rows) of an orthogonal matrix are mutually orthogonal, meaning they are all perpendicular to each other. This implies that the dot product between any two distinct columns (or rows) of the matrix is zero.</p>
+
+<p>Normalization: Each column (or row) of an orthogonal matrix has a magnitude of 1. This means that the dot product of any column (or row) with itself is equal to 1.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#proving orthogonality property
+</span><span class="k">def</span> <span class="nf">vector_angle</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+    <span class="n">cos_theta</span> <span class="o">=</span> <span class="n">u</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="n">LA</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">u</span><span class="p">)</span> <span class="o">/</span> <span class="n">LA</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="p">.</span><span class="n">arccos</span><span class="p">(</span><span class="n">cos_theta</span><span class="p">.</span><span class="n">clip</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">theta</span> <span class="o">=</span> <span class="n">vector_angle</span><span class="p">(</span><span class="n">F_reflect</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">F_reflect</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span> <span class="c1">#columns
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Angle ="</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="s">"radians"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"      ="</span><span class="p">,</span> <span class="n">theta</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="p">,</span> <span class="s">"degrees"</span><span class="p">)</span>
+
+<span class="n">theta</span> <span class="o">=</span> <span class="n">vector_angle</span><span class="p">(</span><span class="n">F_reflect</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">F_reflect</span><span class="p">[</span><span class="mi">1</span><span class="p">,:])</span> <span class="c1">#rows
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Angle ="</span><span class="p">,</span> <span class="n">theta</span><span class="p">,</span> <span class="s">"radians"</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"      ="</span><span class="p">,</span> <span class="n">theta</span> <span class="o">*</span> <span class="mi">180</span> <span class="o">/</span> <span class="n">np</span><span class="p">.</span><span class="n">pi</span><span class="p">,</span> <span class="s">"degrees"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Angle = 1.5707963267948966 radians
+      = 90.0 degrees
+Angle = 1.5707963267948966 radians
+      = 90.0 degrees
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#proving normalization property
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Norm ="</span><span class="p">,</span> <span class="n">LA</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">F_reflect</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]))</span> <span class="c1">#column
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Norm ="</span><span class="p">,</span> <span class="n">LA</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">F_reflect</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]))</span> <span class="c1">#column
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Norm ="</span><span class="p">,</span> <span class="n">LA</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">F_reflect</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]))</span> <span class="c1">#row
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Norm ="</span><span class="p">,</span> <span class="n">LA</span><span class="p">.</span><span class="n">norm</span><span class="p">(</span><span class="n">F_reflect</span><span class="p">[</span><span class="mi">1</span><span class="p">,:]))</span> <span class="c1">#row
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Norm = 1.0
+Norm = 1.0
+Norm = 1.0
+Norm = 1.0
+</code></pre></div></div>
+
+<p>Geometrically, an orthogonal matrix represents a linear transformation that preserves lengths and angles. When an orthogonal matrix is applied to a vector, the resulting transformed vector maintains its length and the angle it forms with other vectors.</p>
+
+<p>Orthogonal matrices have several important properties and applications in linear algebra and related fields. Some key properties include:</p>
+
+<ul>
+  <li>They preserve distances and angles, making them useful in geometric transformations.</li>
+  <li>They have determinant ±1, which means they do not distort the volume of a shape.</li>
+  <li>They provide an efficient way to solve linear systems of equations.</li>
+  <li>They diagonalize symmetric matrices, simplifying various calculations and analyses.</li>
+</ul>
+
+<h2 id="12-determinant">12. Determinant</h2>
+<p>The determinant of a square matrix \(M\), noted \(\det(M)\) or \(\det M\) or \(|M|\) is a value that can be calculated from its elements \((M_{i,j})\) using various equivalent methods. One of the simplest methods is this recursive approach:</p>
+
+\[|M| = M_{1,1}\times|M^{(1,1)}| - M_{1,2}\times|M^{(1,2)}| + M_{1,3}\times|M^{(1,3)}| - M_{1,4}\times|M^{(1,4)}| + \cdots ± M_{1,n}\times|M^{(1,n)}|\]
+
+<ul>
+  <li>Where \(M^{(i,j)}\) is the matrix \(M\) without row \(i\) and column \(j\).</li>
+</ul>
+
+<p>For example, let’s calculate the determinant of the following \(3 \times 3\) matrix:</p>
+
+\[M = \begin{bmatrix}
+  1 &amp; 2 &amp; 3 \\
+  4 &amp; 5 &amp; 6 \\
+  7 &amp; 8 &amp; 0
+\end{bmatrix}\]
+
+<p>Using the method above, we get:</p>
+
+\[|M| = 1 \times \left | \begin{bmatrix} 5 &amp; 6 \\ 8 &amp; 0 \end{bmatrix} \right |
+     - 2 \times \left | \begin{bmatrix} 4 &amp; 6 \\ 7 &amp; 0 \end{bmatrix} \right |
+     + 3 \times \left | \begin{bmatrix} 4 &amp; 5 \\ 7 &amp; 8 \end{bmatrix} \right |\]
+
+<p>Now we need to compute the determinant of each of these \(2 \times 2\) matrices (these determinants are called <strong>minors</strong>):</p>
+
+\[\left | \begin{bmatrix} 5 &amp; 6 \\ 8 &amp; 0 \end{bmatrix} \right | = 5 \times 0 - 6 \times 8 = -48\]
+
+\[\left | \begin{bmatrix} 4 &amp; 6 \\ 7 &amp; 0 \end{bmatrix} \right | = 4 \times 0 - 6 \times 7 = -42\]
+
+\[\left | \begin{bmatrix} 4 &amp; 5 \\ 7 &amp; 8 \end{bmatrix} \right | = 4 \times 8 - 5 \times 7 = -3\]
+
+<p>Now we can calculate the final result:</p>
+
+\[|M| = 1 \times (-48) - 2 \times (-42) + 3 \times (-3) = 27\]
+
+<p>To get the determinant of a matrix, you can call NumPy’s <code class="language-plaintext highlighter-rouge">det</code> function in the <code class="language-plaintext highlighter-rouge">numpy.linalg</code> module:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">M</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="p">])</span>
+<span class="n">LA</span><span class="p">.</span><span class="n">det</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>27.0
+</code></pre></div></div>
+
+<p>One of the main uses of the determinant is to <em>determine</em> whether a square matrix can be inversed or not: if the determinant is equal to 0, then the matrix <em>cannot</em> be inversed (it is a singular matrix), and if the determinant is not 0, then it <em>can</em> be inversed.</p>
+
+<p>For example, let’s compute the determinant for the \(F_{project}\), \(F_{project\_30}\) and \(F_{shear}\) matrices that we defined earlier:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">LA</span><span class="p">.</span><span class="n">det</span><span class="p">(</span><span class="n">F_project</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.0
+</code></pre></div></div>
+
+<p>That’s right, \(F_{project}\) is singular, as we saw earlier.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">LA</span><span class="p">.</span><span class="n">det</span><span class="p">(</span><span class="n">F_project_30</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>2.0816681711721642e-17
+</code></pre></div></div>
+
+<p>This determinant is suspiciously close to 0: it really should be 0, but it’s not due to tiny floating point errors. The matrix is actually singular.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">LA</span><span class="p">.</span><span class="n">det</span><span class="p">(</span><span class="n">F_shear</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.0
+</code></pre></div></div>
+
+<p>Perfect! This matrix <em>can</em> be inversed as we saw earlier. Wow, math really works!</p>
+
+<p>The determinant can also be used to measure how much a linear transformation affects surface areas: for example, the projection matrices \(F_{project}\) and \(F_{project\_30}\) completely flatten the polygon \(P\), until its area is zero. This is why the determinant of these matrices is 0. The shear mapping modified the shape of the polygon, but it did not affect its surface area, which is why the determinant is 1. You can try computing the determinant of a rotation matrix, and you should also find 1. What about a scaling matrix? Let’s see:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F_scale</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+        <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+    <span class="p">])</span>
+<span class="n">plot_transformation</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">F_scale</span> <span class="o">@</span> <span class="n">P</span><span class="p">,</span> <span class="s">"$$P$$"</span><span class="p">,</span> <span class="sa">r</span><span class="s">"$$F_{scale} \cdot P$$"</span><span class="p">,</span>
+                    <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_184_0.png" alt="png" /></p>
+
+<p>We rescaled the polygon by a factor of 1/2 on both vertical and horizontal axes so the surface area of the resulting polygon is 1/4\(^{th}\) of the original polygon. Let’s compute the determinant and check that:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">LA</span><span class="p">.</span><span class="n">det</span><span class="p">(</span><span class="n">F_scale</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.25
+</code></pre></div></div>
+
+<p>Correct!</p>
+
+<p>The determinant can actually be negative, when the transformation results in a “flipped over” version of the original polygon (e.g. a left-hand glove becomes a right-hand glove). For example, the determinant of the <code class="language-plaintext highlighter-rouge">F_reflect</code> matrix is -1 because the surface area is preserved but the polygon gets flipped over:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">LA</span><span class="p">.</span><span class="n">det</span><span class="p">(</span><span class="n">F_reflect</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-1.0
+</code></pre></div></div>
+
+<h2 id="13-composing-linear-transformations">13. Composing linear transformations</h2>
+<p>Several linear transformations can be chained simply by performing multiple dot products in a row. For example, to perform a squeeze mapping followed by a shear mapping, just write:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">P_squeezed_then_sheared</span> <span class="o">=</span> <span class="n">F_shear</span> <span class="o">@</span> <span class="p">(</span><span class="n">F_squeeze</span> <span class="o">@</span> <span class="n">P</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Since the dot product is associative, the following code is equivalent:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">P_squeezed_then_sheared</span> <span class="o">=</span> <span class="n">F_shear</span> <span class="o">@</span> <span class="n">F_squeeze</span> <span class="o">@</span> <span class="n">P</span>
+</code></pre></div></div>
+
+<p>Note that the order of the transformations is the reverse of the dot product order.</p>
+
+<p>If we are going to perform this composition of linear transformations more than once, we might as well save the composition matrix like this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F_squeeze_then_shear</span> <span class="o">=</span> <span class="n">F_shear</span> <span class="o">@</span> <span class="n">F_squeeze</span>
+<span class="n">P_squeezed_then_sheared</span> <span class="o">=</span> <span class="n">F_squeeze_then_shear</span> <span class="o">@</span> <span class="n">P</span>
+</code></pre></div></div>
+
+<p>From now on we can perform both transformations in just one dot product, which can lead to a very significant performance boost.</p>
+
+<p>What if you want to perform the inverse of this double transformation? Well, if you squeezed and then you sheared, and you want to undo what you have done, it should be obvious that you should unshear first and then unsqueeze. In more mathematical terms, given two invertible (aka nonsingular) matrices \(Q\) and \(R\):</p>
+
+\[(Q \cdot R)^{-1} = R^{-1} \cdot Q^{-1}\]
+
+<p>And in NumPy:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">LA</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">F_shear</span> <span class="o">@</span> <span class="n">F_squeeze</span><span class="p">)</span> <span class="o">==</span> <span class="n">LA</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">F_squeeze</span><span class="p">)</span> <span class="o">@</span> <span class="n">LA</span><span class="p">.</span><span class="n">inv</span><span class="p">(</span><span class="n">F_shear</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ True,  True],
+       [ True,  True]])
+</code></pre></div></div>
+
+<h2 id="14-singular-value-decomposition">14. Singular Value Decomposition</h2>
+<p>It turns out that any \(m \times n\) matrix \(M\) can be decomposed into the dot product of three simple matrices:</p>
+<ul>
+  <li>a rotation matrix \(U\) (an \(m \times m\) orthogonal matrix)</li>
+  <li>a scaling &amp; projecting matrix \(\Sigma\) (an \(m \times n\) diagonal matrix)</li>
+  <li>and another rotation matrix \(V^T\) (an \(n \times n\) orthogonal matrix)</li>
+</ul>
+
+\[M = U \cdot \Sigma \cdot V^{T}\]
+
+<p>For example, let’s decompose the shear transformation:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U</span><span class="p">,</span> <span class="n">S_diag</span><span class="p">,</span> <span class="n">V_T</span> <span class="o">=</span> <span class="n">LA</span><span class="p">.</span><span class="n">svd</span><span class="p">(</span><span class="n">F_shear</span><span class="p">)</span> <span class="c1"># note: in python 3 you can rename S_diag to Σ_diag
+</span><span class="n">U</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 0.89442719, -0.4472136 ],
+       [ 0.4472136 ,  0.89442719]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">S_diag</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([2. , 0.5])
+</code></pre></div></div>
+
+<p>Note that this is just a 1D array containing the diagonal values of Σ. To get the actual matrix Σ, we can use NumPy’s <code class="language-plaintext highlighter-rouge">diag</code> function:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">S</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">diag</span><span class="p">(</span><span class="n">S_diag</span><span class="p">)</span>
+<span class="n">S</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[2. , 0. ],
+       [0. , 0.5]])
+</code></pre></div></div>
+
+<p>Now let’s check that \(U \cdot \Sigma \cdot V^T\) is indeed equal to <code class="language-plaintext highlighter-rouge">F_shear</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">U</span> <span class="o">@</span> <span class="n">np</span><span class="p">.</span><span class="n">diag</span><span class="p">(</span><span class="n">S_diag</span><span class="p">)</span> <span class="o">@</span> <span class="n">V_T</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 1.00000000e+00,  1.50000000e+00],
+       [-1.25949234e-17,  1.00000000e+00]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F_shear</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[1. , 1.5],
+       [0. , 1. ]])
+</code></pre></div></div>
+
+<p>It worked like a charm. Let’s apply these transformations one by one (in reverse order) on the unit square to understand what’s going on. First, let’s apply the first rotation \(V^T\):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_transformation</span><span class="p">(</span><span class="n">Square</span><span class="p">,</span> <span class="n">V_T</span> <span class="o">@</span> <span class="n">Square</span><span class="p">,</span> <span class="s">"$$Square$$"</span><span class="p">,</span> <span class="sa">r</span><span class="s">"$$V^T \cdot Square$$"</span><span class="p">,</span>
+                    <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">3.5</span> <span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_207_0.png" alt="png" /></p>
+
+<p>Now let’s rescale along the vertical and horizontal axes using \(\Sigma\):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_transformation</span><span class="p">(</span><span class="n">V_T</span> <span class="o">@</span> <span class="n">Square</span><span class="p">,</span> <span class="n">S</span> <span class="o">@</span> <span class="n">V_T</span> <span class="o">@</span> <span class="n">Square</span><span class="p">,</span>
+                    <span class="sa">r</span><span class="s">"$$V^T \cdot Square$$"</span><span class="p">,</span>
+                    <span class="sa">r</span><span class="s">"$$\Sigma \cdot V^T \cdot Square$$"</span><span class="p">,</span>
+                    <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">3.5</span> <span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_209_0.png" alt="png" /></p>
+
+<p>Finally, we apply the second rotation \(U\):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_transformation</span><span class="p">(</span><span class="n">S</span> <span class="o">@</span> <span class="n">V_T</span> <span class="o">@</span> <span class="n">Square</span><span class="p">,</span> <span class="n">U</span> <span class="o">@</span> <span class="n">S</span> <span class="o">@</span> <span class="n">V_T</span> <span class="o">@</span> <span class="n">Square</span><span class="p">,</span>
+                    <span class="sa">r</span><span class="s">"$$\Sigma \cdot V^T \cdot Square$$"</span><span class="p">,</span>
+                    <span class="sa">r</span><span class="s">"$$U \cdot \Sigma \cdot V^T \cdot Square$$"</span><span class="p">,</span>
+                    <span class="n">axis</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">3.5</span> <span class="p">,</span> <span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_211_0.png" alt="png" /></p>
+
+<p>And we can see that the result is indeed a shear mapping of the original unit square.</p>
+
+<p>You might ask, well how is this SVD used in Machine Learning? Here are a few use cases on how SVD applies to Machine learning.</p>
+
+<ol>
+  <li>SVD is used in machine learning for dimensionality reduction, extracting important features from high-dimensional data.</li>
+  <li>It powers collaborative filtering, enabling recommendations by approximating missing entries in user-item matrices.</li>
+  <li>SVD facilitates image compression by separating images into singular vectors and values, reducing data while maintaining quality.</li>
+  <li>In natural language processing, it uncovers latent topics in documents for tasks like clustering and retrieval.</li>
+  <li>SVD aids noise reduction in signals and denoising images by modifying singular values and vectors.</li>
+  <li>Overall, SVD enables efficient data representation, dimensionality reduction, and extracting meaningful information in various machine learning applications.</li>
+</ol>
+
+<h2 id="15-eigenvectors-and-eigenvalues">15. Eigenvectors and eigenvalues</h2>
+<ul>
+  <li>Intuitively, eigenvectors and eigenvalues provide insights into the behavior of linear transformations or matrices.</li>
+  <li>An <strong>eigenvector</strong> (also called a <strong>characteristic vector</strong>) of a square matrix 𝑀 is a non-zero vector that, when multiplied by 𝑀, results in a scaled version of the original vector.</li>
+  <li>The scaling factor is called the eigenvalue corresponding to that eigenvector.</li>
+  <li>A more formal definition is any vector \(v\) such that:<br />
+\(M \cdot v = \lambda \times v\)<br />
+Where \(\lambda\) is a scalar value called the <strong>eigenvalue</strong> associated to the vector \(v\).</li>
+  <li>In other words, the linear transformation represented by 𝑀 only stretches or compresses the eigenvector, without changing its direction.</li>
+  <li>In other words:<br />
+(linear transformation matrix M) . (base vectors) = (scaling factor) . (base vectors)</li>
+</ul>
+
+<p>In simpler terms, <em>eigenvectors tell us the directions that are preserved by a transformation</em>, and <em>eigenvalues provide the scale at which these directions are stretched or compressed</em>. By analyzing eigenvectors and eigenvalues, we gain insights into the fundamental geometric properties of the linear transformation or matrix and how it affects vectors in space.</p>
+
+<p>For example, any horizontal vector remains horizontal after applying the shear mapping (as you can see on the image above), so it is an eigenvector of \(M\). A vertical vector ends up tilted to the right, so vertical vectors are <em>NOT</em> eigenvectors of \(M\).</p>
+
+<p>If we look at the squeeze mapping, we find that any horizontal or vertical vector keeps its direction (although its length changes), so all horizontal and vertical vectors are eigenvectors of \(F_{squeeze}\).</p>
+
+<p>However, rotation matrices have no eigenvectors at all (except if the rotation angle is 0° or 180°, in which case all non-zero vectors are eigenvectors).</p>
+
+<p>NumPy’s <code class="language-plaintext highlighter-rouge">eig</code> function returns the list of unit eigenvectors and their corresponding eigenvalues for any square matrix. Let’s look at the eigenvectors and eigenvalues of the squeeze mapping matrix \(F_{squeeze}\):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">eigenvalues</span><span class="p">,</span> <span class="n">eigenvectors</span> <span class="o">=</span> <span class="n">LA</span><span class="p">.</span><span class="n">eig</span><span class="p">(</span><span class="n">F_squeeze</span><span class="p">)</span>
+<span class="n">eigenvalues</span> <span class="c1"># [λ0, λ1, …]
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([1.4       , 0.71428571])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">eigenvectors</span> <span class="c1"># [v0, v1, …]
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[1., 0.],
+       [0., 1.]])
+</code></pre></div></div>
+
+<p>Indeed, the horizontal vectors are stretched by a factor of 1.4, and the vertical vectors are shrunk by a factor of 1/1.4=0.714…, so far so good.  Plotting the eigen vectors, we get:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_vector2d</span><span class="p">(</span><span class="n">eigenvectors</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">eigenvectors</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_218_0.png" alt="png" /></p>
+
+<p>Let’s look at the shear mapping matrix \(F_{shear}\):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">eigenvalues2</span><span class="p">,</span> <span class="n">eigenvectors2</span> <span class="o">=</span> <span class="n">LA</span><span class="p">.</span><span class="n">eig</span><span class="p">(</span><span class="n">F_shear</span><span class="p">)</span>
+<span class="n">eigenvalues2</span> <span class="c1"># [λ0, λ1, …]
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([1., 1.])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">eigenvectors2</span> <span class="c1"># [v0, v1, …]
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 1.00000000e+00, -1.00000000e+00],
+       [ 0.00000000e+00,  1.48029737e-16]])
+</code></pre></div></div>
+
+<p>Wait, what!? We expected just one unit eigenvector, not two. The second vector is almost equal to \(\begin{pmatrix}-1 \\ 0 \end{pmatrix}\), which is on the same line as the first vector \(\begin{pmatrix}1 \\ 0 \end{pmatrix}\). This is due to floating point errors. We can safely ignore vectors that are (almost) collinear (i.e. on the same line).</p>
+
+<p>Plotting those eigen vectors, we get:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_vector2d</span><span class="p">(</span><span class="n">eigenvectors2</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"r"</span><span class="p">)</span>
+<span class="n">plot_vector2d</span><span class="p">(</span><span class="n">eigenvectors2</span><span class="p">[:,</span><span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s">"b"</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">axis</span><span class="p">([</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-08-Maths_LinearAlgebra_Matrices_files/2023-07-08-Maths_LinearAlgebra_Matrices_223_0.png" alt="png" /></p>
+
+<p>The first eigenvector [1, 0] remains unchanged, while the second eigenvector [-1,0] lies on the same line after the transformation. This implies that F_shear has only one eigenvector. Thus the linear transformation matrix \(F_{shear}\) preserves only one vector from the original axis.</p>
+
+<h2 id="16-trace">16. Trace</h2>
+<p>The trace of a square matrix \(M\), noted \(tr(M)\) is the sum of the values on its main diagonal. For example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">D</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">],</span>
+        <span class="p">[</span> <span class="mi">10</span><span class="p">,</span>  <span class="mi">20</span><span class="p">,</span>  <span class="mi">30</span><span class="p">],</span>
+        <span class="p">[</span>  <span class="mi">1</span><span class="p">,</span>   <span class="mi">2</span><span class="p">,</span>   <span class="mi">3</span><span class="p">],</span>
+    <span class="p">])</span>
+<span class="n">D</span><span class="p">.</span><span class="n">trace</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>123
+</code></pre></div></div>
+
+<p>The trace does not have a simple geometric interpretation (in general), but it has a number of properties that make it useful in many areas:</p>
+<ul>
+  <li>
+\[tr(A + B) = tr(A) + tr(B)\]
+  </li>
+  <li>
+\[tr(A \cdot B) = tr(B \cdot A)\]
+  </li>
+  <li>
+\[tr(A \cdot B \cdot \cdots \cdot Y \cdot Z) = tr(Z \cdot A \cdot B \cdot \cdots \cdot Y)\]
+  </li>
+  <li>
+\[tr(A^T \cdot B) = tr(A \cdot B^T) = tr(B^T \cdot A) = tr(B \cdot A^T) = \sum_{i,j}X_{i,j} \times Y_{i,j}\]
+  </li>
+  <li>…</li>
+</ul>
+
+<p>It does, however, have a useful geometric interpretation in the case of projection matrices (such as \(F_{project}\) that we discussed earlier): it corresponds to the number of dimensions after projection. For example:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F_project</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[1, 0],
+       [0, 0]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">F_project</span><span class="p">.</span><span class="n">trace</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1
+</code></pre></div></div>
+
+<p>Intuitively, you can think of the trace as a quantity that captures the “total effect” or “accumulated impact” of a matrix.</p>
+
+<h2 id="references">References</h2>
+
+<ul>
+  <li><a href="https://www.deeplearningbook.org/">Book: Deep Learning Book - Ian Goodfellow and Yoshua Bengio and Aaron Courville</a></li>
+  <li>Book: Hands-On Machine Learning with Scikit-Learn and TensorFlow - Aurélien Géron
+<!-- * [ageron github - handson-ml3](https://github.com/ageron/handson-ml3/blob/main/math_linear_algebra.ipynb) --></li>
+  <li><a href="https://www.khanacademy.org/math/linear-algebra">Khan Academy - Linear Algebra</a></li>
+  <li><a href="https://www.youtube.com/watch?v=fNk_zzaMoSs&amp;list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&amp;ab_channel=3Blue1Brown">Essence of linear algebra - 3Blue1Brown YouTube Series</a></li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#linear-algebra" class="page__taxonomy-item" rel="tag">linear algebra</a><span class="sep">, </span>
+    
+      <a href="/tags/#machine-learning-fundamentals" class="page__taxonomy-item" rel="tag">machine learning fundamentals</a><span class="sep">, </span>
+    
+      <a href="/tags/#mathematics" class="page__taxonomy-item" rel="tag">mathematics</a><span class="sep">, </span>
+    
+      <a href="/tags/#matrices" class="page__taxonomy-item" rel="tag">matrices</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-07-08T00:00:00-04:00">July 8, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  Share On <br>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Machine+Learning+Fundamentals%3A+Linear+Algebra%3A+Part+2-Matrices%20http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F07%2F08%2FMaths_LinearAlgebra_Matrices.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F07%2F08%2FMaths_LinearAlgebra_Matrices.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F07%2F08%2FMaths_LinearAlgebra_Matrices.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/posts/2023/06/29/Maths_LinearAlgebra.html" class="pagination--pager" title="Machine Learning Fundamentals: Linear Algebra: Part 1-Vectors
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+ TO remove previous:next-->
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/06/29/Maths_LinearAlgebra.html" rel="permalink">Machine Learning Fundamentals: Linear Algebra: Part 1-Vectors
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          14 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">In this blog post, we will try to understand vectors from their base representation, their properties and the various operations we can perform on vectors.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/06/08/Data_Analysis_With_Pandas.html" rel="permalink">Pandas: Data Analysis Essentials
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          35 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">This article outlines the essential Pandas methods for preliminary data analysis.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/06/08/markdown-cheatsheet.html" rel="permalink">Markdown Cheatsheet: Quick Reference for Commonly Used Syntax
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">This cheatsheet provides a concise reference for frequently used Markdown formatting, helping you create beautiful, well-structured content with ease.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/05/06/github_commands.html" rel="permalink">Git Commands Simplified: A Beginner’s Guide
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">In this beginner’s guide, I break down the essential Git commands into easy-to-understand explanations and practical examples. From initializing a repository...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Vimal Venugopal. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/posts/2023/07/08/Maths_LinearAlgebra_Matrices.html";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/posts/2023/07/08/Maths_LinearAlgebra_Matrices"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://vmlverse.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+  </body>
+</html>

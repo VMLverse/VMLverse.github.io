@@ -203,6 +203,9 @@ To write code in Markdown, you can use the following techniques:
 
 Commonly supported programming languages for syntax highlighting include JavaScript, Python, Java, C++, HTML, CSS, and more.
 
+
+
+
 ## References
 * [Jetbrains Markdown Syntax](https://www.jetbrains.com/help/hub/Markdown-Syntax.html)
 * [Markdown Guide](https://www.markdownguide.org/getting-started/)

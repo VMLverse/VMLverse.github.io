@@ -15,6 +15,7 @@ tags:
 ## Introduction:
 * Linear algebra serves as the foundation for many machine learning algorithms and techniques.
 * Linear Algebra is the branch of mathematics that studies vector spaces and linear transformations between vector spaces, such as rotating a shape, scaling it up or down, translating it (i.e. moving it), etc.
+* This will be a two part post with the following part-1 covering vectors in linear algebra. [Part-2]({% post_url 2023-07-08-Maths_LinearAlgebra_Matrices %}) will cover Matrices.  You can read the part-2 post on Matrices [here]({% post_url 2023-07-08-Maths_LinearAlgebra_Matrices %}). 
 
 Vectors:
 * Vectors are used in machine learning to represent features, observations, and data points.
@@ -121,7 +122,6 @@ plt.show()
 
 
 ## 3. Plotting 3D vectors
-
 
 ```python
 a = np.array([1, 2, 8])
@@ -442,21 +442,23 @@ plt.show()
   $$\textbf{u} \cdot \textbf{v} = \left \Vert \textbf{u} \right \| \times \left \Vert \textbf{v} \right \| \times cos(\theta)$$  
   where $$\theta$$ is the angle between $$\textbf{u}$$ and $$\textbf{v}$$.
 
-Geometric Intuition:
+Geometric Definition:
 * The dot product measures the degree of alignment or similarity between two vectors.
 * Geometrically, it calculates the projection of one vector onto another and then multiplies the magnitudes of the two vectors.
 * The resulting scalar value indicates how much the two vectors point in the same direction. (aka the magnitude or norm of the resulting projection).
 
-To better understand this equation, \\
-* 𝜃 = 0° => cos(𝜃) = 1.0 \\
-* 𝜃 = 90° => cos(𝜃) = 0.0 \\
-* 𝜃 = 180° => cos(𝜃) = -1.0 \\
-* 𝜃 = 270° => cos(𝜃) = 0.0 \\
-* 𝜃 = 360° => cos(𝜃) = 1.0 \\
+To better understand this equation,
+* 𝜃 = 0° => cos(𝜃) = 1.0 
+* 𝜃 = 90° => cos(𝜃) = 0.0
+* 𝜃 = 180° => cos(𝜃) = -1.0
+* 𝜃 = 270° => cos(𝜃) = 0.0
+* 𝜃 = 360° => cos(𝜃) = 1.0
 
-i.e., cos(𝜃) is max when same direction, \\
+**i.e.,:** 
+cos(𝜃) is max when same direction, \\
 cos(𝜃) is min when opposite direction \\
-cos(𝜃) is 0 when perpendicular direction,
+cos(𝜃) is 0 when perpendicular direction
+{: .notice--info}
 
 ```python
 # Generate angles from 0 to 360 degrees in increments of 1 degree
@@ -524,7 +526,7 @@ plot_geometric_dot_product2D(u,v)
 * Another way to calculate the dot product is:  
   $$\textbf{u} \cdot \textbf{v} = \sum_i{\textbf{u}_i \times \textbf{v}_i}$$
 
-Algebraic Intuition:
+Algebraic Definition:
 * This equation represents the algebraic definition of the dot product.
 * It states that the dot product of two vectors, 𝐮 and 𝐯, is equal to the sum of the products of their corresponding components.
 
@@ -556,6 +558,7 @@ u.dot(v)
     11
 
 **Caution**: the `*` operator will perform an *elementwise* multiplication, *NOT* a dot product:
+{: .notice--warning}
 
 ```python
 print("  ",u)
@@ -586,11 +589,11 @@ $$\theta = \arccos{\left ( \dfrac{\textbf{u} \cdot \textbf{v}}{\left \Vert \text
 
 Note that if $$\textbf{u} \cdot \textbf{v} = 0$$, it follows that $$\theta = \dfrac{π}{2}$$ (aka 180/2 = 90deg). In other words, if the dot product of two non-null vectors is zero, it means that they are orthogonal (90deg apart).
 
-Note:
-* The cos() function calculates the cosine of an angle.
+* **Note:** The cos() function calculates the cosine of an angle.
 * It takes an angle (in radians) as input and returns the corresponding cosine value between -1 and 1.
 * The arccos() function, also known as the inverse cosine function or arc cosine function, is the inverse operation of the cosine function.
 * It takes a value between -1 and 1 as input and returns the corresponding angle (in radians) whose cosine is the input value.
+{: .notice--info}
 
 Let's use this formula to calculate the angle between $$\textbf{u}$$ and $$\textbf{v}$$ (in radians):
 
@@ -608,8 +611,8 @@ print("      =", theta * 180 / np.pi, "degrees")
           = 49.76364169072618 degrees
 
 
-Note: due to small floating point errors, `cos_theta` may be very slightly outside the $$[-1, 1]$$ interval, which would make `arccos` fail. This is why we clipped the value within the range, using NumPy's `clip` function.
-
+**Note:** due to small floating point errors, `cos_theta` may be very slightly outside the $$[-1, 1]$$ interval, which would make `arccos` fail. This is why we clipped the value within the range, using NumPy's `clip` function.
+{: .notice--info}
 ## 10. Projecting a point onto an axis
 The dot product is also very useful to project points onto an axis. The projection of vector $$\textbf{v}$$ onto $$\textbf{u}$$'s axis is given by this formula:
 
@@ -685,7 +688,7 @@ plt.show()
 
 *   [Book: Deep Learning Book - Ian Goodfellow and Yoshua Bengio and Aaron Courville](https://www.deeplearningbook.org/)
 *  Book: Hands-On Machine Learning with Scikit-Learn and TensorFlow - Aurélien Géron
-* [ageron github - handson-ml3](https://github.com/ageron/handson-ml3/blob/main/math_linear_algebra.ipynb)
+<!-- * [ageron github - handson-ml3](https://github.com/ageron/handson-ml3/blob/main/math_linear_algebra.ipynb) -->
 * [Khan Academy - Linear Algebra](https://www.khanacademy.org/math/linear-algebra)
 * [Essence of linear algebra - 3Blue1Brown YouTube Series](https://www.youtube.com/watch?v=fNk_zzaMoSs&list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab&ab_channel=3Blue1Brown)
 

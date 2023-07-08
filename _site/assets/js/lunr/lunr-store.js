@@ -24,8 +24,14 @@ var store = [{
         "teaser": null
       },{
         "title": "Machine Learning Fundamentals: Linear Algebra: Part 1-Vectors",
-        "excerpt":"Introduction: Linear algebra serves as the foundation for many machine learning algorithms and techniques. Linear Algebra is the branch of mathematics that studies vector spaces and linear transformations between vector spaces, such as rotating a shape, scaling it up or down, translating it (i.e. moving it), etc. Vectors: Vectors are...","categories": ["posts"],
+        "excerpt":"Introduction: Linear algebra serves as the foundation for many machine learning algorithms and techniques. Linear Algebra is the branch of mathematics that studies vector spaces and linear transformations between vector spaces, such as rotating a shape, scaling it up or down, translating it (i.e. moving it), etc. This will be...","categories": ["posts"],
         "tags": ["linear algebra","machine learning fundamentals","vectors","mathematics"],
         "url": "/posts/2023/06/29/Maths_LinearAlgebra.html",
+        "teaser": null
+      },{
+        "title": "Machine Learning Fundamentals: Linear Algebra: Part 2-Matrices",
+        "excerpt":"Introduction Linear algebra serves as the foundation for many machine learning algorithms and techniques. Linear Algebra is the branch of mathematics that studies vector spaces and linear transformations between vector spaces, such as rotating a shape, scaling it up or down, translating it (i.e. moving it), etc. In this blog...","categories": ["posts"],
+        "tags": ["linear algebra","machine learning fundamentals","matrices","mathematics"],
+        "url": "/posts/2023/07/08/Maths_LinearAlgebra_Matrices.html",
         "teaser": null
       },]
