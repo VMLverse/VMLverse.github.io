@@ -34,4 +34,10 @@ var store = [{
         "tags": ["linear algebra","machine learning fundamentals","matrices","mathematics"],
         "url": "/posts/2023/07/08/Maths_LinearAlgebra_Matrices.html",
         "teaser": null
+      },{
+        "title": "Visual Data Analysis in Python: Part 1",
+        "excerpt":"Introduction In the field of Machine Learning, data visualization plays a critical role beyond creating visually appealing graphics for reports. It is a powerful tool that is extensively utilized throughout all stages of a project. Data visualization serves as a crucial step in the initial exploration of data when tackling...","categories": ["posts"],
+        "tags": ["visual data analytics","machine learning fundamentals","python","seaborn"],
+        "url": "/posts/2023/07/20/Visual_Data_Analysis_in_Python_Part1.html",
+        "teaser": null
       },]
