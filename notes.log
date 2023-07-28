@@ -2,3 +2,5 @@ Next Steps:
 1. Setup Home page with something meaning full.
 2. Make sure, "you may also" works
 3. Remove "previous & Next buttons"
+
+Commit All and Sync: saves changes to local repository, pulls changes from the remote to sync with local changes, and then pushes changes to the remote repository.

@@ -40,4 +40,10 @@ var store = [{
         "tags": ["visual data analytics","machine learning fundamentals","python","seaborn"],
         "url": "/posts/2023/07/20/Visual_Data_Analysis_in_Python_Part1.html",
         "teaser": null
+      },{
+        "title": "Basics of Decision Trees",
+        "excerpt":"Introduction Decision Trees are a straightforward and interpretable method in Machine Learning. They provide human-like decision-making capabilities to computers and have applications in various fields, from classification tasks like “dog” or “cat” prediction to more complex scenarios like medical diagnoses or customer churn predictions. Understanding Decision Trees can be a...","categories": ["posts"],
+        "tags": ["decision trees","machine learning fundamentals","entropy","heuristics","mnist"],
+        "url": "/posts/2023/07/27/Basics_Of_DecisionTrees.html",
+        "teaser": null
       },]

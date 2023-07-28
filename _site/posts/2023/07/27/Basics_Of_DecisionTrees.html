@@ -1,0 +1,1329 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Basics of Decision Trees | VMLverse</title>
+<meta name="description" content="Decision Trees are the gateway to machine learning. They are easy to understand and relate to. However, do we know how they really work?">
+
+
+  <meta name="author" content="Vimal Venugopal">
+  
+  <meta property="article:author" content="Vimal Venugopal">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="VMLverse">
+<meta property="og:title" content="Basics of Decision Trees">
+<meta property="og:url" content="http://localhost:4000/posts/2023/07/27/Basics_Of_DecisionTrees.html">
+
+
+  <meta property="og:description" content="Decision Trees are the gateway to machine learning. They are easy to understand and relate to. However, do we know how they really work?">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-07-27T00:00:00-04:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/posts/2023/07/27/Basics_Of_DecisionTrees.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Vimal Venugopal",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="VMLverse Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo_plain_blck_bg.png" alt="VMLverse"></a>
+        
+        <a class="site-title" href="/">
+          VMLverse
+          <span class="site-subtitle">Explore | Experiment | Expand</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/blog/">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/projects/">Projects</a>
+            </li><li class="masthead__menu-item">
+              <a href="/docs/resume.pdf">Resume</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/DSC1717square.jpeg" alt="Vimal Venugopal" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Vimal Venugopal</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>a curious mind with a passion for machine learning, photography and travel</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://cognitivescrawls.wordpress.com/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Wordpress</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Basics of Decision Trees">
+    <meta itemprop="description" content="Decision Trees are the gateway to machine learning. They are easy to understand and relate to. However, do we know how they really work?">
+    <meta itemprop="datePublished" content="2023-07-27T00:00:00-04:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Basics of Decision Trees
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          13 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> Contents</h4></header>
+              <ul class="toc__menu"><li><a href="#introduction">Introduction</a></li><li><a href="#entropy-intuition">Entropy Intuition</a></li><li><a href="#entropy-definition">Entropy Definition</a></li><li><a href="#entropy-example">Entropy Example</a></li><li><a href="#information-gain-definition">Information Gain Definition</a></li><li><a href="#decision-tree-algorithm">Decision Tree Algorithm</a></li><li><a href="#other-decision-tree-heuristics">Other Decision Tree heuristics</a></li><li><a href="#decision-tree-in-regression">Decision Tree in Regression</a></li><li><a href="#mnist-handwritten-digits-recognition">MNIST Handwritten Digits Recognition</a></li><li><a href="#advantages--disadvantages">Advantages &amp; Disadvantages</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="introduction">Introduction</h2>
+<p>Decision Trees are a straightforward and interpretable method in Machine Learning. They provide human-like decision-making capabilities to computers and have applications in various fields, from classification tasks like “dog” or “cat” prediction to more complex scenarios like medical diagnoses or customer churn predictions. Understanding Decision Trees can be a great entry point to exploring the vast world of Machine Learning algorithms and their practical uses.</p>
+
+<h2 id="entropy-intuition">Entropy Intuition</h2>
+
+<p>I still remember during my ML class at Georgia Tech, my professors <a href="https://www.cc.gatech.edu/fac/Charles.Isbell/">Dr. Charles Isabel</a> and <a href="https://www.littmania.com/">Michael Littman</a> exclaiming at the fact that <a href="https://en.wikipedia.org/wiki/Claude_Shannon">Claude Shannon</a> invented information theory as part of his Master Thesis; At his Master degree, not even PhD. Its like doing the greatest contribution to this world when you are merely in your Masters. In this section we will try to understand Shannon’s Entropy.</p>
+
+<p>Here is an analogy to understand the intuition behind Entropy.</p>
+<ul>
+  <li>Consider the game of “20 Questions” a guesser asks a series of question to find out the name of a celebrity.</li>
+  <li>The guesser’s first question is crucial.</li>
+  <li>They ask the one that narrows down the options the most.</li>
+  <li>Asking specific questions like “Is the celebrity Margot Robbie?” yields no information. If the answer is No, we lost one question with no clue for other 19 questions.</li>
+  <li>Asking broader question like “Is the celebrity a woman?” separates the dataset better than specific questions like “Is the celebrity Margot Robbie?”.</li>
+  <li>Thus in this example, the “gender” feature has more information than the “name” feature.</li>
+  <li>This is the basic intuition that relates to information gain based on entropy.</li>
+</ul>
+
+<h2 id="entropy-definition">Entropy Definition</h2>
+<ul>
+  <li>Shannon’s entropy is defined for a system with N possible states as follows:</li>
+</ul>
+
+\[\Large S = -\sum_{i=1}^{N}p_i \log_2{p_i},\]
+
+<p>where \(p_i\) is the probability of finding the system in the \(i\)-th state.</p>
+
+<ul>
+  <li>This is a very important concept used in physics, information theory, and other areas.</li>
+  <li>It helps quantify the level of chaos or disorder in the system.</li>
+  <li>If the entropy is high, the system is more disordered, and if it’s low, the system is more ordered.</li>
+  <li>This will help us formalize “effective data splitting”, which we alluded to in the context of “20 Questions”.</li>
+</ul>
+
+<h2 id="entropy-example">Entropy Example</h2>
+
+<p>Consider a dataset of colored balls with two features: “Position” (numeric value) and “Is Green” (True/False). Our task is to predict whether a ball is green based on its position.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Position</th>
+      <th>Is Green</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>🟢</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>🟢</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>🟢</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>🟢</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>🟢</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>⚪</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We’ll use entropy to guide us in selecting the best position threshold for splitting the data.</p>
+
+<ol>
+  <li>Entropy of the initial dataset:
+    <ul>
+      <li>There are 5 green balls and 8 non-green balls.</li>
+      <li>If we randomly pull out a ball, then it will be green with probability \(p_{g}=\frac{5}{13}\)</li>
+      <li>Similarly at random, we will end up with non-green ball with probability \(p_{ng=}\frac{8}{13}\).</li>
+      <li>Applying \(p_{g}\) and \(p_{ng}\) on the entropy formula, we can arrive at:
+\(S_0 = -\sum_{i=1}^{2}p_i \log_2{p_i},\)
+\(S_0 = - (p_{g} \log_2{p_{g}} + p_{ng} \log_2{p_{ng}}),\)
+\(S_0 = -\frac{5}{13}\log_2{\frac{5}{13}} - \frac{8}{13}\log_2{\frac{8}{13}} \approx 0.96.\)</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Entropy of the intial dataset is close to 1.0 which means the intial dataset is highly disordered or chaotic.</p>
+
+<ol>
+  <li>Consider splitting the data based on the position threshold “8”:</li>
+</ol>
+
+<ul>
+  <li>Subset1:</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Position</th>
+      <th>Is Green</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>🟢</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>🟢</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>🟢</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>🟢</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>🟢</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Lets calculate the entropy for “Position &lt;= 8” (Subset 1):</p>
+<ul>
+  <li>
+\[p_{g=}\frac{5}{9}\]
+  </li>
+  <li>
+\[p_{ng=}\frac{4}{9}\]
+  </li>
+  <li>
+\[S_1 = -\frac{5}{9}\log_2{\frac{5}{9}} - \frac{4}{9}\log_2{\frac{4}{9}} \approx 0.99.\]
+  </li>
+  <li>Subset2:</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Position</th>
+      <th>Is Green</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>9</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>⚪</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Lets calculate the entropy for Entropy for “Position &gt; 8” (Subset 2):</p>
+<ul>
+  <li>
+\[p_{g=}\frac{0}{4}\]
+  </li>
+  <li>
+\[p_{ng=}\frac{4}{4}\]
+  </li>
+  <li>
+\[S_2 = -\frac{0}{4}\log_2{\frac{0}{4}} - \frac{4}{4}\log_2{\frac{4}{4}} = 0.\]
+  </li>
+  <li>
+    <p>Therefore, Total Entropy after split on “Position &lt;= 8”:
+   \(S_{\text{Position &lt;= 8}} = \frac{9}{13} \cdot S_1 + \frac{4}{13} \cdot S_2\)</p>
+
+\[S_{\text{Position &lt;= 8}} = \frac{9}{13} \cdot 0.99 + \frac{4}{13} \cdot 0\]
+
+\[S_{\text{Position &lt;= 8}} \approx 0.68.\]
+  </li>
+</ul>
+
+<ol>
+  <li>As an alternative, lets consider splitting the data based on the position threshold “7”:
+    <ul>
+      <li>Entropy for “Position &lt;= 7” (Subset 1):</li>
+    </ul>
+  </li>
+</ol>
+
+<table>
+  <thead>
+    <tr>
+      <th>Position</th>
+      <th>Is Green</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>🟢</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>🟢</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>🟢</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>🟢</td>
+    </tr>
+  </tbody>
+</table>
+
+\[S_3 = -\frac{4}{8}\log_2{\frac{4}{8}} - \frac{4}{8}\log_2{\frac{4}{8}} = 1.\]
+
+<ul>
+  <li>Entropy for “Position &gt; 7” (Subset 2):</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Position</th>
+      <th>Is Green</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>8</td>
+      <td>🟢</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>⚪</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>⚪</td>
+    </tr>
+  </tbody>
+</table>
+
+\[S_4 = -\frac{1}{5}\log_2{\frac{1}{5}} - \frac{4}{5}\log_2{\frac{4}{5}} \approx 0.72.\]
+
+<ul>
+  <li>Total Entropy after split on “Position &lt;= 7”:
+\(S_{\text{Position &lt;= 7}} = \frac{8}{13} \cdot 1 + \frac{5}{13} \cdot 0.72 \approx 0.89.\)</li>
+</ul>
+
+<p>As we can see splitting on position 8 has entropy of 0.68 which is lower than the entropy if split on position 7. Thus we can choose position 8 as our split. We have seen how entropy helps us find the best position threshold for splitting the data and constructing an effective decision tree for predicting the color of a ball based on its position.</p>
+
+<h2 id="information-gain-definition">Information Gain Definition</h2>
+
+<p>Formally, the information gain (IG) for a split based on the variable $Q$ (in this example it’s a variable “$position \leq 8$”) is defined as</p>
+
+\[\Large IG(Q) = S_O - \sum_{i=1}^{q}\frac{N_i}{N}S_i,\]
+
+<p>where $q$ is the number of groups after the split, $N_i$ is number of objects from the sample in which variable $Q$ is equal to the $i$-th value. In our example, our split yielded two groups ($q = 2$), one with 9 elements ($N_1 = 9$), the other with 4 ($N_2 = 4$). Therefore, we can compute the information gain as</p>
+
+\[\Large IG(pos \leq 8) = S_0 - \frac{9}{13}S_1 - \frac{4}{13}S_2 \approx 0.32.\]
+
+<p>It turns out that dividing the balls into two groups by splitting on “position is less than or equal to 8” gave us a more ordered system. If we continue to divide them into groups until the balls in each group are all of the same color, we will end up with a decision tree that predicts ball color based on its position. Note that the entropy of a group where all of the balls are the same color is equal to 0 (\(log_2 1 =0\)
+).</p>
+
+<p><img src="/assets/images/2023-07-27-Basics_Of_DecisionTrees_files/decisiontree-1-min.png" alt="png" /></p>
+
+<h2 id="decision-tree-algorithm">Decision Tree Algorithm</h2>
+
+<p>The pseudocode provided below can be considered as a high-level overview of the Decision Tree building process. In practice, choosing the best variable to split on (which gives the greatest information gain or minimizes impurity) is a crucial step, and it is typically done using specific metrics like Information Gain for classification tasks or Mean Squared Error reduction for regression tasks.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Decision Tree Building Algorithm (Classification)
+</span>
+<span class="c1"># Function to build the Decision Tree
+</span><span class="k">def</span> <span class="nf">build</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+    <span class="n">create</span> <span class="n">node</span> <span class="n">t</span>
+
+    <span class="c1"># Base case: If the stopping criterion is met, assign a predictive model to t (e.g., majority class label for classification)
+</span>    <span class="k">if</span> <span class="n">stopping_criterion</span><span class="p">(</span><span class="n">L</span><span class="p">):</span>
+        <span class="n">assign_predictive_model</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">L</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Find the best binary split L = L_left + L_right
+</span>        <span class="n">L_left</span><span class="p">,</span> <span class="n">L_right</span> <span class="o">=</span> <span class="n">find_best_split</span><span class="p">(</span><span class="n">L</span><span class="p">)</span>
+
+        <span class="c1"># Recursively build the left and right subtrees
+</span>        <span class="n">t</span><span class="p">.</span><span class="n">left</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="n">L_left</span><span class="p">)</span>
+        <span class="n">t</span><span class="p">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">build</span><span class="p">(</span><span class="n">L_right</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">t</span>
+
+</code></pre></div></div>
+
+<h2 id="other-decision-tree-heuristics">Other Decision Tree heuristics</h2>
+
+<p>Gini impurity and misclassification error are other popular heuristics used to evaluate the quality of splits in Decision Trees. While Information Gain and Gini impurity are closely related and often provide similar results, they have different mathematical foundations and properties. The choice of the heuristic can impact the structure and performance of the resulting Decision Tree.</p>
+
+<ol>
+  <li>Gini Impurity:
+    <ul>
+      <li>
+\[G = 1 - \sum\limits_k (p_k)^2\]
+      </li>
+      <li>Gini impurity is a measure of the impurity or uncertainty of a node in a Decision Tree.</li>
+      <li>It calculates the probability of misclassifying a randomly chosen element from the set if it were randomly classified according to the class distribution of the set.</li>
+      <li>Gini impurity ranges from 0 to 0.5, with 0 representing a pure node (all elements belong to the same class) and 0.5 representing a completely impure node (classes are equally distributed).</li>
+      <li>Gini impurity is often used as an alternative to Information Gain, and the two metrics generally lead to similar splits.</li>
+    </ul>
+
+    <p>Lets try calculating the Gini Impurity Values for our Ball Example:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Subtree</th>
+          <th>Green vs NG</th>
+          <th>\(p_g\)</th>
+          <th>\(p_ng\)</th>
+          <th>Gini Imp.</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>\(S_0\)</td>
+          <td>🟢-5, ⚪-8</td>
+          <td>5/13</td>
+          <td>8/13</td>
+          <td>0.47</td>
+        </tr>
+        <tr>
+          <td>\(S_1\)</td>
+          <td>🟢-5, ⚪-4</td>
+          <td>5/9</td>
+          <td>4/9</td>
+          <td>0.49</td>
+        </tr>
+        <tr>
+          <td>\(S_2\)</td>
+          <td>🟢-0, ⚪-4</td>
+          <td>0/4</td>
+          <td>4/4</td>
+          <td>0.0</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>As from our earlier Entropy example, Gini Impurity reduces as the group of balls becomes monochromatic.</p>
+  </li>
+  <li>Misclassification Error:
+    <ul>
+      <li>
+\[E = 1 - \max\limits_k p_k\]
+      </li>
+      <li>Misclassification error, also known as zero-one loss, calculates the proportion of misclassified instances in a node.</li>
+      <li>Unlike Gini impurity and Information Gain, misclassification error is not differentiable, making it less suitable for optimization algorithms.</li>
+      <li>It can be more sensitive to changes in class distribution, especially when dealing with imbalanced datasets, which may lead to suboptimal splits.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>In practice, Gini impurity and Information Gain tend to be the more commonly used quality criteria for splitting in Decision Trees. They are both easy to implement, computationally efficient, and can handle multiclass classification problems. Gini impurity is preferred in some libraries (e.g., Scikit-learn) due to its efficiency when dealing with large datasets.</p>
+
+<h2 id="decision-tree-in-regression">Decision Tree in Regression</h2>
+
+<p>When predicting a numeric variable, the idea of a tree construction remains the same, but the quality criteria changes:</p>
+
+<ul>
+  <li>Variance:</li>
+</ul>
+
+\[\Large D = \frac{1}{\ell} \sum\limits_{i =1}^{\ell} (y_i - \frac{1}{\ell} \sum\limits_{j=1}^{\ell} y_j)^2,\]
+
+<p>where \(\ell\) is the number of samples in a leaf, \(y_i\) is the value of the target variable. By finding features that divide the training set in a way that makes the target variable values in each leaf node roughly equal, we can build a tree that predicts numeric values more accurately.</p>
+
+<p>Suppose we have a dataset with a single feature (X) and a target variable (y). Here’s a simplified version of the dataset:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>     X     </th>
+      <th>     y     </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>8</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>We want to build a decision tree to predict the target variable (y) based on the feature (X). The goal is to find the split point for X that minimizes the total variance in the target variable.</p>
+
+<p>Let’s try different split points for X and calculate the total variance for each split:</p>
+
+<ol>
+  <li>Split at X &lt;= 2.5:
+    <ul>
+      <li>Group 1 (X &lt;= 2.5): y values = [5, 4], mean y = (5 + 4) / 2 = 4.5</li>
+      <li>Group 2 (X &gt; 2.5): y values = [7, 6, 8], mean y = (7 + 6 + 8) / 3 = 7</li>
+      <li>Variance of Group 1 (\(D_1\)) = ((5-4.5)^2 + (4-4.5)^2) / 2 = 0.25</li>
+      <li>Variance of Group 2 (\(D_2\)) = ((7-7)^2 + (6-7)^2 + (8-7)^2) / 3 = 0.67</li>
+      <li>Total Variance (\(D\)) = (0.25 + 0.67) / 5 ≈ 0.18</li>
+    </ul>
+  </li>
+  <li>Split at X &lt;= 3.5:
+    <ul>
+      <li>Group 1 (X &lt;= 3.5): y values = [5, 4, 7], mean y = (5 + 4 + 7) / 3 = 5.33</li>
+      <li>Group 2 (X &gt; 3.5): y values = [6, 8], mean y = (6 + 8) / 2 = 7</li>
+      <li>Variance of Group 1 (\(D_1\)) = ((5-5.33)^2 + (4-5.33)^2 + (7-5.33)^2) / 3 ≈ 2</li>
+      <li>Variance of Group 2 (\(D_2\)) = ((6-7)^2 + (8-7)^2) / 2 = 0.5</li>
+      <li>Total Variance (\(D\)) = (2 + 0.5) / 5 ≈ 0.5</li>
+    </ul>
+  </li>
+  <li>Split at X &lt;= 4.5:
+    <ul>
+      <li>Group 1 (X &lt;= 4.5): y values = [5, 4, 7, 6], mean y = (5 + 4 + 7 + 6) / 4 = 5.5</li>
+      <li>Group 2 (X &gt; 4.5): y values = [8], mean y = 8</li>
+      <li>Variance of Group 1 (\(D_1\)) = ((5-5.5)^2 + (4-5.5)^2 + (7-5.5)^2 + (6-5.5)^2) / 4 = 0.625</li>
+      <li>Variance of Group 2 (\(D_2\)) = (8-8)^2 = 0</li>
+      <li>Total Variance (\(D\)) = (0.625 + 0) / 5 ≈ 0.125</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Based on the total variance values, we can see that splitting at X &lt;= 4.5 gives the lowest total variance. Therefore, the decision tree will split the data at X &lt;= 4.5 to minimize the variance in the target variable and make more accurate predictions.</p>
+
+<h2 id="mnist-handwritten-digits-recognition">MNIST Handwritten Digits Recognition</h2>
+
+<ul>
+  <li>Recognizing hand written digits is a real world task.</li>
+  <li>We will use the sklearn built-in dataset on handwritten digits.</li>
+  <li>The images in this dataset are represented as 8x8 matrices, where each element of the matrix represents the intensity of white color for a specific pixel.</li>
+  <li>To convert each image into a feature description, we “unfold” the 8x8 matrix into a vector of length 64.</li>
+  <li>This vector captures the pixel intensities in a linear sequence, creating a feature representation of the object.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+
+<span class="c1"># Load the Digits dataset
+</span><span class="n">digits</span> <span class="o">=</span> <span class="n">datasets</span><span class="p">.</span><span class="n">load_digits</span><span class="p">()</span>
+
+<span class="c1"># Get the images (data) and target labels
+</span><span class="n">images</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">target_labels</span> <span class="o">=</span> <span class="n">digits</span><span class="p">.</span><span class="n">images</span><span class="p">,</span> <span class="n">digits</span><span class="p">.</span><span class="n">data</span><span class="p">,</span> <span class="n">digits</span><span class="p">.</span><span class="n">target</span>
+
+
+<span class="n">images</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[ 0.,  0.,  5., 13.,  9.,  1.,  0.,  0.],
+       [ 0.,  0., 13., 15., 10., 15.,  5.,  0.],
+       [ 0.,  3., 15.,  2.,  0., 11.,  8.,  0.],
+       [ 0.,  4., 12.,  0.,  0.,  8.,  8.,  0.],
+       [ 0.,  5.,  8.,  0.,  0.,  9.,  8.,  0.],
+       [ 0.,  4., 11.,  0.,  1., 12.,  7.,  0.],
+       [ 0.,  2., 14.,  5., 10., 12.,  0.,  0.],
+       [ 0.,  0.,  6., 13., 10.,  0.,  0.,  0.]])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Visualize some handwritten digits
+</span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="p">.</span><span class="n">flat</span><span class="p">):</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">images</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s">'gray'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s">'Digit: </span><span class="si">{</span><span class="n">target_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">axis</span><span class="p">(</span><span class="s">'off'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-07-27-Basics_Of_DecisionTrees_files/2023-07-27-Basics_Of_DecisionTrees_15_0.png" alt="png" /></p>
+
+<p>We will split the dataset into training and holdout sets, with 70% of the data used for training (X_train, y_train) and 30% for holdout (X_holdout, y_holdout). The holdout set will be reserved for final evaluation and will not be involved in tuning the model parameters.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_holdout</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_holdout</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">target_labels</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">17</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>We will train a decision tree with  random parameters.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+
+<span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">17</span><span class="p">)</span>
+
+<span class="n">tree</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</code></pre></div></div>
+
+<style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style>
+<div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>DecisionTreeClassifier(max_depth=5, random_state=17)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked="" /><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">DecisionTreeClassifier</label><div class="sk-toggleable__content"><pre>DecisionTreeClassifier(max_depth=5, random_state=17)</pre></div></div></div></div></div>
+
+<p>We will make predictions on the holdout set.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="n">tree_pred</span> <span class="o">=</span> <span class="n">tree</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_holdout</span><span class="p">)</span>
+<span class="n">accuracy_score</span><span class="p">(</span>
+    <span class="n">y_holdout</span><span class="p">,</span> <span class="n">tree_pred</span>
+<span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.6666666666666666
+</code></pre></div></div>
+
+<p>In the process of tuning our model parameters, we will perform cross-validation. However, we have more features, specifically 64, which will impact the complexity of the model and the selection of optimal parameters to achieve better performance.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">GridSearchCV</span>
+
+<span class="n">tree_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">"max_depth"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">64</span><span class="p">],</span>
+    <span class="s">"max_features"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">64</span><span class="p">],</span>
+<span class="p">}</span>
+
+<span class="n">tree_grid</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">tree</span><span class="p">,</span> <span class="n">tree_params</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">n_jobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">tree_grid</span><span class="p">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Fitting 5 folds for each of 99 candidates, totalling 495 fits
+</code></pre></div></div>
+
+<style>#sk-container-id-2 {color: black;background-color: white;}#sk-container-id-2 pre{padding: 0;}#sk-container-id-2 div.sk-toggleable {background-color: white;}#sk-container-id-2 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-2 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-2 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-2 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-2 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-2 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-2 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-2 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-2 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-2 div.sk-item {position: relative;z-index: 1;}#sk-container-id-2 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-2 div.sk-item::before, #sk-container-id-2 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-2 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-2 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-2 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-2 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-2 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-2 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-2 div.sk-label-container {text-align: center;}#sk-container-id-2 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-2 div.sk-text-repr-fallback {display: none;}</style>
+<div id="sk-container-id-2" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>GridSearchCV(cv=5,
+             estimator=DecisionTreeClassifier(max_depth=5, random_state=17),
+             n_jobs=-1,
+             param_grid={&#x27;max_depth&#x27;: [1, 2, 3, 5, 10, 20, 25, 30, 40, 50, 64],
+                         &#x27;max_features&#x27;: [1, 2, 3, 5, 10, 20, 30, 50, 64]},
+             verbose=True)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden=""><div class="sk-item sk-dashed-wrapped"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" /><label for="sk-estimator-id-2" class="sk-toggleable__label sk-toggleable__label-arrow">GridSearchCV</label><div class="sk-toggleable__content"><pre>GridSearchCV(cv=5,
+             estimator=DecisionTreeClassifier(max_depth=5, random_state=17),
+             n_jobs=-1,
+             param_grid={&#x27;max_depth&#x27;: [1, 2, 3, 5, 10, 20, 25, 30, 40, 50, 64],
+                         &#x27;max_features&#x27;: [1, 2, 3, 5, 10, 20, 30, 50, 64]},
+             verbose=True)</pre></div></div></div><div class="sk-parallel"><div class="sk-parallel-item"><div class="sk-item"><div class="sk-label-container"><div class="sk-label sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-3" type="checkbox" /><label for="sk-estimator-id-3" class="sk-toggleable__label sk-toggleable__label-arrow">estimator: DecisionTreeClassifier</label><div class="sk-toggleable__content"><pre>DecisionTreeClassifier(max_depth=5, random_state=17)</pre></div></div></div><div class="sk-serial"><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-4" type="checkbox" /><label for="sk-estimator-id-4" class="sk-toggleable__label sk-toggleable__label-arrow">DecisionTreeClassifier</label><div class="sk-toggleable__content"><pre>DecisionTreeClassifier(max_depth=5, random_state=17)</pre></div></div></div></div></div></div></div></div></div></div>
+
+<p>listing out the best parameters and the corresponding mean accuracy from cross-validation.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tree_grid</span><span class="p">.</span><span class="n">best_params_</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>{'max_depth': 10, 'max_features': 50}
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">tree_grid</span><span class="p">.</span><span class="n">best_score_</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.8568203376968316
+</code></pre></div></div>
+
+<h2 id="advantages--disadvantages">Advantages &amp; Disadvantages</h2>
+
+<p>Pros:</p>
+<ol>
+  <li>Generate clear and interpretable classification rules.</li>
+  <li>Easy to visualize both the model and predictions for specific test objects.</li>
+  <li>Fast training and forecasting.</li>
+  <li>Small number of model parameters.</li>
+  <li>Support both numerical and categorical features.</li>
+</ol>
+
+<p>Cons:</p>
+<ol>
+  <li>Sensitivity to noise in input data, which can affect the model’s interpretability.</li>
+  <li>Limitations in separating borders, as decision trees use hyperplanes perpendicular to coordinate axes.</li>
+  <li>Prone to overfitting, requiring pruning or setting constraints on the tree depth and leaf samples.</li>
+  <li>Instability, as small changes to data can significantly alter the decision tree.</li>
+  <li>Difficulty in supporting missing values in the data.</li>
+  <li>Optimal decision tree search is an NP-complete problem, and heuristics are used in practice.</li>
+  <li>The model can only interpolate, not extrapolate, making constant predictions for objects beyond the training data’s feature space.</li>
+</ol>
+
+<p>These limitations should be taken into consideration when using decision trees and can be mitigated through techniques like pruning, ensemble methods, and setting constraints on the tree’s complexity.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#decision-trees" class="page__taxonomy-item" rel="tag">decision trees</a><span class="sep">, </span>
+    
+      <a href="/tags/#entropy" class="page__taxonomy-item" rel="tag">entropy</a><span class="sep">, </span>
+    
+      <a href="/tags/#heuristics" class="page__taxonomy-item" rel="tag">heuristics</a><span class="sep">, </span>
+    
+      <a href="/tags/#machine-learning-fundamentals" class="page__taxonomy-item" rel="tag">machine learning fundamentals</a><span class="sep">, </span>
+    
+      <a href="/tags/#mnist" class="page__taxonomy-item" rel="tag">mnist</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-07-27T00:00:00-04:00">July 27, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  Share On <br>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Basics+of+Decision+Trees%20http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F07%2F27%2FBasics_Of_DecisionTrees.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F07%2F27%2FBasics_Of_DecisionTrees.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F07%2F27%2FBasics_Of_DecisionTrees.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/posts/2023/07/20/Visual_Data_Analysis_in_Python_Part1.html" class="pagination--pager" title="Visual Data Analysis in Python: Part 1
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+ TO remove previous:next-->
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/07/20/Visual_Data_Analysis_in_Python_Part1.html" rel="permalink">Visual Data Analysis in Python: Part 1
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          22 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">In this blog post, we explore visual data analytics, leveraging data visualization to uncover insights and patterns in our datasets. In this part 1 post, we ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/07/08/Maths_LinearAlgebra_Matrices.html" rel="permalink">Machine Learning Fundamentals: Linear Algebra: Part 2-Matrices
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          39 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">In this blog post, we will try to understand matrices, their representation, properties and the various operations we can perform on them.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/06/29/Maths_LinearAlgebra.html" rel="permalink">Machine Learning Fundamentals: Linear Algebra: Part 1-Vectors
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          14 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">In this blog post, we will try to understand vectors from their base representation, their properties and the various operations we can perform on vectors.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/06/08/Data_Analysis_With_Pandas.html" rel="permalink">Pandas: Data Analysis Essentials
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          35 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">This article outlines the essential Pandas methods for preliminary data analysis.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Vimal Venugopal. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/posts/2023/07/27/Basics_Of_DecisionTrees.html";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/posts/2023/07/27/Basics_Of_DecisionTrees"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://vmlverse.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+  </body>
+</html>

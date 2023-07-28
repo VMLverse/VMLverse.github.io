@@ -1,4 +1,676 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-07-21T00:06:59-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">VMLverse</title><subtitle>&quot;Welcome to VMLverse - Join me as I embark on a continuous learning journey into the fascinating world of Machine Learning.&quot;</subtitle><author><name>Vimal Venugopal</name></author><entry><title type="html">Visual Data Analysis in Python: Part 1</title><link href="http://localhost:4000/posts/2023/07/20/Visual_Data_Analysis_in_Python_Part1.html" rel="alternate" type="text/html" title="Visual Data Analysis in Python: Part 1" /><published>2023-07-20T00:00:00-04:00</published><updated>2023-07-20T00:00:00-04:00</updated><id>http://localhost:4000/posts/2023/07/20/Visual_Data_Analysis_in_Python_Part1</id><content type="html" xml:base="http://localhost:4000/posts/2023/07/20/Visual_Data_Analysis_in_Python_Part1.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-07-27T23:11:50-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">VMLverse</title><subtitle>&quot;Welcome to VMLverse - Join me as I embark on a continuous learning journey into the fascinating world of Machine Learning.&quot;</subtitle><author><name>Vimal Venugopal</name></author><entry><title type="html">Basics of Decision Trees</title><link href="http://localhost:4000/posts/2023/07/27/Basics_Of_DecisionTrees.html" rel="alternate" type="text/html" title="Basics of Decision Trees" /><published>2023-07-27T00:00:00-04:00</published><updated>2023-07-27T00:00:00-04:00</updated><id>http://localhost:4000/posts/2023/07/27/Basics_Of_DecisionTrees</id><content type="html" xml:base="http://localhost:4000/posts/2023/07/27/Basics_Of_DecisionTrees.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Decision Trees are a straightforward and interpretable method in Machine Learning. They provide human-like decision-making capabilities to computers and have applications in various fields, from classification tasks like “dog” or “cat” prediction to more complex scenarios like medical diagnoses or customer churn predictions. Understanding Decision Trees can be a great entry point to exploring the vast world of Machine Learning algorithms and their practical uses.&lt;/p&gt;
+
+&lt;h2 id=&quot;entropy-intuition&quot;&gt;Entropy Intuition&lt;/h2&gt;
+
+&lt;p&gt;I still remember during my ML class at Georgia Tech, my professors &lt;a href=&quot;https://www.cc.gatech.edu/fac/Charles.Isbell/&quot;&gt;Dr. Charles Isabel&lt;/a&gt; and &lt;a href=&quot;https://www.littmania.com/&quot;&gt;Michael Littman&lt;/a&gt; exclaiming at the fact that &lt;a href=&quot;https://en.wikipedia.org/wiki/Claude_Shannon&quot;&gt;Claude Shannon&lt;/a&gt; invented information theory as part of his Master Thesis; At his Master degree, not even PhD. Its like doing the greatest contribution to this world when you are merely in your Masters. In this section we will try to understand Shannon’s Entropy.&lt;/p&gt;
+
+&lt;p&gt;Here is an analogy to understand the intuition behind Entropy.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Consider the game of “20 Questions” a guesser asks a series of question to find out the name of a celebrity.&lt;/li&gt;
+  &lt;li&gt;The guesser’s first question is crucial.&lt;/li&gt;
+  &lt;li&gt;They ask the one that narrows down the options the most.&lt;/li&gt;
+  &lt;li&gt;Asking specific questions like “Is the celebrity Margot Robbie?” yields no information. If the answer is No, we lost one question with no clue for other 19 questions.&lt;/li&gt;
+  &lt;li&gt;Asking broader question like “Is the celebrity a woman?” separates the dataset better than specific questions like “Is the celebrity Margot Robbie?”.&lt;/li&gt;
+  &lt;li&gt;Thus in this example, the “gender” feature has more information than the “name” feature.&lt;/li&gt;
+  &lt;li&gt;This is the basic intuition that relates to information gain based on entropy.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;entropy-definition&quot;&gt;Entropy Definition&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Shannon’s entropy is defined for a system with N possible states as follows:&lt;/li&gt;
+&lt;/ul&gt;
+
+\[\Large S = -\sum_{i=1}^{N}p_i \log_2{p_i},\]
+
+&lt;p&gt;where \(p_i\) is the probability of finding the system in the \(i\)-th state.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;This is a very important concept used in physics, information theory, and other areas.&lt;/li&gt;
+  &lt;li&gt;It helps quantify the level of chaos or disorder in the system.&lt;/li&gt;
+  &lt;li&gt;If the entropy is high, the system is more disordered, and if it’s low, the system is more ordered.&lt;/li&gt;
+  &lt;li&gt;This will help us formalize “effective data splitting”, which we alluded to in the context of “20 Questions”.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;entropy-example&quot;&gt;Entropy Example&lt;/h2&gt;
+
+&lt;p&gt;Consider a dataset of colored balls with two features: “Position” (numeric value) and “Is Green” (True/False). Our task is to predict whether a ball is green based on its position.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Position&lt;/th&gt;
+      &lt;th&gt;Is Green&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;🟢&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;🟢&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;6&lt;/td&gt;
+      &lt;td&gt;🟢&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;🟢&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;8&lt;/td&gt;
+      &lt;td&gt;🟢&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;9&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;10&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;11&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;We’ll use entropy to guide us in selecting the best position threshold for splitting the data.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Entropy of the initial dataset:
+    &lt;ul&gt;
+      &lt;li&gt;There are 5 green balls and 8 non-green balls.&lt;/li&gt;
+      &lt;li&gt;If we randomly pull out a ball, then it will be green with probability \(p_{g}=\frac{5}{13}\)&lt;/li&gt;
+      &lt;li&gt;Similarly at random, we will end up with non-green ball with probability \(p_{ng=}\frac{8}{13}\).&lt;/li&gt;
+      &lt;li&gt;Applying \(p_{g}\) and \(p_{ng}\) on the entropy formula, we can arrive at:
+\(S_0 = -\sum_{i=1}^{2}p_i \log_2{p_i},\)
+\(S_0 = - (p_{g} \log_2{p_{g}} + p_{ng} \log_2{p_{ng}}),\)
+\(S_0 = -\frac{5}{13}\log_2{\frac{5}{13}} - \frac{8}{13}\log_2{\frac{8}{13}} \approx 0.96.\)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Entropy of the intial dataset is close to 1.0 which means the intial dataset is highly disordered or chaotic.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Consider splitting the data based on the position threshold “8”:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Subset1:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Position&lt;/th&gt;
+      &lt;th&gt;Is Green&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;🟢&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;🟢&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;6&lt;/td&gt;
+      &lt;td&gt;🟢&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;🟢&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;8&lt;/td&gt;
+      &lt;td&gt;🟢&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Lets calculate the entropy for “Position &amp;lt;= 8” (Subset 1):&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+\[p_{g=}\frac{5}{9}\]
+  &lt;/li&gt;
+  &lt;li&gt;
+\[p_{ng=}\frac{4}{9}\]
+  &lt;/li&gt;
+  &lt;li&gt;
+\[S_1 = -\frac{5}{9}\log_2{\frac{5}{9}} - \frac{4}{9}\log_2{\frac{4}{9}} \approx 0.99.\]
+  &lt;/li&gt;
+  &lt;li&gt;Subset2:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Position&lt;/th&gt;
+      &lt;th&gt;Is Green&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;9&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;10&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;11&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Lets calculate the entropy for Entropy for “Position &amp;gt; 8” (Subset 2):&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;
+\[p_{g=}\frac{0}{4}\]
+  &lt;/li&gt;
+  &lt;li&gt;
+\[p_{ng=}\frac{4}{4}\]
+  &lt;/li&gt;
+  &lt;li&gt;
+\[S_2 = -\frac{0}{4}\log_2{\frac{0}{4}} - \frac{4}{4}\log_2{\frac{4}{4}} = 0.\]
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Therefore, Total Entropy after split on “Position &amp;lt;= 8”:
+   \(S_{\text{Position &amp;lt;= 8}} = \frac{9}{13} \cdot S_1 + \frac{4}{13} \cdot S_2\)&lt;/p&gt;
+
+\[S_{\text{Position &amp;lt;= 8}} = \frac{9}{13} \cdot 0.99 + \frac{4}{13} \cdot 0\]
+
+\[S_{\text{Position &amp;lt;= 8}} \approx 0.68.\]
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;As an alternative, lets consider splitting the data based on the position threshold “7”:
+    &lt;ul&gt;
+      &lt;li&gt;Entropy for “Position &amp;lt;= 7” (Subset 1):&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Position&lt;/th&gt;
+      &lt;th&gt;Is Green&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;0&lt;/td&gt;
+      &lt;td&gt;🟢&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;🟢&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;6&lt;/td&gt;
+      &lt;td&gt;🟢&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;7&lt;/td&gt;
+      &lt;td&gt;🟢&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+\[S_3 = -\frac{4}{8}\log_2{\frac{4}{8}} - \frac{4}{8}\log_2{\frac{4}{8}} = 1.\]
+
+&lt;ul&gt;
+  &lt;li&gt;Entropy for “Position &amp;gt; 7” (Subset 2):&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Position&lt;/th&gt;
+      &lt;th&gt;Is Green&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;8&lt;/td&gt;
+      &lt;td&gt;🟢&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;9&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;10&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;11&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;12&lt;/td&gt;
+      &lt;td&gt;⚪&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+\[S_4 = -\frac{1}{5}\log_2{\frac{1}{5}} - \frac{4}{5}\log_2{\frac{4}{5}} \approx 0.72.\]
+
+&lt;ul&gt;
+  &lt;li&gt;Total Entropy after split on “Position &amp;lt;= 7”:
+\(S_{\text{Position &amp;lt;= 7}} = \frac{8}{13} \cdot 1 + \frac{5}{13} \cdot 0.72 \approx 0.89.\)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;As we can see splitting on position 8 has entropy of 0.68 which is lower than the entropy if split on position 7. Thus we can choose position 8 as our split. We have seen how entropy helps us find the best position threshold for splitting the data and constructing an effective decision tree for predicting the color of a ball based on its position.&lt;/p&gt;
+
+&lt;h2 id=&quot;information-gain-definition&quot;&gt;Information Gain Definition&lt;/h2&gt;
+
+&lt;p&gt;Formally, the information gain (IG) for a split based on the variable $Q$ (in this example it’s a variable “$position \leq 8$”) is defined as&lt;/p&gt;
+
+\[\Large IG(Q) = S_O - \sum_{i=1}^{q}\frac{N_i}{N}S_i,\]
+
+&lt;p&gt;where $q$ is the number of groups after the split, $N_i$ is number of objects from the sample in which variable $Q$ is equal to the $i$-th value. In our example, our split yielded two groups ($q = 2$), one with 9 elements ($N_1 = 9$), the other with 4 ($N_2 = 4$). Therefore, we can compute the information gain as&lt;/p&gt;
+
+\[\Large IG(pos \leq 8) = S_0 - \frac{9}{13}S_1 - \frac{4}{13}S_2 \approx 0.32.\]
+
+&lt;p&gt;It turns out that dividing the balls into two groups by splitting on “position is less than or equal to 8” gave us a more ordered system. If we continue to divide them into groups until the balls in each group are all of the same color, we will end up with a decision tree that predicts ball color based on its position. Note that the entropy of a group where all of the balls are the same color is equal to 0 (\(log_2 1 =0\)
+).&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2023-07-27-Basics_Of_DecisionTrees_files/decisiontree-1-min.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;decision-tree-algorithm&quot;&gt;Decision Tree Algorithm&lt;/h2&gt;
+
+&lt;p&gt;The pseudocode provided below can be considered as a high-level overview of the Decision Tree building process. In practice, choosing the best variable to split on (which gives the greatest information gain or minimizes impurity) is a crucial step, and it is typically done using specific metrics like Information Gain for classification tasks or Mean Squared Error reduction for regression tasks.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Decision Tree Building Algorithm (Classification)
+&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;# Function to build the Decision Tree
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;create&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;node&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Base case: If the stopping criterion is met, assign a predictive model to t (e.g., majority class label for classification)
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stopping_criterion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;assign_predictive_model&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;c1&quot;&gt;# Find the best binary split L = L_left + L_right
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;L_left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L_right&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;find_best_split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+        &lt;span class=&quot;c1&quot;&gt;# Recursively build the left and right subtrees
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;left&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L_left&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;right&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;L_right&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;other-decision-tree-heuristics&quot;&gt;Other Decision Tree heuristics&lt;/h2&gt;
+
+&lt;p&gt;Gini impurity and misclassification error are other popular heuristics used to evaluate the quality of splits in Decision Trees. While Information Gain and Gini impurity are closely related and often provide similar results, they have different mathematical foundations and properties. The choice of the heuristic can impact the structure and performance of the resulting Decision Tree.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Gini Impurity:
+    &lt;ul&gt;
+      &lt;li&gt;
+\[G = 1 - \sum\limits_k (p_k)^2\]
+      &lt;/li&gt;
+      &lt;li&gt;Gini impurity is a measure of the impurity or uncertainty of a node in a Decision Tree.&lt;/li&gt;
+      &lt;li&gt;It calculates the probability of misclassifying a randomly chosen element from the set if it were randomly classified according to the class distribution of the set.&lt;/li&gt;
+      &lt;li&gt;Gini impurity ranges from 0 to 0.5, with 0 representing a pure node (all elements belong to the same class) and 0.5 representing a completely impure node (classes are equally distributed).&lt;/li&gt;
+      &lt;li&gt;Gini impurity is often used as an alternative to Information Gain, and the two metrics generally lead to similar splits.&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;Lets try calculating the Gini Impurity Values for our Ball Example:&lt;/p&gt;
+
+    &lt;table&gt;
+      &lt;thead&gt;
+        &lt;tr&gt;
+          &lt;th&gt;Subtree&lt;/th&gt;
+          &lt;th&gt;Green vs NG&lt;/th&gt;
+          &lt;th&gt;\(p_g\)&lt;/th&gt;
+          &lt;th&gt;\(p_ng\)&lt;/th&gt;
+          &lt;th&gt;Gini Imp.&lt;/th&gt;
+        &lt;/tr&gt;
+      &lt;/thead&gt;
+      &lt;tbody&gt;
+        &lt;tr&gt;
+          &lt;td&gt;\(S_0\)&lt;/td&gt;
+          &lt;td&gt;🟢-5, ⚪-8&lt;/td&gt;
+          &lt;td&gt;5/13&lt;/td&gt;
+          &lt;td&gt;8/13&lt;/td&gt;
+          &lt;td&gt;0.47&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;\(S_1\)&lt;/td&gt;
+          &lt;td&gt;🟢-5, ⚪-4&lt;/td&gt;
+          &lt;td&gt;5/9&lt;/td&gt;
+          &lt;td&gt;4/9&lt;/td&gt;
+          &lt;td&gt;0.49&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+          &lt;td&gt;\(S_2\)&lt;/td&gt;
+          &lt;td&gt;🟢-0, ⚪-4&lt;/td&gt;
+          &lt;td&gt;0/4&lt;/td&gt;
+          &lt;td&gt;4/4&lt;/td&gt;
+          &lt;td&gt;0.0&lt;/td&gt;
+        &lt;/tr&gt;
+      &lt;/tbody&gt;
+    &lt;/table&gt;
+
+    &lt;p&gt;As from our earlier Entropy example, Gini Impurity reduces as the group of balls becomes monochromatic.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Misclassification Error:
+    &lt;ul&gt;
+      &lt;li&gt;
+\[E = 1 - \max\limits_k p_k\]
+      &lt;/li&gt;
+      &lt;li&gt;Misclassification error, also known as zero-one loss, calculates the proportion of misclassified instances in a node.&lt;/li&gt;
+      &lt;li&gt;Unlike Gini impurity and Information Gain, misclassification error is not differentiable, making it less suitable for optimization algorithms.&lt;/li&gt;
+      &lt;li&gt;It can be more sensitive to changes in class distribution, especially when dealing with imbalanced datasets, which may lead to suboptimal splits.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;In practice, Gini impurity and Information Gain tend to be the more commonly used quality criteria for splitting in Decision Trees. They are both easy to implement, computationally efficient, and can handle multiclass classification problems. Gini impurity is preferred in some libraries (e.g., Scikit-learn) due to its efficiency when dealing with large datasets.&lt;/p&gt;
+
+&lt;h2 id=&quot;decision-tree-in-regression&quot;&gt;Decision Tree in Regression&lt;/h2&gt;
+
+&lt;p&gt;When predicting a numeric variable, the idea of a tree construction remains the same, but the quality criteria changes:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Variance:&lt;/li&gt;
+&lt;/ul&gt;
+
+\[\Large D = \frac{1}{\ell} \sum\limits_{i =1}^{\ell} (y_i - \frac{1}{\ell} \sum\limits_{j=1}^{\ell} y_j)^2,\]
+
+&lt;p&gt;where \(\ell\) is the number of samples in a leaf, \(y_i\) is the value of the target variable. By finding features that divide the training set in a way that makes the target variable values in each leaf node roughly equal, we can build a tree that predicts numeric values more accurately.&lt;/p&gt;
+
+&lt;p&gt;Suppose we have a dataset with a single feature (X) and a target variable (y). Here’s a simplified version of the dataset:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;     X     &lt;/th&gt;
+      &lt;th&gt;     y     &lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;1&lt;/td&gt;
+      &lt;td&gt;5&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2&lt;/td&gt;
+      &lt;td&gt;4&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;3&lt;/td&gt;
+      &lt;td&gt;7&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;4&lt;/td&gt;
+      &lt;td&gt;6&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;5&lt;/td&gt;
+      &lt;td&gt;8&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;We want to build a decision tree to predict the target variable (y) based on the feature (X). The goal is to find the split point for X that minimizes the total variance in the target variable.&lt;/p&gt;
+
+&lt;p&gt;Let’s try different split points for X and calculate the total variance for each split:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Split at X &amp;lt;= 2.5:
+    &lt;ul&gt;
+      &lt;li&gt;Group 1 (X &amp;lt;= 2.5): y values = [5, 4], mean y = (5 + 4) / 2 = 4.5&lt;/li&gt;
+      &lt;li&gt;Group 2 (X &amp;gt; 2.5): y values = [7, 6, 8], mean y = (7 + 6 + 8) / 3 = 7&lt;/li&gt;
+      &lt;li&gt;Variance of Group 1 (\(D_1\)) = ((5-4.5)^2 + (4-4.5)^2) / 2 = 0.25&lt;/li&gt;
+      &lt;li&gt;Variance of Group 2 (\(D_2\)) = ((7-7)^2 + (6-7)^2 + (8-7)^2) / 3 = 0.67&lt;/li&gt;
+      &lt;li&gt;Total Variance (\(D\)) = (0.25 + 0.67) / 5 ≈ 0.18&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Split at X &amp;lt;= 3.5:
+    &lt;ul&gt;
+      &lt;li&gt;Group 1 (X &amp;lt;= 3.5): y values = [5, 4, 7], mean y = (5 + 4 + 7) / 3 = 5.33&lt;/li&gt;
+      &lt;li&gt;Group 2 (X &amp;gt; 3.5): y values = [6, 8], mean y = (6 + 8) / 2 = 7&lt;/li&gt;
+      &lt;li&gt;Variance of Group 1 (\(D_1\)) = ((5-5.33)^2 + (4-5.33)^2 + (7-5.33)^2) / 3 ≈ 2&lt;/li&gt;
+      &lt;li&gt;Variance of Group 2 (\(D_2\)) = ((6-7)^2 + (8-7)^2) / 2 = 0.5&lt;/li&gt;
+      &lt;li&gt;Total Variance (\(D\)) = (2 + 0.5) / 5 ≈ 0.5&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Split at X &amp;lt;= 4.5:
+    &lt;ul&gt;
+      &lt;li&gt;Group 1 (X &amp;lt;= 4.5): y values = [5, 4, 7, 6], mean y = (5 + 4 + 7 + 6) / 4 = 5.5&lt;/li&gt;
+      &lt;li&gt;Group 2 (X &amp;gt; 4.5): y values = [8], mean y = 8&lt;/li&gt;
+      &lt;li&gt;Variance of Group 1 (\(D_1\)) = ((5-5.5)^2 + (4-5.5)^2 + (7-5.5)^2 + (6-5.5)^2) / 4 = 0.625&lt;/li&gt;
+      &lt;li&gt;Variance of Group 2 (\(D_2\)) = (8-8)^2 = 0&lt;/li&gt;
+      &lt;li&gt;Total Variance (\(D\)) = (0.625 + 0) / 5 ≈ 0.125&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Based on the total variance values, we can see that splitting at X &amp;lt;= 4.5 gives the lowest total variance. Therefore, the decision tree will split the data at X &amp;lt;= 4.5 to minimize the variance in the target variable and make more accurate predictions.&lt;/p&gt;
+
+&lt;h2 id=&quot;mnist-handwritten-digits-recognition&quot;&gt;MNIST Handwritten Digits Recognition&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Recognizing hand written digits is a real world task.&lt;/li&gt;
+  &lt;li&gt;We will use the sklearn built-in dataset on handwritten digits.&lt;/li&gt;
+  &lt;li&gt;The images in this dataset are represented as 8x8 matrices, where each element of the matrix represents the intensity of white color for a specific pixel.&lt;/li&gt;
+  &lt;li&gt;To convert each image into a feature description, we “unfold” the 8x8 matrix into a vector of length 64.&lt;/li&gt;
+  &lt;li&gt;This vector captures the pixel intensities in a linear sequence, creating a feature representation of the object.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Load the Digits dataset
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;digits&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load_digits&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# Get the images (data) and target labels
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;target_labels&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;digits&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;digits&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;digits&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;array([[ 0.,  0.,  5., 13.,  9.,  1.,  0.,  0.],
+       [ 0.,  0., 13., 15., 10., 15.,  5.,  0.],
+       [ 0.,  3., 15.,  2.,  0., 11.,  8.,  0.],
+       [ 0.,  4., 12.,  0.,  0.,  8.,  8.,  0.],
+       [ 0.,  5.,  8.,  0.,  0.,  9.,  8.,  0.],
+       [ 0.,  4., 11.,  0.,  1., 12.,  7.,  0.],
+       [ 0.,  2., 14.,  5., 10., 12.,  0.,  0.],
+       [ 0.,  0.,  6., 13., 10.,  0.,  0.,  0.]])
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Visualize some handwritten digits
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fig&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subplots&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;figsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;enumerate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imshow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;gray&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_title&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Digit: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target_labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;off&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;show&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2023-07-27-Basics_Of_DecisionTrees_files/2023-07-27-Basics_Of_DecisionTrees_15_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We will split the dataset into training and holdout sets, with 70% of the data used for training (X_train, y_train) and 30% for holdout (X_holdout, y_holdout). The holdout set will be reserved for final evaluation and will not be involved in tuning the model parameters.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.model_selection&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_test_split&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X_holdout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_holdout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_test_split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;target_labels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test_size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random_state&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;17&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We will train a decision tree with  random parameters.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.tree&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DecisionTreeClassifier&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;tree&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DecisionTreeClassifier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max_depth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random_state&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;17&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;tree&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;style&gt;#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: &quot;▸&quot;;float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: &quot;▾&quot;;}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: &quot;&quot;;width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: &quot;&quot;;position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: &quot;&quot;;position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter&apos;s `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}&lt;/style&gt;
+&lt;div id=&quot;sk-container-id-1&quot; class=&quot;sk-top-container&quot;&gt;&lt;div class=&quot;sk-text-repr-fallback&quot;&gt;&lt;pre&gt;DecisionTreeClassifier(max_depth=5, random_state=17)&lt;/pre&gt;&lt;b&gt;In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. &lt;br /&gt;On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.&lt;/b&gt;&lt;/div&gt;&lt;div class=&quot;sk-container&quot; hidden=&quot;&quot;&gt;&lt;div class=&quot;sk-item&quot;&gt;&lt;div class=&quot;sk-estimator sk-toggleable&quot;&gt;&lt;input class=&quot;sk-toggleable__control sk-hidden--visually&quot; id=&quot;sk-estimator-id-1&quot; type=&quot;checkbox&quot; checked=&quot;&quot; /&gt;&lt;label for=&quot;sk-estimator-id-1&quot; class=&quot;sk-toggleable__label sk-toggleable__label-arrow&quot;&gt;DecisionTreeClassifier&lt;/label&gt;&lt;div class=&quot;sk-toggleable__content&quot;&gt;&lt;pre&gt;DecisionTreeClassifier(max_depth=5, random_state=17)&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We will make predictions on the holdout set.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.metrics&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;accuracy_score&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;tree_pred&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tree&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;predict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_holdout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;accuracy_score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;y_holdout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tree_pred&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;0.6666666666666666
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In the process of tuning our model parameters, we will perform cross-validation. However, we have more features, specifically 64, which will impact the complexity of the model and the selection of optimal parameters to achieve better performance.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.model_selection&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GridSearchCV&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;tree_params&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;max_depth&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;40&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;max_features&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;tree_grid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GridSearchCV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tree&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tree_params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n_jobs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;verbose&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;tree_grid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Fitting 5 folds for each of 99 candidates, totalling 495 fits
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;style&gt;#sk-container-id-2 {color: black;background-color: white;}#sk-container-id-2 pre{padding: 0;}#sk-container-id-2 div.sk-toggleable {background-color: white;}#sk-container-id-2 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-2 label.sk-toggleable__label-arrow:before {content: &quot;▸&quot;;float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-2 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-2 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-2 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: &quot;▾&quot;;}#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-2 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-2 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-2 div.sk-parallel-item::after {content: &quot;&quot;;width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-2 div.sk-serial::before {content: &quot;&quot;;position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-2 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-2 div.sk-item {position: relative;z-index: 1;}#sk-container-id-2 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-2 div.sk-item::before, #sk-container-id-2 div.sk-parallel-item::before {content: &quot;&quot;;position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-2 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-2 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-2 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-2 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-2 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-2 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-2 div.sk-label-container {text-align: center;}#sk-container-id-2 div.sk-container {/* jupyter&apos;s `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-2 div.sk-text-repr-fallback {display: none;}&lt;/style&gt;
+&lt;div id=&quot;sk-container-id-2&quot; class=&quot;sk-top-container&quot;&gt;&lt;div class=&quot;sk-text-repr-fallback&quot;&gt;&lt;pre&gt;GridSearchCV(cv=5,
+             estimator=DecisionTreeClassifier(max_depth=5, random_state=17),
+             n_jobs=-1,
+             param_grid={&amp;#x27;max_depth&amp;#x27;: [1, 2, 3, 5, 10, 20, 25, 30, 40, 50, 64],
+                         &amp;#x27;max_features&amp;#x27;: [1, 2, 3, 5, 10, 20, 30, 50, 64]},
+             verbose=True)&lt;/pre&gt;&lt;b&gt;In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. &lt;br /&gt;On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.&lt;/b&gt;&lt;/div&gt;&lt;div class=&quot;sk-container&quot; hidden=&quot;&quot;&gt;&lt;div class=&quot;sk-item sk-dashed-wrapped&quot;&gt;&lt;div class=&quot;sk-label-container&quot;&gt;&lt;div class=&quot;sk-label sk-toggleable&quot;&gt;&lt;input class=&quot;sk-toggleable__control sk-hidden--visually&quot; id=&quot;sk-estimator-id-2&quot; type=&quot;checkbox&quot; /&gt;&lt;label for=&quot;sk-estimator-id-2&quot; class=&quot;sk-toggleable__label sk-toggleable__label-arrow&quot;&gt;GridSearchCV&lt;/label&gt;&lt;div class=&quot;sk-toggleable__content&quot;&gt;&lt;pre&gt;GridSearchCV(cv=5,
+             estimator=DecisionTreeClassifier(max_depth=5, random_state=17),
+             n_jobs=-1,
+             param_grid={&amp;#x27;max_depth&amp;#x27;: [1, 2, 3, 5, 10, 20, 25, 30, 40, 50, 64],
+                         &amp;#x27;max_features&amp;#x27;: [1, 2, 3, 5, 10, 20, 30, 50, 64]},
+             verbose=True)&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;sk-parallel&quot;&gt;&lt;div class=&quot;sk-parallel-item&quot;&gt;&lt;div class=&quot;sk-item&quot;&gt;&lt;div class=&quot;sk-label-container&quot;&gt;&lt;div class=&quot;sk-label sk-toggleable&quot;&gt;&lt;input class=&quot;sk-toggleable__control sk-hidden--visually&quot; id=&quot;sk-estimator-id-3&quot; type=&quot;checkbox&quot; /&gt;&lt;label for=&quot;sk-estimator-id-3&quot; class=&quot;sk-toggleable__label sk-toggleable__label-arrow&quot;&gt;estimator: DecisionTreeClassifier&lt;/label&gt;&lt;div class=&quot;sk-toggleable__content&quot;&gt;&lt;pre&gt;DecisionTreeClassifier(max_depth=5, random_state=17)&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class=&quot;sk-serial&quot;&gt;&lt;div class=&quot;sk-item&quot;&gt;&lt;div class=&quot;sk-estimator sk-toggleable&quot;&gt;&lt;input class=&quot;sk-toggleable__control sk-hidden--visually&quot; id=&quot;sk-estimator-id-4&quot; type=&quot;checkbox&quot; /&gt;&lt;label for=&quot;sk-estimator-id-4&quot; class=&quot;sk-toggleable__label sk-toggleable__label-arrow&quot;&gt;DecisionTreeClassifier&lt;/label&gt;&lt;div class=&quot;sk-toggleable__content&quot;&gt;&lt;pre&gt;DecisionTreeClassifier(max_depth=5, random_state=17)&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;listing out the best parameters and the corresponding mean accuracy from cross-validation.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;tree_grid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;best_params_&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;{&apos;max_depth&apos;: 10, &apos;max_features&apos;: 50}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;tree_grid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;best_score_&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;0.8568203376968316
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;advantages--disadvantages&quot;&gt;Advantages &amp;amp; Disadvantages&lt;/h2&gt;
+
+&lt;p&gt;Pros:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Generate clear and interpretable classification rules.&lt;/li&gt;
+  &lt;li&gt;Easy to visualize both the model and predictions for specific test objects.&lt;/li&gt;
+  &lt;li&gt;Fast training and forecasting.&lt;/li&gt;
+  &lt;li&gt;Small number of model parameters.&lt;/li&gt;
+  &lt;li&gt;Support both numerical and categorical features.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Cons:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Sensitivity to noise in input data, which can affect the model’s interpretability.&lt;/li&gt;
+  &lt;li&gt;Limitations in separating borders, as decision trees use hyperplanes perpendicular to coordinate axes.&lt;/li&gt;
+  &lt;li&gt;Prone to overfitting, requiring pruning or setting constraints on the tree depth and leaf samples.&lt;/li&gt;
+  &lt;li&gt;Instability, as small changes to data can significantly alter the decision tree.&lt;/li&gt;
+  &lt;li&gt;Difficulty in supporting missing values in the data.&lt;/li&gt;
+  &lt;li&gt;Optimal decision tree search is an NP-complete problem, and heuristics are used in practice.&lt;/li&gt;
+  &lt;li&gt;The model can only interpolate, not extrapolate, making constant predictions for objects beyond the training data’s feature space.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;These limitations should be taken into consideration when using decision trees and can be mitigated through techniques like pruning, ensemble methods, and setting constraints on the tree’s complexity.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name>Vimal Venugopal</name></author><category term="posts" /><category term="decision trees" /><category term="machine learning fundamentals" /><category term="entropy" /><category term="heuristics" /><category term="mnist" /><summary type="html">Decision Trees are the gateway to machine learning. They are easy to understand and relate to. However, do we know how they really work?</summary></entry><entry><title type="html">Visual Data Analysis in Python: Part 1</title><link href="http://localhost:4000/posts/2023/07/20/Visual_Data_Analysis_in_Python_Part1.html" rel="alternate" type="text/html" title="Visual Data Analysis in Python: Part 1" /><published>2023-07-20T00:00:00-04:00</published><updated>2023-07-20T00:00:00-04:00</updated><id>http://localhost:4000/posts/2023/07/20/Visual_Data_Analysis_in_Python_Part1</id><content type="html" xml:base="http://localhost:4000/posts/2023/07/20/Visual_Data_Analysis_in_Python_Part1.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
 &lt;ul&gt;
   &lt;li&gt;In the field of Machine Learning, data visualization plays a critical role beyond creating visually appealing graphics for reports. It is a powerful tool that is extensively utilized throughout all stages of a project.&lt;/li&gt;
