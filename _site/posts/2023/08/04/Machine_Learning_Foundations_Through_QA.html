@@ -1,0 +1,842 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Machine Learning Foundations Through Q&amp;A | VMLverse</title>
+<meta name="description" content="we will try to understand the foundations of Machine learning &amp; Deep learning in the form of Q&amp;A.">
+
+
+  <meta name="author" content="Vimal Venugopal">
+  
+  <meta property="article:author" content="Vimal Venugopal">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="VMLverse">
+<meta property="og:title" content="Machine Learning Foundations Through Q&amp;A">
+<meta property="og:url" content="http://localhost:4000/posts/2023/08/04/Machine_Learning_Foundations_Through_QA.html">
+
+
+  <meta property="og:description" content="we will try to understand the foundations of Machine learning &amp; Deep learning in the form of Q&amp;A.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-08-04T00:00:00-04:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/posts/2023/08/04/Machine_Learning_Foundations_Through_QA.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Vimal Venugopal",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="VMLverse Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo_plain_blck_bg.png" alt="VMLverse"></a>
+        
+        <a class="site-title" href="/">
+          VMLverse
+          <span class="site-subtitle">Explore | Experiment | Expand</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/blog/">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/projects/">Projects</a>
+            </li><li class="masthead__menu-item">
+              <a href="/docs/resume.pdf">Resume</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/DSC1717square.jpeg" alt="Vimal Venugopal" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Vimal Venugopal</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>a curious mind with a passion for machine learning, photography and travel</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://cognitivescrawls.wordpress.com/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Wordpress</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Machine Learning Foundations Through Q&amp;A">
+    <meta itemprop="description" content="we will try to understand the foundations of Machine learning &amp; Deep learning in the form of Q&amp;A.">
+    <meta itemprop="datePublished" content="2023-08-04T00:00:00-04:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Machine Learning Foundations Through Q&amp;A
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          18 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="introduction">Introduction</h2>
+
+<p>In this article, we will review the basics of Machine learning &amp; Deep learning in the form of Q&amp;A. Consider this as some sort of FAQs on ML &amp; DL when someone new to the field is trying to understand. We will explore key concepts, applications, and common terminologies to provide a solid foundation for anyone starting their journey into the exciting world of ML and DL. I was reading the fastai book and found this Q&amp;A sort of writing quite helpful. It is as if I am reasoning myself and it gives me a moment to think about the article that is coming up instead of reading through a heading and understanding the content in it. (Some of my own pedagogy!)</p>
+
+<h2 id="q-what-is-regular-programming">Q: What is regular programming?</h2>
+<p>A: Regular programming is a method to make computers accomplish a particular task by providing them with precise step-by-step instructions.</p>
+
+<p>Example: Let’s say we want to write a program to add two numbers together. In regular programming, we would need to explicitly write down the steps, such as taking input for the two numbers, performing the addition, and displaying the result.</p>
+
+<p>Regular programming can be represented as below. A program which takes in input and provides resulttts.</p>
+
+<p><img src="/assets/images/2023-08-04-Machine_Learning_Foundations_Through_QA_files/2023-08-04-Machine_Learning_Foundations_Through_QA_5_0.svg" alt="svg" /></p>
+
+<h2 id="q-what-is-machine-learning-and-how-does-it-differ-from-regular-programming">Q: What is machine learning, and how does it differ from regular programming?</h2>
+<p>A: Instead of explicitly instructing the computer with precise steps, machine learning allows the computer to learn from examples and figure out how to solve problems on its own.</p>
+
+<p>Example: In regular programming, if we want a computer to identify images of dogs, we would need to write detailed code telling it how to recognize specific features of a dog. However, in machine learning, we would provide the computer with a large dataset of images labeled as “dog” or “not dog,” and it would learn from those examples to identify dogs without explicit instructions.</p>
+
+<h2 id="q-when-did-machine-learning-concept-come-about">Q: When did machine learning concept come about?</h2>
+
+<p>Arthur Samuel was an IBM researcher who, in 1949, pioneered the concept of machine learning. He proposed the idea of training computers by showing them examples of a problem and allowing them to learn how to solve it on their own, rather than explicitly programming the steps.</p>
+
+<p>The key concepts in Samuel’s idea of machine learning include:</p>
+
+<ul>
+  <li>“Weight assignment”: Representing variables with values that the computer can adjust during the learning process.</li>
+  <li>“Actual performance”: Evaluating the performance of the computer’s current weight assignment based on its results.</li>
+  <li>“Automatic means of testing”: Having a mechanism to automatically evaluate the computer’s performance without human intervention.</li>
+  <li>“Mechanism for improving performance”: Implementing an automatic process to adjust weight assignments to enhance the computer’s performance.</li>
+</ul>
+
+<h2 id="q-how-does-the-term-model-differ-from-the-traditional-concept-of-a-program-in-machine-learning">Q: How does the term “model” differ from the traditional concept of a “program” in machine learning?</h2>
+<p>A: The term “model” is used to describe a special kind of program. Unlike traditional programs that follow specific, fixed steps to complete a task, a machine learning model can perform multiple tasks and make decisions based on its internal weights or model parameters. These parameters define how the model behaves and can be adjusted to adapt its behavior.</p>
+
+<p>Here is the updated high level representation of machine learning. As you can see, we have swapped out Program with Model and included Weights which control the behaavior of the model.</p>
+
+<p><img src="/assets/images/2023-08-04-Machine_Learning_Foundations_Through_QA_files/2023-08-04-Machine_Learning_Foundations_Through_QA_10_0.svg" alt="svg" /></p>
+
+<h2 id="q-how-does-the-model-learn-optimal-weights-behavior">Q: How does the model learn optimal weights (behavior)?</h2>
+<p>A: Arthur Samuel identified two key components to make machine learning automatic and enable the system to “learn” from its experience:</p>
+
+<ul>
+  <li>Automatic means of testing: A method to evaluate the current weight assignment’s effectiveness in terms of actual performance. In the case of Samuel’s checkers program, this would involve testing how well the model plays against other models.</li>
+  <li>Mechanism for weight adjustment: An automated process to alter the weight assignment to improve the model’s performance. The adjustments are based on the comparison between models, where the winning model’s weights influence the updates.</li>
+</ul>
+
+<p><img src="/assets/images/2023-08-04-Machine_Learning_Foundations_Through_QA_files/2023-08-04-Machine_Learning_Foundations_Through_QA_12_0.svg" alt="svg" /></p>
+
+<h2 id="q-what-happens-to-the-weights-of-a-machine-learning-model-after-it-has-been-trained">Q: What happens to the weights of a machine learning model after it has been trained?</h2>
+<p>A: After a machine learning model has been trained and the final, best weight assignment has been selected, the weights become fixed and constant. At this point, the training process is complete, and the model is ready for real-world use. The selected weights become an integral part of the trained model, as they determine how the model will make predictions or decisions on new, unseen data.</p>
+
+<p>Example: Consider a trained machine learning model for image recognition, specifically identifying cats and dogs. During the training process, the model’s weights are adjusted based on a large dataset of labeled images of cats and dogs, allowing the model to learn to differentiate between them. Once the training is finished and the optimal weights are chosen, the model becomes a stable system with fixed weights. Now, when you input a new image, the model will use its fixed weights to classify it as either a cat or a dog without changing the weights any further.</p>
+
+<p>The below shows a representation of a trained model. As we can see, this resembles our earlier regular program representation. This is an important insight: <strong>a trained model can be treated just like a regular computer program.</strong></p>
+
+<p><img src="/assets/images/2023-08-04-Machine_Learning_Foundations_Through_QA_files/2023-08-04-Machine_Learning_Foundations_Through_QA_14_0.svg" alt="svg" /></p>
+
+<h2 id="q-how-has-the-terminology-evolved-in-modern-deep-learning-compared-to-arthur-samuels-time">Q: How has the terminology evolved in modern deep learning compared to Arthur Samuel’s time?</h2>
+<p>A: In modern deep learning, the terminology has evolved as follows:</p>
+<ul>
+  <li>Architecture: The functional form of the model is referred to as its “architecture.” It represents the overall structure of the model and how the different layers are interconnected.</li>
+  <li>Parameters: The weights in the model are now called “parameters.” These parameters are the numerical values that the model learns during the training process and influence the model’s behavior.</li>
+  <li>Independent Variable: The data used for making predictions, excluding the labels, is known as the “independent variable.” It serves as input to the model.</li>
+  <li>Predictions: The results produced by the model based on the given inputs are still referred to as “predictions.” These predictions represent the model’s output.</li>
+  <li>Loss: The measure of performance, indicating how well the model’s predictions match the correct labels, is now called the “loss.” The goal is to minimize the loss during training to improve the model’s accuracy.</li>
+  <li>Labels/Targets/Dependent Variable: The correct labels used during training to compute the loss are known as “labels,” “targets,” or the “dependent variable.” These labels represent the ground truth values for the input data.</li>
+</ul>
+
+<p>Example: In a modern deep learning model for image classification, the “architecture” defines the layers and connections in the neural network. The “parameters” are the weights that the model learns from the data. The “independent variable” is the image data fed into the model for prediction. The “predictions” are the model’s outputs, like classifying the image as a “dog” or “cat.” The “loss” quantifies how accurate the predictions are compared to the correct “labels” (e.g., “dog” or “cat”) during the training process.</p>
+
+<p><img src="/assets/images/2023-08-04-Machine_Learning_Foundations_Through_QA_files/2023-08-04-Machine_Learning_Foundations_Through_QA_16_0.svg" alt="svg" /></p>
+
+<h2 id="q-what-are-some-fundamental-limitations-inherent-to-machine-learning">Q: What are some fundamental limitations inherent to machine learning?</h2>
+<p>A: Some fundamental limitations of training deep learning models are as follows:</p>
+
+<ol>
+  <li>
+    <p>Data Dependency: A model cannot be created without data. To train a deep learning model effectively, a substantial amount of relevant data is required. The model learns from this data to identify patterns and make predictions.</p>
+  </li>
+  <li>
+    <p>Limited Learning Scope: A deep learning model can only learn to recognize and operate on the patterns that are present in the input data used for training. If certain patterns or variations are missing from the training data, the model may struggle to handle unseen data effectively.</p>
+  </li>
+  <li>
+    <p>Prediction-Oriented: Machine learning, including deep learning, focuses on making predictions based on the data it has been trained on. It doesn’t inherently provide recommended actions or strategies for decision-making.</p>
+  </li>
+  <li>
+    <p>Need for Labeled Data: To train a deep learning model, not only is input data necessary, but also labeled data. Labels indicate the correct outputs for the input data, and the model learns from the correlation between the input and labels to make accurate predictions.</p>
+  </li>
+</ol>
+
+<p>Example: Suppose we want to use deep learning to build an image classifier that can distinguish between pictures of dogs and cats. To achieve this, we require a large dataset of images of dogs and cats, along with the corresponding labels indicating which pictures are dogs and which are cats. The model will learn to recognize features and patterns in the labeled data and use that knowledge to predict whether a new image contains a dog or a cat. Without labeled data, the model would lack the information it needs to make accurate predictions.</p>
+
+<h2 id="q-what-is-overfitting-and-how-does-it-occur-during-the-training-process">Q: What is overfitting and how does it occur during the training process?</h2>
+<p>A: Overfitting is a common issue in machine learning, including deep learning, where a model performs extremely well on the training data but fails to generalize well on new, unseen data. It occurs when the model memorizes specific patterns and noise present in the training data rather than learning the underlying general patterns that apply to unseen data.</p>
+
+<p>Explanation: During the training process, the model tries to minimize its error or loss on the training data, and over time, it becomes better at predicting the training examples. However, if the model is trained for too long, it may start memorizing the training data, including noise and outliers, instead of learning the essential features that are genuinely relevant to the task. As a result, the model’s performance on the validation set (unseen data) may deteriorate because it has become too specialized in the training data.</p>
+
+<p>Example: Suppose we have a deep learning model to identify handwritten digits. During the training process, the model gets better at recognizing the digits in the training dataset, achieving high accuracy on this data. However, if the model is trained for an extended period, it might start memorizing specific examples from the training set, including slight variations in writing styles and noise. As a consequence, when tested on new handwritten digits that it has not seen before, the model’s accuracy might decrease significantly, indicating that it is overfitting to the training data.</p>
+
+<h2 id="what-is-a-validation-set">What is a Validation Set?</h2>
+<p>Validation Set: Essential for training a model, the validation set is a separate dataset used to evaluate the model’s accuracy on unseen data. Measuring accuracy on the validation set helps prevent overfitting, where the model becomes too specialized in the training data and fails to generalize well to new data.</p>
+
+<h2 id="what-is-a-test-set">What is a Test Set?</h2>
+<p>A: In addition to the training and validation sets, there is a third dataset called the test set. The test set is used to assess the final performance of the trained model. Once the model has been trained and its parameters have been optimized using the training set and evaluated on the validation set, the final evaluation of the model’s performance is done on the test set. The test set provides an unbiased estimate of how well the model will perform on new, unseen data in real-world scenarios. It helps ensure that the model’s performance is reliable and not biased towards the data it was trained on.</p>
+
+<h2 id="q-why-are-deep-learning-models-hard-to-understand-particularly-compared-to-simpler-models-like-linear-regression">Q: Why are deep learning models hard to understand, particularly compared to simpler models like linear regression?</h2>
+<p>A: Deep learning models are difficult to understand because of their “deep” structure, containing hundreds or thousands of layers. Unlike simpler models like linear regression, where we can easily determine the importance of input variables based on their weights, deep neural networks have complex interactions between neurons and hidden layers, making it challenging to identify the factors influencing their predictions.</p>
+
+<h2 id="q-what-is-the-universal-approximation-theorem-in-the-context-of-neural-networks-and-what-are-its-practical-limitations">Q: What is the Universal Approximation Theorem in the context of neural networks, and what are its practical limitations?</h2>
+<p>A: The Universal Approximation Theorem states that neural networks have the ability to theoretically represent any mathematical function. In other words, given enough complexity and depth, neural networks can approximate any function to a desired degree. However, in practice, there are limitations due to the availability of data and computational resources, making it impossible to train a model to represent all functions.</p>
+
+<p>Example: Imagine you have a neural network with a large number of layers and neurons. According to the Universal Approximation Theorem, this network could approximate any function, whether it’s linear, nonlinear, or complex. However, practically, you may not have access to enough data to train the network for all possible functions, and the computational power required to optimize such a complex model may be infeasible. So, while the theorem highlights the theoretical capabilities of neural networks, practical considerations constrain their ability to approximate all functions in real-world scenarios.</p>
+
+<h2 id="q-what-are-the-essential-components-required-for-building-and-training-a-deep-learning-model">Q: What are the essential components required for building and training a deep learning model?</h2>
+<p>A: To build and train a deep learning model, you need the following components:</p>
+
+<ol>
+  <li>
+    <p>Architecture: You must choose an appropriate architecture or structure for the model, which involves selecting the type and arrangement of layers and neurons.</p>
+  </li>
+  <li>
+    <p>Data: You need a dataset to feed into the model as input, representing the examples on which the model will learn.</p>
+  </li>
+  <li>
+    <p>Labels: For most deep learning use-cases, you require labeled data, where each input data point is associated with the correct output or target value. Labels are used to compare the model’s predictions during training.</p>
+  </li>
+  <li>
+    <p>Loss Function: A loss function is necessary to quantitatively measure how well the model’s predictions match the true labels. It represents the discrepancy between the predicted output and the actual target.</p>
+  </li>
+  <li>
+    <p>Optimizer: To improve the model’s performance, you need an optimizer that updates the model’s parameters based on the loss function’s evaluation. The optimizer adjusts the model’s weights to minimize the loss and enhance its predictive capabilities.</p>
+  </li>
+</ol>
+
+<p>Example: Suppose we want to build a deep learning model for image classification to differentiate between cats and dogs. We select a convolutional neural network (CNN) as the architecture, with layers designed to recognize visual patterns. We collect a dataset of labeled images of cats and dogs. The images serve as input data, and their corresponding labels (cats or dogs) are used during training to compare the model’s predictions. We choose a loss function, such as categorical cross-entropy, to quantify the difference between predicted probabilities and true labels. With an optimizer, like stochastic gradient descent (SGD), we update the model’s parameters (weights) in each training iteration to minimize the loss and improve the model’s ability to classify new images correctly.</p>
+
+<p><img src="/assets/images/2023-08-04-Machine_Learning_Foundations_Through_QA_files/Machine_Learning_24_0.svg" alt="svg" /></p>
+
+<h2 id="q-what-are-pretrained-models-and-why-are-they-useful-in-deep-learning">Q: What are pretrained models, and why are they useful in deep learning?</h2>
+<p>A: Pretrained models are deep learning models that have been trained on large datasets for tasks other than the current one. For instance, image recognition models might be pretrained on the ImageNet dataset with 1000 classes. These models are useful because they have already learned to recognize simple features like edges and colors, which can be beneficial in various tasks.</p>
+
+<p>Example: Suppose we want to build a model to classify different types of animals, but we don’t have a large dataset for this specific task. Instead of training the model from scratch, we can use a pretrained image recognition model trained on the ImageNet dataset. This model has already learned to detect edges, colors, and other basic visual features, making it a good starting point for our animal classification task. However, since the pretrained model was not trained on the exact animal classification task, we may need to fine-tune or adapt it to perform well on our specific problem.</p>
+
+<h2 id="q-how-do-you-adapt-a-pretrained-model-for-a-specific-task-and-what-are-the-head-layers-in-this-context">Q: How do you adapt a pretrained model for a specific task, and what are the “head” layers in this context?</h2>
+<p>A: When using a pretrained model, the early layers have already learned general features from the original training task (e.g., edge and color detection in an image recognition model). However, the later layers are more specialized and specific to the original task, making them less useful for the new task.</p>
+
+<p>To make the pretrained model work for the new task, you discard the later layers and add new layers that match the requirements of your dataset and target task. These new layers become the “head” of the model. You can then train the model on your specific dataset with the new head while keeping the pretrained weights of the early layers, enabling the model to leverage the previously learned general features.</p>
+
+<p>Example: Suppose you have a pretrained image recognition model that was originally trained on the ImageNet dataset. You want to use this model for a specific task, such as classifying different species of birds. In this case, you remove the later layers of the pretrained model, which were specific to ImageNet’s 1000 classes. Then, you add new layers to the model, sized appropriately for your bird classification task. These new layers form the “head” of the model, and you train the model on your bird dataset using the pretrained weights from the early layers and random weights in the head layers. This process allows the model to quickly adapt to your bird classification task while benefiting from the general visual features learned in the early layers.</p>
+
+<h2 id="q-what-types-of-features-do-the-earlier-and-later-layers-of-a-deep-learning-model-typically-learn">Q: What types of features do the earlier and later layers of a deep learning model typically learn?</h2>
+<p>A: In a deep learning model, the earlier layers tend to learn simple features like diagonal, horizontal, and vertical edges. As we move to the later layers, the model learns more advanced features, such as car wheels, flower petals, and even outlines of animals.</p>
+
+<p>The hierarchical nature of deep learning allows it to learn progressively more abstract and meaningful features as the data moves through the layers of the network.</p>
+
+<h2 id="q-what-is-the-role-of-the-architecture-in-a-machine-learning-model">Q: What is the role of the architecture in a machine learning model?</h2>
+<p>A: The architecture of a machine learning model serves as the template or structure that the model follows. It defines the mathematical model that the machine learning algorithm tries to fit to the data.</p>
+
+<p>In machine learning, the architecture specifies the arrangement of layers, nodes, and connections in the model. For example, in a neural network, the architecture determines the number of layers, the number of neurons in each layer, and how the neurons are interconnected. Each layer performs specific computations on the data, transforming the input data into meaningful representations. The architecture plays a crucial role in determining the complexity and capacity of the model, which affects its ability to learn and generalize to new data.</p>
+
+<h2 id="q-what-are-hyperparameters-in-the-context-of-training-machine-learning-models-and-how-do-they-impact-the-training-process">Q: What are hyperparameters in the context of training machine learning models, and how do they impact the training process?</h2>
+<p>A: Hyperparameters are the parameters that define how a machine learning model is trained, but they are not learned during the training process itself. Instead, they are set before training and can significantly affect the model’s performance.</p>
+
+<p>Explanation: Hyperparameters are distinct from the model’s parameters, which are learned during training (e.g., the weights and biases in a neural network). Hyperparameters, on the other hand, control various aspects of the training process. Examples of hyperparameters include the number of epochs (how many times the model sees the entire training dataset), the learning rate (how fast the model parameters are updated during training), the batch size (number of samples used in each training iteration), and the size of the hidden layers in a neural network.</p>
+
+<p>Tuning hyperparameters is an essential part of model development, as selecting appropriate values can significantly impact the model’s ability to learn and generalize. It often involves experimentation and validation to find the optimal hyperparameter settings for a given task.</p>
+
+<p>Example: In training a neural network for image classification, we need to set hyperparameters like the number of epochs, learning rate, and batch size. If we choose too few epochs, the model might not converge to the best performance. If the learning rate is too high, the model might oscillate or diverge during training. These hyperparameters can have a substantial impact on the model’s training progress and ultimate accuracy, so it’s crucial to fine-tune them for optimal results.</p>
+
+<h2 id="q-why-is-a-gpu-graphics-processing-unit-preferred-over-a-cpu-central-processing-unit-for-deep-learning-tasks">Q: Why is a GPU (Graphics Processing Unit) preferred over a CPU (Central Processing Unit) for deep learning tasks?</h2>
+<p>A: A GPU is more suitable for deep learning due to its parallel processing capabilities, optimized memory bandwidth, and specialized hardware for tensor operations. It can efficiently handle large-scale matrix computations, making it well-suited for deep learning tasks.</p>
+
+<p>Explanation:
+The main differences between a GPU and a CPU (Central Processing Unit) lie in their designs and functionalities:</p>
+<ul>
+  <li>Parallel Processing: GPUs are designed to perform massive parallel processing. They consist of thousands of small cores capable of handling multiple tasks simultaneously. This parallelism makes GPUs well-suited for the matrix operations involved in deep learning, where many calculations can be performed at the same time.</li>
+  <li>Vectorized Operations: GPUs are optimized for vectorized operations, allowing them to execute a single instruction on multiple data elements simultaneously. This feature is advantageous in deep learning, where large datasets are processed in parallel.</li>
+  <li>Memory Bandwidth: Deep learning models often involve large amounts of data, and GPUs have higher memory bandwidth compared to CPUs. This allows them to access and move data more efficiently during computations, reducing the bottleneck caused by memory access.</li>
+  <li>Specialized Hardware: Many modern GPUs are equipped with specialized hardware and tensor cores that accelerate common deep learning operations, such as matrix multiplications used in neural network training.</li>
+  <li>Performance-to-Cost Ratio: GPUs offer better performance-to-cost ratios for deep learning tasks compared to CPUs. They provide substantial computational power at a relatively lower cost, making them popular choices for researchers and practitioners.</li>
+</ul>
+
+<p>On the other hand, CPUs are general-purpose processors designed to handle a wide range of tasks efficiently, but they are not optimized for parallel computations like GPUs. In a typical deep learning workload, where large matrix multiplications and activation functions dominate, CPUs might be slower and less effective due to the following reasons:</p>
+<ul>
+  <li>Limited Parallelism: CPUs have a smaller number of more powerful cores designed for sequential processing. While they can execute a wide variety of tasks efficiently, they lack the parallel processing capabilities of GPUs.</li>
+  <li>Memory Bottleneck: For deep learning tasks, CPUs might struggle to provide enough memory bandwidth, leading to slower data transfer and computational performance.
+-Higher Cost: CPUs are generally more expensive than GPUs for the same level of deep learning performance.</li>
+</ul>
+
+<p>Example: Let’s consider training a deep neural network for image recognition. The model requires extensive matrix computations to adjust the millions of weights during training. A GPU can perform these computations in parallel, significantly speeding up the training process. In contrast, a CPU would struggle to keep up with the same computations due to its limited parallel processing capabilities, resulting in slower training times. Therefore, for deep learning tasks, a GPU offers a more efficient and cost-effective solution compared to a CPU.</p>
+
+<h2 id="references">References</h2>
+<ul>
+  <li>Book: Howard, J., &amp; Gugger, S. (2021). Deep learning for coders with FASTAI and pytorch: AI applications without a Phd. O’Reilly Media, Inc. <a href="https://www.amazon.com/Deep-Learning-Coders-fastai-PyTorch-ebook-dp-B08C2KM7NR/dp/B08C2KM7NR">link</a></li>
+  <li>Paper: Zeiler, M. D. &amp; Fergus, R. (2013). Visualizing and Understanding Convolutional Networks (cite arxiv:1311.2901) <a href="https://arxiv.org/pdf/1311.2901.pdf">link</a></li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#basics" class="page__taxonomy-item" rel="tag">basics</a><span class="sep">, </span>
+    
+      <a href="/tags/#deep-learning" class="page__taxonomy-item" rel="tag">deep learning</a><span class="sep">, </span>
+    
+      <a href="/tags/#foundations" class="page__taxonomy-item" rel="tag">foundations</a><span class="sep">, </span>
+    
+      <a href="/tags/#machine-learning" class="page__taxonomy-item" rel="tag">machine learning</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-08-04T00:00:00-04:00">August 4, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  Share On <br>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Machine+Learning+Foundations+Through+Q%26A%20http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F08%2F04%2FMachine_Learning_Foundations_Through_QA.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F08%2F04%2FMachine_Learning_Foundations_Through_QA.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F08%2F04%2FMachine_Learning_Foundations_Through_QA.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/posts/2023/07/27/Basics_Of_DecisionTrees.html" class="pagination--pager" title="Basics of Decision Trees
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+ TO remove previous:next-->
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/07/27/Basics_Of_DecisionTrees.html" rel="permalink">Basics of Decision Trees
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          13 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Decision Trees are the gateway to machine learning. They are easy to understand and relate to. However, do we know how they really work?
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/07/20/Visual_Data_Analysis_in_Python_Part1.html" rel="permalink">Visual Data Analysis in Python: Part 1
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          22 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">In this blog post, we explore visual data analytics, leveraging data visualization to uncover insights and patterns in our datasets. In this part 1 post, we ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/07/08/Maths_LinearAlgebra_Matrices.html" rel="permalink">Machine Learning Fundamentals: Linear Algebra: Part 2-Matrices
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          39 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">In this blog post, we will try to understand matrices, their representation, properties and the various operations we can perform on them.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/06/29/Maths_LinearAlgebra.html" rel="permalink">Machine Learning Fundamentals: Linear Algebra: Part 1-Vectors
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          14 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">In this blog post, we will try to understand vectors from their base representation, their properties and the various operations we can perform on vectors.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Vimal Venugopal. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/posts/2023/08/04/Machine_Learning_Foundations_Through_QA.html";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/posts/2023/08/04/Machine_Learning_Foundations_Through_QA"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://vmlverse.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+  </body>
+</html>

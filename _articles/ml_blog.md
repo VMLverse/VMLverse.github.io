@@ -44,8 +44,51 @@
           - Write about a topic
 07:24 Books
           - Machine Learning with PyTorch and SckiKit-Learn by Raschka
+            - https://github.com/rasbt/machine-learning-book
           - Hands-On Machine Learning with SciKit-Learn, Keras & TensorFlow by Geron
 
 
 ## References
 https://www.youtube.com/watch?v=wtolixa9XTg&ab_channel=AssemblyAI
+
+## Other Resources:
+### Source: Geron ML book
+• Code examples: https://github.com/ageron/handson-ml2
+• https://www.dataquest.io/ website
+• Joel Grus, Data Science from Scratch (O’Reilly). This book presents the funda‐
+mentals of Machine Learning, and implements some of the main algorithms in
+pure Python (from scratch, as the name suggests).
+• Stephen Marsland, Machine Learning: An Algorithmic Perspective (Chapman and
+Hall). This book is a great introduction to Machine Learning, covering a wide
+range of topics in depth, with code examples in Python (also from scratch, but
+using NumPy).
+• Sebastian Raschka, Python Machine Learning (Packt Publishing). Also a great
+introduction to Machine Learning, this book leverages Python open source libra‐
+ries (Pylearn 2 and Theano).
+• François Chollet, Deep Learning with Python (Manning). A very practical book
+that covers a large range of topics in a clear and concise way, as you might expect
+from the author of the excellent Keras library. It favors code examples over math‐
+ematical theory.
+• Yaser S. Abu-Mostafa, Malik Magdon-Ismail, and Hsuan-Tien Lin, Learning from
+Data (AMLBook). A rather theoretical approach to ML, this book provides deep
+insights, in particular on the bias/variance tradeoff (see Chapter 4).
+• Stuart Russell and Peter Norvig, Artificial Intelligence: A Modern Approach, 3rd
+Edition (Pearson). This is a great (and huge) book covering an incredible amount
+of topics, including Machine Learning. It helps put ML into perspective.
+
+### Deep Learning:
+- Book: Michael Nielsen - http://neuralnetworksanddeeplearning.com/
+- 
+- - 1 year skilling up full time in DL specifically, first FastAI and then Full Stack Deep Learning and Deep Learning Systems (DLS: https://dlsyscourse.org/lectures/), and then also implementing papers I found interesting
+- first FastAI: https://course.fast.ai/Resources/book.html 
+- Two: Full Stack Deep Learning (https://fullstackdeeplearning.com/course/)
+- Three: Deep Learning Systems (DLS: https://dlsyscourse.org/lectures/)
+
+### Reddit Recommendations:
+- "Understanding Deep Learning" by Simon J.D. Prince
+
+### Datasets
+-  the Oxford-IIIT Pet Dataset that contains 7,349 images of cats and dogs from 37 different breeds
+https://www.robots.ox.ac.uk/~vgg/data/pets/ 
+- Famous Imagenet dataset
+https://image-net.org/

@@ -46,4 +46,10 @@ var store = [{
         "tags": ["decision trees","machine learning fundamentals","entropy","heuristics","mnist"],
         "url": "/posts/2023/07/27/Basics_Of_DecisionTrees.html",
         "teaser": null
+      },{
+        "title": "Machine Learning Foundations Through Q&A",
+        "excerpt":"Introduction In this article, we will review the basics of Machine learning &amp; Deep learning in the form of Q&amp;A. Consider this as some sort of FAQs on ML &amp; DL when someone new to the field is trying to understand. We will explore key concepts, applications, and common terminologies...","categories": ["posts"],
+        "tags": ["machine learning","deep learning","foundations","basics"],
+        "url": "/posts/2023/08/04/Machine_Learning_Foundations_Through_QA.html",
+        "teaser": null
       },]

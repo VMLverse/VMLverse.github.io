@@ -471,8 +471,3 @@ Cons:
 7. The model can only interpolate, not extrapolate, making constant predictions for objects beyond the training data's feature space.
 
 These limitations should be taken into consideration when using decision trees and can be mitigated through techniques like pruning, ensemble methods, and setting constraints on the tree's complexity.
-
-
-```python
-
-```
