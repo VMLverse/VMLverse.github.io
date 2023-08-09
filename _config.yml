@@ -113,10 +113,16 @@ whitelist:
   - jekyll-include-cache
   - jemoji
 
-#DEFINE NEW COLLECTION
+#DEFINE NEW COLLECTION  - projects
 collections:
   projects:
     output: true
+
+#DEFINE NEW COLLECTION  - projects
+collections:
+  miniprojects:
+    output: true
+    permalink: /projects/:collection/:path/
 
 # default YAML front matter
 defaults:
@@ -158,6 +164,17 @@ defaults:
       comments: true
       share: true
       related: true
+  # miniprojects
+  - scope:
+      path: ""
+      type: miniprojects
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
 
 #########################
 
@@ -181,6 +198,7 @@ comments:
 include:
   - _pages
   - code
+  - _miniprojects
 
 exclude:
     - notes.log

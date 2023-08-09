@@ -1,4 +1,10 @@
 var store = [{
+        "title": "Computer Vision: Happy Face vs Sad Face Classifier",
+        "excerpt":"Basic Steps The basic steps we’ll take are: Use DuckDuckGo to search for images of “happy humans” Use DuckDuckGo to search for images of “sad humans” Fine-tune a pretrained neural network to recognise these two groups Try running this model on a happy human and see if it works. We...","categories": [],
+        "tags": [],
+        "url": "/projects/miniprojects/MiniProject_Happy_Sad_Classifier/",
+        "teaser": "/assets/images/MiniProject_Happy_Sad_Classifier_files/MiniProject_Happy_Sad_Classifier_23_0.png"
+      },{
         "title": "Building my Personal Site with Jekyll & Minimal Mistakes",
         "excerpt":"Prelude With my job as PS consultant, I had no projects to host on github. I love writing and I wanted to write about the books I read or other occassional inspirations I get from random things. Ever since I thought about having a blog, my friend has been recommending...","categories": ["posts"],
         "tags": [],
@@ -52,4 +58,4 @@ var store = [{
         "tags": ["machine learning","deep learning","foundations","basics"],
         "url": "/posts/2023/08/04/Machine_Learning_Foundations_Through_QA.html",
         "teaser": null
-      },]
+      }]

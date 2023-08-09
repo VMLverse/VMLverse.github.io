@@ -9,6 +9,8 @@ classes: wide
 header:
     overlay_image: /assets/images/joel-filipe-small-warmer.jpg
 ---
+## Mini-Projects
+[Go to MiniProjects](./miniprojects/){: .btn .btn--primary .btn--small}
 ## Projects
 - ### Semi Supervised Learning - FixMatch 
   **Summary:** Implemented Fix Match SSL Algorithm on CIFAR-10 database and run ablation experiments on the essential components of Fix Match. Fix Match algorithm supplements limited labelled data by augmenting the images to produce additional labeled data. Was able to get an accuracy of 94.67% on using only 250 labeled examples on a WideResNet CNN Model.<br />
