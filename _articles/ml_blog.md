@@ -92,3 +92,6 @@ of topics, including Machine Learning. It helps put ML into perspective.
 https://www.robots.ox.ac.uk/~vgg/data/pets/ 
 - Famous Imagenet dataset
 https://image-net.org/
+
+### Learney Video List
+Complete StatQuest Videos: https://maps.joindeltaacademy.com/maps/StatQuest

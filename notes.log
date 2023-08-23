@@ -29,8 +29,10 @@ Use find and replace all:
 Find: '2023-08-04-Machine_Learning_Foundations_Through_QA_files/'
 Replace: '/assets/images/2023-08-04-Machine_Learning_Foundations_Through_QA_files/'
 Note: the beginning '/' is important
+
 7. Update any latex math referencese from $ to $$.
 For some reason ipynb markdown supports single $ sign to indicte $math_formula$ while .md file (or jekyll) requires two $$ sign to indicate $math_formula$.
+
 8. Finally include metadata at the beginning of the article
 ---
 title:  "Machine Learning Foundations Through Q&A"
@@ -50,6 +52,7 @@ tags:
 '$ bundle exec jekyll serve'
 Check out the blog posted at Server address: http://127.0.0.1:4000/
 To stop the local post, press ctrl-c to stop.
+
 10. If all good, publish the article to main github.
 - use Command+P to bring up the quick menu bar in VSCode
 - search for "git commit" to save changes to local repository

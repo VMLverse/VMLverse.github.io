@@ -1,10 +1,4 @@
 var store = [{
-        "title": "Computer Vision: Happy Face vs Sad Face Classifier",
-        "excerpt":"Basic Steps The basic steps we’ll take are: Use DuckDuckGo to search for images of “happy humans” Use DuckDuckGo to search for images of “sad humans” Fine-tune a pretrained neural network to recognise these two groups Try running this model on a happy human and see if it works. We...","categories": [],
-        "tags": [],
-        "url": "/projects/miniprojects/MiniProject_Happy_Sad_Classifier/",
-        "teaser": "/assets/images/MiniProject_Happy_Sad_Classifier_files/MiniProject_Happy_Sad_Classifier_23_0.png"
-      },{
         "title": "Building my Personal Site with Jekyll & Minimal Mistakes",
         "excerpt":"Prelude With my job as PS consultant, I had no projects to host on github. I love writing and I wanted to write about the books I read or other occassional inspirations I get from random things. Ever since I thought about having a blog, my friend has been recommending...","categories": ["posts"],
         "tags": [],
@@ -58,4 +52,16 @@ var store = [{
         "tags": ["machine learning","deep learning","foundations","basics"],
         "url": "/posts/2023/08/04/Machine_Learning_Foundations_Through_QA.html",
         "teaser": null
+      },{
+        "title": "MiniProject: Emotion Classifier - Part1",
+        "excerpt":"Introduction This is part 1 of my miniproject series on building a human emotion classifier. In this project we are going to using a basic CNN model resnet34 that was already pre-trained on ImageNet database. We are also going to apply transfer learning to fine-tune the model using images downloaded...","categories": [],
+        "tags": ["cnn","classifier","transfer learning","computer vision","resnet"],
+        "url": "/2023/08/04/MiniProject_EmotionClassifer_Part1.html",
+        "teaser": "/assets/images/MiniProject_Happy_Sad_Classifier_files/MiniProject_Happy_Sad_Classifier_23_0.png"
+      },{
+        "title": "MiniProject: Emotion Classifier - Part2",
+        "excerpt":"Introduction In this part2 of our Human Emotion Classifier Mini Project, we will look at augmenting and cleaning our data that is used for training our model. This article will be an extension of the previous part1 of Human Emotion Classifier. Like in the previous project, this python implementation will...","categories": [],
+        "tags": ["cnn","classifier","transfer learning","computer vision","resnet"],
+        "url": "/2023/08/09/MiniProject_EmotionClassifer_Part2.html",
+        "teaser": "/assets/images/2023-08-09-MiniProject_EmotionClassifer_Part2_files/2023-08-09-MiniProject_EmotionClassifer_Part2_47_0.png"
       }]

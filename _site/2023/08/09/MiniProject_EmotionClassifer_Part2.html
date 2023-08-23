@@ -1,0 +1,1567 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>MiniProject: Emotion Classifier - Part2 | VMLverse</title>
+<meta name="description" content="Part2 of Building a Human Emotion Classifier using CNN by applying transfer Learning on Resnet18 implemented with FastAI">
+
+
+  <meta name="author" content="Vimal Venugopal">
+  
+  <meta property="article:author" content="Vimal Venugopal">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="VMLverse">
+<meta property="og:title" content="MiniProject: Emotion Classifier - Part2">
+<meta property="og:url" content="http://localhost:4000/2023/08/09/MiniProject_EmotionClassifer_Part2.html">
+
+
+  <meta property="og:description" content="Part2 of Building a Human Emotion Classifier using CNN by applying transfer Learning on Resnet18 implemented with FastAI">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/2023-08-09-MiniProject_EmotionClassifer_Part2_files/2023-08-09-MiniProject_EmotionClassifer_Part2_47_0.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2023-08-09T00:00:00-04:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/2023/08/09/MiniProject_EmotionClassifer_Part2.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Vimal Venugopal",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="VMLverse Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo_plain_blck_bg.png" alt="VMLverse"></a>
+        
+        <a class="site-title" href="/">
+          VMLverse
+          <span class="site-subtitle">Explore | Experiment | Expand</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/blog/">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/projects/">Projects</a>
+            </li><li class="masthead__menu-item">
+              <a href="/docs/resume.pdf">Resume</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/DSC1717square.jpeg" alt="Vimal Venugopal" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Vimal Venugopal</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>a curious mind with a passion for machine learning, photography and travel</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://cognitivescrawls.wordpress.com/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Wordpress</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="MiniProject: Emotion Classifier - Part2">
+    <meta itemprop="description" content="Part2 of Building a Human Emotion Classifier using CNN by applying transfer Learning on Resnet18 implemented with FastAI">
+    <meta itemprop="datePublished" content="2023-08-09T00:00:00-04:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">MiniProject: Emotion Classifier - Part2
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          16 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> Contents</h4></header>
+              <ul class="toc__menu"><li><a href="#introduction">Introduction</a></li><li><a href="#step1-setup">STEP1: Setup</a></li><li><a href="#step2-loading-images-into-model">STEP2: Loading Images into Model</a></li><li><a href="#step3-data-augmentation">STEP3: Data Augmentation</a></li><li><a href="#step4-data-cleaning">STEP4: Data Cleaning</a></li><li><a href="#step5-pickling-our-trained-model">STEP5: Pickling our Trained Model</a></li><li><a href="#references">References</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="introduction">Introduction</h2>
+<p>In this part2 of our Human Emotion Classifier Mini Project, we will look at augmenting and cleaning our data that is used for training our model.
+This article will be an extension of the previous <a href="/2023/08/04/MiniProject_EmotionClassifer_Part1.html">part1 of Human Emotion Classifier</a>. Like in the previous project, this python implementation will be based on fastai library.</p>
+
+<h2 id="step1-setup">STEP1: Setup</h2>
+<p>Before we proceed with augmenting &amp; cleaning data, lets setup this notebook by downloading some test data for our Happy Sad classifier and setting up the model.</p>
+
+<p>In this step we will be installing required packages and downloading images to our colab workspace. Feel free to review my <a href="projects/miniprojects/MiniProject_Happy_Sad_Classifier/">previous post</a> for explanation of the below code.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># `!pip install -Uqq &lt;libraries&gt;` upgrades to the latest version of &lt;libraries&gt;
+</span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">Uqq</span> <span class="n">fastai</span> <span class="n">duckduckgo_search</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">duckduckgo_search</span> <span class="kn">import</span> <span class="n">ddg_images</span>
+<span class="kn">from</span> <span class="nn">fastcore.all</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="k">def</span> <span class="nf">search_images</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">max_images</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Searching for '</span><span class="si">{</span><span class="n">term</span><span class="si">}</span><span class="s">'"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">L</span><span class="p">(</span><span class="n">ddg_images</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">max_results</span><span class="o">=</span><span class="n">max_images</span><span class="p">)).</span><span class="n">itemgot</span><span class="p">(</span><span class="s">'image'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Test run for a single image search using ddg.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#NB: `search_images` depends on duckduckgo.com, which doesn't always return correct responses.
+#    If you get a JSON error, just try running it again (it may take a couple of tries).
+</span><span class="n">urls</span> <span class="o">=</span> <span class="n">search_images</span><span class="p">(</span><span class="s">'happy human face'</span><span class="p">,</span> <span class="n">max_images</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">urls</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Searching for 'happy human face'
+
+
+/usr/local/lib/python3.10/dist-packages/duckduckgo_search/compat.py:60: UserWarning: ddg_images is deprecated. Use DDGS().images() generator
+  warnings.warn("ddg_images is deprecated. Use DDGS().images() generator")
+/usr/local/lib/python3.10/dist-packages/duckduckgo_search/compat.py:64: UserWarning: parameter page is deprecated
+  warnings.warn("parameter page is deprecated")
+/usr/local/lib/python3.10/dist-packages/duckduckgo_search/compat.py:66: UserWarning: parameter max_results is deprecated
+  warnings.warn("parameter max_results is deprecated")
+
+
+
+
+
+'https://i.pinimg.com/736x/08/15/db/0815db06df850e27e74411a3232ffa3e--smiling-eyes-heart-face.jpg'
+</code></pre></div></div>
+
+<p>Download the image URL and save to colab, and open using PIL.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">fastdownload</span> <span class="kn">import</span> <span class="n">download_url</span>
+<span class="n">dest</span> <span class="o">=</span> <span class="s">'happy.jpg'</span>
+<span class="n">download_url</span><span class="p">(</span><span class="n">urls</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dest</span><span class="p">,</span> <span class="n">show_progress</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">fastai.vision.all</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+<span class="n">im</span><span class="p">.</span><span class="n">to_thumb</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="mi">256</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-08-09-MiniProject_EmotionClassifer_Part2_files/2023-08-09-MiniProject_EmotionClassifer_Part2_7_0.png" alt="png" /></p>
+
+<p>Great, our test script for searching and downloading images works fine.
+Now lets make a new directory and download images.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">face_types</span> <span class="o">=</span> <span class="s">'happy'</span><span class="p">,</span><span class="s">'sad'</span><span class="p">,</span> <span class="s">'angry'</span>
+<span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s">'faces'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">():</span>
+    <span class="n">path</span><span class="p">.</span><span class="n">mkdir</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">face_types</span><span class="p">:</span>
+        <span class="n">dest</span> <span class="o">=</span> <span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="n">o</span><span class="p">)</span>
+        <span class="n">dest</span><span class="p">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">download_images</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">urls</span><span class="o">=</span><span class="n">search_images</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">o</span><span class="si">}</span><span class="s"> human face + front view'</span><span class="p">,</span> <span class="n">max_images</span><span class="o">=</span><span class="mi">100</span><span class="p">))</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">download_images</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">urls</span><span class="o">=</span><span class="n">search_images</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">o</span><span class="si">}</span><span class="s"> face + front view'</span><span class="p">,</span> <span class="n">max_images</span><span class="o">=</span><span class="mi">100</span><span class="p">))</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">download_images</span><span class="p">(</span><span class="n">dest</span><span class="p">,</span> <span class="n">urls</span><span class="o">=</span><span class="n">search_images</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">o</span><span class="si">}</span><span class="s"> person face + front closeup'</span><span class="p">,</span> <span class="n">max_images</span><span class="o">=</span><span class="mi">100</span><span class="p">))</span>
+
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Searching for 'happy human face + front view'
+Searching for 'happy face + front view'
+Searching for 'happy person face + front closeup'
+Searching for 'sad human face + front view'
+Searching for 'sad face + front view'
+Searching for 'sad person face + front closeup'
+Searching for 'angry human face + front view'
+Searching for 'angry face + front view'
+Searching for 'angry person face + front closeup'
+</code></pre></div></div>
+
+<p>You can delete the folder if you want to do a fresh download.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#path.delete()
+</span></code></pre></div></div>
+
+<p>Lets check the number of files downloaded to each category:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Specify the directory path
+</span><span class="n">foldername</span> <span class="o">=</span> <span class="s">"faces"</span>  <span class="c1"># Replace with the actual path
+</span>
+<span class="c1"># Function to count files in a directory
+</span><span class="k">def</span> <span class="nf">count_files_in_directory</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">len</span><span class="p">([</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">os</span><span class="p">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span> <span class="k">if</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">f</span><span class="p">))])</span>
+
+<span class="c1"># Loop through each subdirectory
+</span><span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">face_types</span><span class="p">:</span>
+    <span class="n">subdirectory</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">foldername</span><span class="p">,</span> <span class="n">o</span><span class="p">)</span>
+    <span class="n">num_files</span> <span class="o">=</span> <span class="n">count_files_in_directory</span><span class="p">(</span><span class="n">subdirectory</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Number of files in '</span><span class="si">{</span><span class="n">o</span><span class="si">}</span><span class="s">' subdirectory: </span><span class="si">{</span><span class="n">num_files</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Number of files in 'happy' subdirectory: 265
+Number of files in 'sad' subdirectory: 264
+Number of files in 'angry' subdirectory: 261
+</code></pre></div></div>
+
+<p>Quick check if our path has images</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fns</span> <span class="o">=</span> <span class="n">get_image_files</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">fns</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(#787) [Path('faces/happy/803d9ef1-d50b-4bd8-963f-69e58b4cd496.jpg'),Path('faces/happy/f1eb73df-5b2d-4c30-b914-d60281101972.jpg'),Path('faces/happy/195b79ea-4577-4cb5-8957-21e35ad82791.jpg'),Path('faces/happy/46d5a029-e0e4-4ee1-ae46-c59ad04d14fb.jpg'),Path('faces/happy/5aaa2350-4c9c-4e1e-8f94-5e66cb6eb618.jpg'),Path('faces/happy/c0d0e7be-43c6-44c3-8ea5-dc00cc64eac7.jpg'),Path('faces/happy/9a3ea967-9955-4a6a-a504-b850d9393419.jpg'),Path('faces/happy/9eebd409-3bf2-423b-89d5-fe3e2608c457.jpg'),Path('faces/happy/0624746c-e5d8-470f-bb2a-2fecd7e3bd6d.jpg'),Path('faces/happy/801068e3-a8c6-4d53-a254-10f02f60267d.jpg')...]
+</code></pre></div></div>
+
+<p>Some of our downloaded images might be corrupt too. We can check for failed images using  fastai’s <code class="language-plaintext highlighter-rouge">verify_images</code> function.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">failed</span> <span class="o">=</span> <span class="n">verify_images</span><span class="p">(</span><span class="n">fns</span><span class="p">)</span>
+<span class="n">failed</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(#18) [Path('faces/happy/40db1e96-dc45-488f-b73e-c04c976d3a54.jpg'),Path('faces/happy/2d2b4b70-89ce-4df1-8a03-2954d2f2fd33.png'),Path('faces/happy/e4f8cea9-6733-4d97-9ff2-acc25e366030.jpg'),Path('faces/happy/0238f319-85ce-431c-b165-cae404e9f0f9.jpg'),Path('faces/happy/8a37e7fd-0ea8-4d60-b9de-211be7f45177.svg'),Path('faces/happy/cf6a3985-bbf8-490a-bc38-54c5c89136cb.svg'),Path('faces/happy/32671e2c-aea5-42f2-a1d8-f68bf2d3896a.svg'),Path('faces/happy/cad5597a-258d-4e70-af39-768ba4da7158.jpg'),Path('faces/angry/ba2932e9-fa89-4409-b6ca-a243c79b7d58.jpg'),Path('faces/angry/e55b132a-a074-4ed5-9d3c-36c96506bf00.jpg')...]
+</code></pre></div></div>
+
+<p>We can delete (or remove) the failed images by running the unlink method.</p>
+
+<p>Like most fastai functions that return a collection, verify_images returns an object of type L, which includes the map method. This calls the passed function on each element of the collection:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">failed</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="n">unlink</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Note: You can use ??verify_images to lookup function information.</p>
+
+<p>We have now completed step#1 of downloading images for training our model. We will now move on to the next step on how we can setup fastai dataloader function to feed these images into our model.</p>
+
+<h2 id="step2-loading-images-into-model">STEP2: Loading Images into Model</h2>
+
+<p>We will be using fastai’s <code class="language-plaintext highlighter-rouge">DataLoaders</code> class which will help us load the images into the model. It will also help us split the model into train and validation set.</p>
+
+<p>To turn our downloaded data into a DataLoaders object we need to tell fastai at least four things:</p>
+
+<ul>
+  <li>What kinds of data we are working with</li>
+  <li>How to get the list of items</li>
+  <li>How to label these items</li>
+  <li>How to create the validation set</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">faces</span> <span class="o">=</span> <span class="n">DataBlock</span><span class="p">(</span>
+    <span class="n">blocks</span><span class="o">=</span><span class="p">(</span><span class="n">ImageBlock</span><span class="p">,</span> <span class="n">CategoryBlock</span><span class="p">),</span>
+    <span class="n">get_items</span><span class="o">=</span><span class="n">get_image_files</span><span class="p">,</span>
+    <span class="n">splitter</span><span class="o">=</span><span class="n">RandomSplitter</span><span class="p">(</span><span class="n">valid_pct</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+    <span class="n">get_y</span><span class="o">=</span><span class="n">parent_label</span><span class="p">,</span>
+    <span class="n">item_tfms</span><span class="o">=</span><span class="n">Resize</span><span class="p">(</span><span class="mi">128</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>There are lots of things going on in this one block of code. Let me break down for you:</p>
+<ul>
+  <li>first we provide a tuple where we specify what types we want for the independent and dependent variables: <code class="language-plaintext highlighter-rouge">blocks=(ImageBlock, CategoryBlock)</code></li>
+  <li>The get_image_files function takes a path, and returns a list of all of the images in that path (recursively, by default): <code class="language-plaintext highlighter-rouge">get_items=get_image_files</code></li>
+  <li>randomly split 20% of the data
+ as validation set <code class="language-plaintext highlighter-rouge">splitter=RandomSplitter(valid_pct=0.2, seed=42)</code></li>
+  <li><code class="language-plaintext highlighter-rouge">get_y=parent_label</code>, parent_label is a function provided by fastai that simply gets the name of the folder a file is in.</li>
+  <li><code class="language-plaintext highlighter-rouge">item_tfms=Resize(128)</code> here we are specificing ‘resize to 128 pixels’ as the item transformation. More on this coming below.</li>
+</ul>
+
+<p>Note: The independent variable (x) is the thing we are using to make predictions from, and the dependent variable (y) is our target.</p>
+
+<p>With the above ‘faces’ variable, we have created a <strong>template</strong> class for creating a DataLoaders. We can now instantiate a new instance of the dataloaders by specifying the path input.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dls</span> <span class="o">=</span> <span class="n">faces</span><span class="p">.</span><span class="n">dataloaders</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>A DataLoaders includes validation and training DataLoaders.</li>
+  <li>DataLoader is a class that provides batches of a few items at a time to the GPU.</li>
+  <li>When you loop through a DataLoader fastai will give you 64 (by default) items at a time, all stacked up into a single tensor. We can take a look at a few of those items by calling the show_batch method on a DataLoader:</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dls</span><span class="p">.</span><span class="n">valid</span><span class="p">.</span><span class="n">show_batch</span><span class="p">(</span><span class="n">max_n</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-08-09-MiniProject_EmotionClassifer_Part2_files/2023-08-09-MiniProject_EmotionClassifer_Part2_30_1.png" alt="png" /></p>
+
+<p><strong>Item Transformations:</strong></p>
+
+<p><strong>Why need a transform?</strong></p>
+
+<p>Our images are all different sizes, and this is a problem for deep learning: we don’t feed the model one image at a time but several of them (what we call a mini-batch). To group them in a big array (usually called a tensor) that is going to go through our model, they all need to be of the same size. So, we need to add a transform which will resize these images to the same size.</p>
+
+<p>The following are some of the transforms:</p>
+
+<ul>
+  <li>
+    <p>resize - crops the images to fit a square shape of the size requested. This can result in losing some important details. This is the default as seen above.</p>
+  </li>
+  <li>
+    <p>Squish - squish or stretch the images, but they end up as unrealistic shapes, leading to a model that learns that things look different to how they actually are, which we would expect to result in lower accuracy</p>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">faces</span> <span class="o">=</span> <span class="n">faces</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">item_tfms</span><span class="o">=</span><span class="n">Resize</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">ResizeMethod</span><span class="p">.</span><span class="n">Squish</span><span class="p">))</span>
+<span class="n">dls</span> <span class="o">=</span> <span class="n">faces</span><span class="p">.</span><span class="n">dataloaders</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">dls</span><span class="p">.</span><span class="n">valid</span><span class="p">.</span><span class="n">show_batch</span><span class="p">(</span><span class="n">max_n</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-08-09-MiniProject_EmotionClassifer_Part2_files/2023-08-09-MiniProject_EmotionClassifer_Part2_35_0.png" alt="png" /></p>
+
+<ul>
+  <li>Padding - If we pad the images then we have a whole lot of empty space, which is just wasted computation for our model and results in a lower effective resolution for the part of the image we actually use.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">faces</span> <span class="o">=</span> <span class="n">faces</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">item_tfms</span><span class="o">=</span><span class="n">Resize</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">ResizeMethod</span><span class="p">.</span><span class="n">Pad</span><span class="p">,</span> <span class="n">pad_mode</span><span class="o">=</span><span class="s">'zeros'</span><span class="p">))</span>
+<span class="n">dls</span> <span class="o">=</span> <span class="n">faces</span><span class="p">.</span><span class="n">dataloaders</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">dls</span><span class="p">.</span><span class="n">valid</span><span class="p">.</span><span class="n">show_batch</span><span class="p">(</span><span class="n">max_n</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-08-09-MiniProject_EmotionClassifer_Part2_files/2023-08-09-MiniProject_EmotionClassifer_Part2_37_0.png" alt="png" /></p>
+
+<p>However, given these resize techniques, none of these seem useful. Croping may leave out important information. Squishing may cause pictures to appear weird. Padding just adds additional computational time.</p>
+
+<p><strong>Is there any better resize technique?</strong></p>
+
+<p>Yes! Introducing the ‘<strong>random resize crop</strong>’ technique as our savior - Randomly select part of the image, and crop to just that part.</p>
+<ul>
+  <li>On each epoch (which is one complete pass through all of our images in the dataset) we randomly select a different part of each image.</li>
+  <li>This means that our model can learn to focus on, and recognize, different features in our images.</li>
+  <li>
+    <p>It also reflects how images work in the real world: different photos of the same thing may be framed in slightly different ways.</p>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">min_scale</code> determines how much of the image to select at minimum each time. In our code, we say to select atleast 30% of our image each time a random crop happens. we dont want to go smaller than that.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">faces</span> <span class="o">=</span> <span class="n">faces</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">item_tfms</span><span class="o">=</span><span class="n">RandomResizedCrop</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">min_scale</span><span class="o">=</span><span class="mf">0.3</span><span class="p">))</span>
+<span class="n">dls</span> <span class="o">=</span> <span class="n">faces</span><span class="p">.</span><span class="n">dataloaders</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">dls</span><span class="p">.</span><span class="n">valid</span><span class="p">.</span><span class="n">show_batch</span><span class="p">(</span><span class="n">max_n</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-08-09-MiniProject_EmotionClassifer_Part2_files/2023-08-09-MiniProject_EmotionClassifer_Part2_41_0.png" alt="png" /></p>
+
+<p>This is the end of step#2. To recap:</p>
+<ul>
+  <li>Our goal was to create a way to feed our downloaded images into our model. We determined definig a <code class="language-plaintext highlighter-rouge">Dataloaders</code> class is the way to achieve that.</li>
+  <li>We also ran into a problem of making the images into equal size and our solution was to use random resize crop.</li>
+</ul>
+
+<p>In the next step we can see how we can use this same function to ‘augment’ our data.</p>
+
+<h2 id="step3-data-augmentation">STEP3: Data Augmentation</h2>
+
+<p>Data augmentation refers to creating random variations of our input data, such that they appear different, but do not actually change the meaning of the data.</p>
+
+<p>In our previous implementation of Random Resize Cropping, you must have noticed the <code class="language-plaintext highlighter-rouge">unique=False</code> setting. We are telling to NOT have the same image repeated during RandomResizedCrop transform. However, if we set <code class="language-plaintext highlighter-rouge">unique=True</code> we can generate multiple random crops of the same image - thus ‘augmenting’ our dataset.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">faces</span> <span class="o">=</span> <span class="n">faces</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">item_tfms</span><span class="o">=</span><span class="n">RandomResizedCrop</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span> <span class="n">min_scale</span><span class="o">=</span><span class="mf">0.3</span><span class="p">))</span>
+<span class="n">dls</span> <span class="o">=</span> <span class="n">faces</span><span class="p">.</span><span class="n">dataloaders</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">dls</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">show_batch</span><span class="p">(</span><span class="n">max_n</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-08-09-MiniProject_EmotionClassifer_Part2_files/2023-08-09-MiniProject_EmotionClassifer_Part2_45_0.png" alt="png" /></p>
+
+<p>Other common data augmentation techniques for images are rotation, flipping, perspective warping, brightness changes and contrast changes.</p>
+
+<p>Because our images are now all the same size, we can apply these augmentations to an entire batch of them using the GPU, which will save a lot of time. To tell fastai we want to use these transforms on a batch, we use the <code class="language-plaintext highlighter-rouge">batch_tfms</code> parameter.</p>
+
+<p>Note: RandomResizedCrop is NOT used in this example, so you can see the differences more clearly; The amount of augmentation is also doubled compared to the default, for the same reason.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">faces</span> <span class="o">=</span> <span class="n">faces</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">item_tfms</span><span class="o">=</span><span class="n">Resize</span><span class="p">(</span><span class="mi">128</span><span class="p">),</span> <span class="n">batch_tfms</span><span class="o">=</span><span class="n">aug_transforms</span><span class="p">(</span><span class="n">mult</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">dls</span> <span class="o">=</span> <span class="n">faces</span><span class="p">.</span><span class="n">dataloaders</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">dls</span><span class="p">.</span><span class="n">train</span><span class="p">.</span><span class="n">show_batch</span><span class="p">(</span><span class="n">max_n</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">unique</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-08-09-MiniProject_EmotionClassifer_Part2_files/2023-08-09-MiniProject_EmotionClassifer_Part2_47_0.png" alt="png" /></p>
+
+<p>Personally, am not new to Data Augmentation. In fact, my <a href="/projects/">final project</a> during my Deep Learning semester at Georgia Tech was in the field of Semi-Supervised Learning (SSL) which uses similar techniques to increase your training data if you are short on labelled data.</p>
+
+<p>Well, thats the quick intro to step#3, data augmentation. To recap, we have:</p>
+<ul>
+  <li>made use of batch transform through GPU since all our images are now of equal size after resizing.</li>
+  <li>Used random augmentation techniques with random cropping to augment or increase our dataset size.</li>
+</ul>
+
+<h2 id="step4-data-cleaning">STEP4: Data Cleaning</h2>
+
+<p>Before we clean our data, we would run our collected data against our model.</p>
+
+<p><strong>Why do we train our model before training it?</strong>
+Imagine cleaning our data directly. On what basis do we tell a good sample from a bad sample? If we train our model, we would get output prediction probability.
+From this we will know which images are causing poor performance and we can selectly remove those data.</p>
+
+<p><strong>Model Driven DataCleaning:</strong></p>
+
+<p>In order to train our model, we prepare our <code class="language-plaintext highlighter-rouge">Dataloaders</code> template class for feeding our data into our model.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">faces</span> <span class="o">=</span> <span class="n">faces</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="n">item_tfms</span><span class="o">=</span><span class="n">RandomResizedCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="n">min_scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
+    <span class="n">batch_tfms</span><span class="o">=</span><span class="n">aug_transforms</span><span class="p">())</span>
+<span class="n">dls</span> <span class="o">=</span> <span class="n">faces</span><span class="p">.</span><span class="n">dataloaders</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>In the above code:</p>
+<ul>
+  <li>we standardize our image sizes to 224p using <code class="language-plaintext highlighter-rouge">RandomResizedCrop</code></li>
+  <li>Finally we also apply <code class="language-plaintext highlighter-rouge">aug_transforms</code> to augment our exisitng data - this is required since we downloaded only 150 images per class.</li>
+</ul>
+
+<p>We can now feed this data into our model and run it.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">learn</span> <span class="o">=</span> <span class="n">vision_learner</span><span class="p">(</span><span class="n">dls</span><span class="p">,</span> <span class="n">resnet34</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">error_rate</span><span class="p">)</span>
+<span class="n">learn</span><span class="p">.</span><span class="n">fine_tune</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/lib/python3.10/dist-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet34_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet34_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+</code></pre></div></div>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>error_rate</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>1.937506</td>
+      <td>1.181332</td>
+      <td>0.483660</td>
+      <td>00:19</td>
+    </tr>
+  </tbody>
+</table>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>error_rate</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>1.322784</td>
+      <td>0.963943</td>
+      <td>0.405229</td>
+      <td>00:20</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>1.150738</td>
+      <td>0.952749</td>
+      <td>0.320261</td>
+      <td>00:20</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.962727</td>
+      <td>0.861842</td>
+      <td>0.254902</td>
+      <td>00:19</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0.869386</td>
+      <td>0.816627</td>
+      <td>0.254902</td>
+      <td>00:21</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Confusion Matrix:</strong>
+Now that we have trained our model, we need to see where exactly our model is making mistakes. <em>Confusion Matrix</em> comes to our rescue.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">interp</span> <span class="o">=</span> <span class="n">ClassificationInterpretation</span><span class="p">.</span><span class="n">from_learner</span><span class="p">(</span><span class="n">learn</span><span class="p">)</span>
+<span class="n">interp</span><span class="p">.</span><span class="n">plot_confusion_matrix</span><span class="p">()</span>
+</code></pre></div></div>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<p><img src="/assets/images/2023-08-09-MiniProject_EmotionClassifer_Part2_files/2023-08-09-MiniProject_EmotionClassifer_Part2_57_4.png" alt="png" /></p>
+
+<p>The labels in confusion matrix make it easy to interpret it. The rows represent the actual labels and the columns represent the predicted labels. Ideally we would want all the numbers to fall along diagonal; That way, the predicted labels matches the actual labels.</p>
+
+<p>However in this case, it appears the model is able to perform really well(14/16=87.5%) on “Angry” faces😠, Somewhat well(9/18=50%) on Happy faces😀 and moderately well(7/16=43.75%) on “sad” faces😞.</p>
+
+<p><strong>Determining reason for errors:</strong></p>
+
+<p>We have blindly fed the data into our model and expecting it to perform well. We donot know for sure if the errors are due to model, bad image sample(outliers) or even wrong labels.</p>
+
+<p>To introspect into this, lets pull down the images and rank them in order of their losses. The loss is a number that is higher if the model is incorrect (especially if it’s also confident of its incorrect answer), or if it’s correct, but not confident of its correct answer.</p>
+
+<p>In fastai, <code class="language-plaintext highlighter-rouge">plot_top_losses</code> shows us the images with the highest loss in our dataset. As the title of the output says, each image is labeled with four things: prediction, actual (target label), loss, and probability. The probability here is the confidence level, from zero to one, that the model has assigned to its prediction:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">interp</span><span class="p">.</span><span class="n">plot_top_losses</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<p><img src="/assets/images/2023-08-09-MiniProject_EmotionClassifer_Part2_files/2023-08-09-MiniProject_EmotionClassifer_Part2_60_2.png" alt="png" /></p>
+
+<p>As we can see from the output, it is pretty clear the happy faces are being continuously being recognized as angry.</p>
+
+<p>Intuitively, we are used to think data cleaning first, model training next. However, this example shows, a model can infact help highlight the data issues quickly.</p>
+
+<p><strong>Data Cleaning:</strong></p>
+
+<p>fastai already has a nice method with builtin GUI called <code class="language-plaintext highlighter-rouge">ImageClassifierCleaner</code> that helps us with the datacleaning process. In this class, we first choose the category, then select the dataset (train or validation) and then view the images in descending order of loss. Finally, for datacleaning, we can use the UI to remove a sample or relabel a sample.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#hide_output
+</span><span class="kn">from</span> <span class="nn">fastai.vision.widgets</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">cleaner</span> <span class="o">=</span> <span class="n">ImageClassifierCleaner</span><span class="p">(</span><span class="n">learn</span><span class="p">)</span>
+<span class="n">cleaner</span>
+</code></pre></div></div>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VBox(children=(Dropdown(options=('angry', 'happy', 'sad'), value='angry'), Dropdown(options=('Train', 'Valid')…
+</code></pre></div></div>
+
+<p>Looking at the <code class="language-plaintext highlighter-rouge">happy</code> train dataset, we can see its not all smiley faces. Some expressions are surprised, some are cartoon &amp; hand-drawn. (Side Note: Hand-drawn, cartoon and real pictures are considered different realms in CNNs). We can quickly use the UI to either delete the surprised face or move the crying face to the <code class="language-plaintext highlighter-rouge">sad</code> class.</p>
+
+<p>ImageClassifierCleaner doesn’t actually do the deleting or changing of labels for you; it just returns the indices of items to change. So, for instance, to delete (unlink) all images selected for deletion, we would run:</p>
+
+<p><code class="language-plaintext highlighter-rouge">for idx in cleaner.delete(): cleaner.fns[idx].unlink()</code>
+To move images for which we’ve selected a different category, we would run:</p>
+
+<p><code class="language-plaintext highlighter-rouge">for idx,cat in cleaner.change(): shutil.move(str(cleaner.fns[idx]), path/cat)</code></p>
+
+<p><strong>NOTE:</strong> We need to run this code every time a new dropdown is selected. When a new dropdown is selected, the. buffer in cleaner.delete() &amp; cleaner.change() is reset.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cleaner</span><span class="p">.</span><span class="n">delete</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(#15) [0,1,2,3,4,8,12,13,15,17...]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cleaner</span><span class="p">.</span><span class="n">change</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(#0) []
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">cleaner</span><span class="p">.</span><span class="n">delete</span><span class="p">():</span> <span class="n">cleaner</span><span class="p">.</span><span class="n">fns</span><span class="p">[</span><span class="n">idx</span><span class="p">].</span><span class="n">unlink</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">idx</span><span class="p">,</span><span class="n">cat</span> <span class="ow">in</span> <span class="n">cleaner</span><span class="p">.</span><span class="n">change</span><span class="p">():</span> <span class="n">shutil</span><span class="p">.</span><span class="n">move</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cleaner</span><span class="p">.</span><span class="n">fns</span><span class="p">[</span><span class="n">idx</span><span class="p">]),</span> <span class="n">path</span><span class="o">/</span><span class="n">cat</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<p>We have now cleaned the data, lets retrain the model with the new cleaned data in the faces folder. We can redo all the steps from the beginning.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s">'faces'</span><span class="p">)</span>
+<span class="n">fns</span> <span class="o">=</span> <span class="n">get_image_files</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+<span class="n">fns</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(#677) [Path('faces/happy/803d9ef1-d50b-4bd8-963f-69e58b4cd496.jpg'),Path('faces/happy/f1eb73df-5b2d-4c30-b914-d60281101972.jpg'),Path('faces/happy/195b79ea-4577-4cb5-8957-21e35ad82791.jpg'),Path('faces/happy/46d5a029-e0e4-4ee1-ae46-c59ad04d14fb.jpg'),Path('faces/happy/c0d0e7be-43c6-44c3-8ea5-dc00cc64eac7.jpg'),Path('faces/happy/9a3ea967-9955-4a6a-a504-b850d9393419.jpg'),Path('faces/happy/9eebd409-3bf2-423b-89d5-fe3e2608c457.jpg'),Path('faces/happy/0624746c-e5d8-470f-bb2a-2fecd7e3bd6d.jpg'),Path('faces/happy/801068e3-a8c6-4d53-a254-10f02f60267d.jpg'),Path('faces/happy/da2b5d89-46a8-4c3e-9d87-0d5453906da4.png')...]
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">failed</span> <span class="o">=</span> <span class="n">verify_images</span><span class="p">(</span><span class="n">fns</span><span class="p">)</span>
+<span class="n">failed</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(#0) []
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">failed</span><span class="p">.</span><span class="nb">map</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="n">unlink</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">faces</span> <span class="o">=</span> <span class="n">DataBlock</span><span class="p">(</span>
+    <span class="n">blocks</span><span class="o">=</span><span class="p">(</span><span class="n">ImageBlock</span><span class="p">,</span> <span class="n">CategoryBlock</span><span class="p">),</span>
+    <span class="n">get_items</span><span class="o">=</span><span class="n">get_image_files</span><span class="p">,</span>
+    <span class="n">splitter</span><span class="o">=</span><span class="n">RandomSplitter</span><span class="p">(</span><span class="n">valid_pct</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+    <span class="n">get_y</span><span class="o">=</span><span class="n">parent_label</span><span class="p">,</span>
+    <span class="n">item_tfms</span><span class="o">=</span><span class="n">Resize</span><span class="p">(</span><span class="mi">128</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">faces</span> <span class="o">=</span> <span class="n">faces</span><span class="p">.</span><span class="n">new</span><span class="p">(</span>
+    <span class="n">item_tfms</span><span class="o">=</span><span class="n">RandomResizedCrop</span><span class="p">(</span><span class="mi">224</span><span class="p">,</span> <span class="n">min_scale</span><span class="o">=</span><span class="mf">0.5</span><span class="p">),</span>
+    <span class="n">batch_tfms</span><span class="o">=</span><span class="n">aug_transforms</span><span class="p">())</span>
+<span class="n">dls</span> <span class="o">=</span> <span class="n">faces</span><span class="p">.</span><span class="n">dataloaders</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">learn</span> <span class="o">=</span> <span class="n">vision_learner</span><span class="p">(</span><span class="n">dls</span><span class="p">,</span> <span class="n">resnet34</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="n">error_rate</span><span class="p">)</span>
+<span class="n">learn</span><span class="p">.</span><span class="n">fine_tune</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/lib/python3.10/dist-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and may be removed in the future, please use 'weights' instead.
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and may be removed in the future. The current behavior is equivalent to passing `weights=ResNet34_Weights.IMAGENET1K_V1`. You can also use `weights=ResNet34_Weights.DEFAULT` to get the most up-to-date weights.
+  warnings.warn(msg)
+</code></pre></div></div>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>error_rate</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>1.948587</td>
+      <td>1.226522</td>
+      <td>0.481481</td>
+      <td>00:20</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+</code></pre></div></div>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: left;">
+      <th>epoch</th>
+      <th>train_loss</th>
+      <th>valid_loss</th>
+      <th>error_rate</th>
+      <th>time</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>1.349108</td>
+      <td>0.997914</td>
+      <td>0.407407</td>
+      <td>00:17</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>1.117022</td>
+      <td>0.954740</td>
+      <td>0.325926</td>
+      <td>00:17</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>0.935056</td>
+      <td>0.957761</td>
+      <td>0.333333</td>
+      <td>00:16</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0.828097</td>
+      <td>0.948619</td>
+      <td>0.325926</td>
+      <td>00:16</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">interp</span> <span class="o">=</span> <span class="n">ClassificationInterpretation</span><span class="p">.</span><span class="n">from_learner</span><span class="p">(</span><span class="n">learn</span><span class="p">)</span>
+<span class="n">interp</span><span class="p">.</span><span class="n">plot_confusion_matrix</span><span class="p">()</span>
+</code></pre></div></div>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+</code></pre></div></div>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-08-09-MiniProject_EmotionClassifer_Part2_files/2023-08-09-MiniProject_EmotionClassifer_Part2_76_6.png" alt="png" /></p>
+
+<p>Looking at the confusing matrix, our classifier is doing pretty well. Lets see where our top losses are:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">interp</span><span class="p">.</span><span class="n">plot_top_losses</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/usr/local/lib/python3.10/dist-packages/PIL/Image.py:996: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-08-09-MiniProject_EmotionClassifer_Part2_files/2023-08-09-MiniProject_EmotionClassifer_Part2_78_3.png" alt="png" /></p>
+
+<p>From these top losses, we can understand that these appear to be abnormal outliers (atleast some of them do seem like it). Our classifier is not the greatest, but it should be good enough for detection of basic human emotions.</p>
+
+<h2 id="step5-pickling-our-trained-model">STEP5: Pickling our Trained Model</h2>
+
+<p>Now that our model is trainined and optimized with datacleaning, we want to save its state, export it as a file and use it when we deploy it.</p>
+
+<p>Recap that a model is an architecture with trained weights and biases. By exporting the trained model, we can save its architecture and the trained weights. The <code class="language-plaintext highlighter-rouge">export</code> method in fastai also saves the definition of our Dataloaders tempalte.</p>
+
+<p>Calling <code class="language-plaintext highlighter-rouge">export</code>, fastai will save a file called “export.pkl”:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">learn</span><span class="p">.</span><span class="n">export</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Confirming if our current path has a file ending with <code class="language-plaintext highlighter-rouge">.pkl</code>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">()</span>
+<span class="n">path</span><span class="p">.</span><span class="n">ls</span><span class="p">(</span><span class="n">file_exts</span><span class="o">=</span><span class="s">'.pkl'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(#1) [Path('export.pkl')]
+</code></pre></div></div>
+
+<p>Great, we have now exported our trained model. All we need is this pickle file and we can use it directly to make predictions (aka Inference).</p>
+
+<p>Lets go through the steps of using this pickle file:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">learn_inf</span> <span class="o">=</span> <span class="n">load_learner</span><span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="s">'export.pkl'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now that the learner is loaded from the pickle file, lets use it for predictions.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">prediction_results</span> <span class="o">=</span> <span class="n">learn_inf</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="s">'happy.jpg'</span><span class="p">)</span>
+
+<span class="n">prediction_results</span>
+</code></pre></div></div>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>('happy', tensor(1), tensor([2.5756e-03, 9.9692e-01, 5.0282e-04]))
+</code></pre></div></div>
+
+<p>This has returned three things: the predicted category in the same format you originally provided (in this case that’s a string), the index of the predicted category, and the probabilities of each category. The last two are based on the order of categories in the vocab of the DataLoaders; that is, the stored list of all possible categories. At inference time, you can access the DataLoaders as an attribute of the Learner:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">learn_inf</span><span class="p">.</span><span class="n">dls</span><span class="p">.</span><span class="n">vocab</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>['angry', 'happy', 'sad']
+</code></pre></div></div>
+
+<p>We can use the index returned by prediction results to return the class and class probability.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result_index</span> <span class="o">=</span> <span class="n">prediction_results</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'predicted category:{}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">learn_inf</span><span class="p">.</span><span class="n">dls</span><span class="p">.</span><span class="n">vocab</span><span class="p">[</span><span class="n">result_index</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'predicted probability:{}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">prediction_results</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">result_index</span><span class="p">]))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>predicted category:happy
+predicted probability:0.9969214797019958
+</code></pre></div></div>
+
+<h2 id="references">References</h2>
+<ul>
+  <li>Book: Howard, J., &amp; Gugger, S. (2021). Deep learning for coders with FASTAI and pytorch: AI applications without a Phd. O’Reilly Media, Inc. <a href="https://www.amazon.com/Deep-Learning-Coders-fastai-PyTorch-ebook-dp-B08C2KM7NR/dp/B08C2KM7NR">link</a></li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#classifier" class="page__taxonomy-item" rel="tag">classifier</a><span class="sep">, </span>
+    
+      <a href="/tags/#cnn" class="page__taxonomy-item" rel="tag">cnn</a><span class="sep">, </span>
+    
+      <a href="/tags/#computer-vision" class="page__taxonomy-item" rel="tag">computer vision</a><span class="sep">, </span>
+    
+      <a href="/tags/#resnet" class="page__taxonomy-item" rel="tag">resnet</a><span class="sep">, </span>
+    
+      <a href="/tags/#transfer-learning" class="page__taxonomy-item" rel="tag">transfer learning</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-08-09T00:00:00-04:00">August 9, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  Share On <br>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=MiniProject%3A+Emotion+Classifier+-+Part2%20http%3A%2F%2Flocalhost%3A4000%2F2023%2F08%2F09%2FMiniProject_EmotionClassifer_Part2.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2023%2F08%2F09%2FMiniProject_EmotionClassifer_Part2.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2023%2F08%2F09%2FMiniProject_EmotionClassifer_Part2.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/2023/08/04/MiniProject_EmotionClassifer_Part1.html" class="pagination--pager" title="MiniProject: Emotion Classifier - Part1
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+ TO remove previous:next-->
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/MiniProject_Happy_Sad_Classifier_files/MiniProject_Happy_Sad_Classifier_23_0.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/2023/08/04/MiniProject_EmotionClassifer_Part1.html" rel="permalink">MiniProject: Emotion Classifier - Part1
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          12 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Part1 of Building a Human Emotion Classifier using CNN by applying transfer Learning on Resnet18 implemented with FastAI
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/08/04/Machine_Learning_Foundations_Through_QA.html" rel="permalink">Machine Learning Foundations Through Q&amp;A
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          18 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">we will try to understand the foundations of Machine learning &amp; Deep learning in the form of Q&amp;A.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/07/27/Basics_Of_DecisionTrees.html" rel="permalink">Basics of Decision Trees
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          13 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Decision Trees are the gateway to machine learning. They are easy to understand and relate to. However, do we know how they really work?
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/07/20/Visual_Data_Analysis_in_Python_Part1.html" rel="permalink">Visual Data Analysis in Python: Part 1
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          22 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">In this blog post, we explore visual data analytics, leveraging data visualization to uncover insights and patterns in our datasets. In this part 1 post, we ...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Vimal Venugopal. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/2023/08/09/MiniProject_EmotionClassifer_Part2.html";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/2023/08/09/MiniProject_EmotionClassifer_Part2"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://vmlverse.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+  </body>
+</html>
