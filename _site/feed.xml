@@ -1,4 +1,313 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-08-18T23:28:04-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">VMLverse</title><subtitle>&quot;Welcome to VMLverse - Join me as I embark on a continuous learning journey into the fascinating world of Machine Learning.&quot;</subtitle><author><name>Vimal Venugopal</name></author><entry><title type="html">MiniProject: Emotion Classifier - Part2</title><link href="http://localhost:4000/2023/08/09/MiniProject_EmotionClassifer_Part2.html" rel="alternate" type="text/html" title="MiniProject: Emotion Classifier - Part2" /><published>2023-08-09T00:00:00-04:00</published><updated>2023-08-09T00:00:00-04:00</updated><id>http://localhost:4000/2023/08/09/MiniProject_EmotionClassifer_Part2</id><content type="html" xml:base="http://localhost:4000/2023/08/09/MiniProject_EmotionClassifer_Part2.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-08-27T00:11:39-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">VMLverse</title><subtitle>&quot;Welcome to VMLverse - Join me as I embark on a continuous learning journey into the fascinating world of Machine Learning.&quot;</subtitle><author><name>Vimal Venugopal</name></author><entry><title type="html">MiniProject: Emotion Classifier - Part3</title><link href="http://localhost:4000/2023/08/24/MiniProject_EmotionClassifer_Part3.html" rel="alternate" type="text/html" title="MiniProject: Emotion Classifier - Part3" /><published>2023-08-24T00:00:00-04:00</published><updated>2023-08-24T00:00:00-04:00</updated><id>http://localhost:4000/2023/08/24/MiniProject_EmotionClassifer_Part3</id><content type="html" xml:base="http://localhost:4000/2023/08/24/MiniProject_EmotionClassifer_Part3.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;In this part 3 of the series on Emotion Classifer miniproject, we are going to see how we can deploy the human emotion classifer to production and make a usuable front end for a customer. This is going to be the basic steps and not a full on production app. The &lt;a href=&quot;/2023/08/04/MiniProject_EmotionClassifer_Part1.html&quot;&gt;part1&lt;/a&gt; of this mini project series covers the basics of transfer learning while &lt;a href=&quot;/2023/08/09/MiniProject_EmotionClassifer_Part2.html&quot;&gt;part2&lt;/a&gt; covers augmenting and cleaning data.&lt;/p&gt;
+
+&lt;p&gt;We will accomplish the deployment of the trained model in three steps. First we will try loading the pickle file and running it locally. Second, we will use Notebook’s builtin UI methods to write UI functions to interface between user and the notebook. Lastly, we will look at presenting this UI to the user.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Initial Setup:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;We are repeating the required steps from part1 and part2 to setup the imports and functions required for this tutorial. If any of these code doesnt make sense to you, I suggest going back to part1 and part2 to review.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# `!pip install -Uqq &amp;lt;libraries&amp;gt;` upgrades to the latest version of &amp;lt;libraries&amp;gt;
+&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pip&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Uqq&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fastai&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;duckduckgo_search&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m75.4/75.4 kB[0m [31m3.1 MB/s[0m eta [36m0:00:00[0m
+[2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m74.5/74.5 kB[0m [31m9.9 MB/s[0m eta [36m0:00:00[0m
+[2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m57.5/57.5 kB[0m [31m7.7 MB/s[0m eta [36m0:00:00[0m
+[2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m2.7/2.7 MB[0m [31m45.9 MB/s[0m eta [36m0:00:00[0m
+[2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m58.3/58.3 kB[0m [31m6.7 MB/s[0m eta [36m0:00:00[0m
+[?25h
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;duckduckgo_search&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ddg_images&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;fastcore.all&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#download required classes &amp;amp; packages
+&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;duckduckgo_search&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ddg_images&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;fastcore.all&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;fastdownload&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;download_url&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;fastai.vision.all&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#create method to search images
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;search_images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;term&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_images&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Searching for &apos;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;term&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;L&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ddg_images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;term&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_results&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;max_images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;itemgot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;image&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#search for image using keyword and download to destination
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;happy.jpg&apos;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;download_url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;search_images&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;smiling person face closeup&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;max_images&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;show_progress&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#finally open the image to show what we have
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;im&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dest&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;im&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_thumb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;256&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;256&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Searching for &apos;smiling person face closeup&apos;
+
+
+/usr/local/lib/python3.10/dist-packages/duckduckgo_search/compat.py:60: UserWarning: ddg_images is deprecated. Use DDGS().images() generator
+  warnings.warn(&quot;ddg_images is deprecated. Use DDGS().images() generator&quot;)
+/usr/local/lib/python3.10/dist-packages/duckduckgo_search/compat.py:64: UserWarning: parameter page is deprecated
+  warnings.warn(&quot;parameter page is deprecated&quot;)
+/usr/local/lib/python3.10/dist-packages/duckduckgo_search/compat.py:66: UserWarning: parameter max_results is deprecated
+  warnings.warn(&quot;parameter max_results is deprecated&quot;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2023-08-26-MiniProject_EmotionClassifer_Part3_files/2023-08-26-MiniProject_EmotionClassifer_Part3_4_2.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;step1-loading-the-pickle-file&quot;&gt;STEP1: Loading the pickle file&lt;/h2&gt;
+
+&lt;p&gt;In the previous &lt;a href=&quot;/2023/08/09/MiniProject_EmotionClassifer_Part2.html&quot;&gt;part2&lt;/a&gt; of this miniproject series, we had exported a pickle file at the last step. The pickle file is a persisted model that contains both the architecture and the trained parameters. The method also saves our definition of Dataloaders. Reason why this is important is we dont have to specify again on how to transform the input data when deploying this pickle file in production.&lt;/p&gt;
+
+&lt;p&gt;To use a pickle file, all we need to do is load the .pkl file and call the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;predict()&lt;/code&gt; on the model for inference. Simple as that!&lt;/p&gt;
+
+&lt;p&gt;Note: If you donot have a pickle file, please review the &lt;a href=&quot;/2023/08/09/MiniProject_EmotionClassifer_Part2.html&quot;&gt;part2&lt;/a&gt; of this miniproject.&lt;/p&gt;
+
+&lt;p&gt;Lets setup the basic for searching images using ddg_images. This is the same code as we had used in part1 and part2.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#setup current path
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;learn_inf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;load_learner&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;export.pkl&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;prediction_results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;learn_inf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;predict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;happy.jpg&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;style&gt;
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+&lt;/style&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;result_index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prediction_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;predicted category:{}&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;learn_inf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dls&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vocab&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result_index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;predicted probability:{}&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prediction_results&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result_index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;predicted category:happy
+predicted probability:0.9985558390617371
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;step2-create-a-super-simple-notebook-app&quot;&gt;STEP2: Create a Super Simple Notebook App&lt;/h2&gt;
+
+&lt;p&gt;There are two important packages within the Python that will help us create FrontEnd UI like components.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;IPython widgets are GUI components that bring together JavaScript and Python functionality in a web browser, and can be created and used within a Jupyter notebook. This is similar to the UI we saw in Part 2 with the Data Cleaner function. FastAI uses IPython widgets behind the scenes to bring about the UI components. The downside is, users have to run jupyter notebooks. We dont want users to run Jupyter notebooks in order to access the app. That is why we have a second package, aptly named &lt;em&gt;Voila&lt;/em&gt;!&lt;/li&gt;
+  &lt;li&gt;Voilà is a system for making applications consisting of IPython widgets available to end users, without them having to use Jupyter at all.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Sample - Upload Button:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Lets test out rendering Upload button GUI using IPythong Widgets. Code is super simple right?&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#hide_output
+&lt;/span&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;ipywidgets&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widgets&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;ipywidgets&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;btn_upload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widgets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FileUpload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;btn_upload&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;FileUpload(value={}, description=&apos;Upload&apos;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Sample - Uploaded Image:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;For the book, we can’t actually click an upload button, so we fake it.&lt;/p&gt;
+
+&lt;p&gt;SimpleNamespace is a class provided by the types module in Python’s standard library. It’s a simple container class that allows you to create objects whose attributes can be assigned arbitrary values, similar to using a dictionary or a regular object, but with a more convenient syntax.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#hide_output
+# For the book, we can&apos;t actually click an upload button, so we fake it
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;btn_upload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SimpleNamespace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;happy.jpg&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Lets also render the uploaded image to see if we can view it.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PILImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;btn_upload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Instead of viewing the img directly, lets view the image through IPython widgets Output function.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#hide_output
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;out_pl&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widgets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;out_pl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clear_output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;out_pl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_thumb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;out_pl&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Output()
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Sample - Predict Uploaded Image:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Now that we can upload an image from a button, lets use the uploaded image to run prediction on our trained classifer.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred_idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;probs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;learn_inf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;predict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;probs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;probs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;style&gt;
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+&lt;/style&gt;
+
+&lt;p&gt;Instead of displaying the output in the normal Jupyter way lets display it using the IPythong Widgets.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#hide_output
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;lbl_pred&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widgets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Label&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;lbl_pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;I am &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;probs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred_idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;02&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;% sure that the image provided is a picture of a &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; person&apos;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;lbl_pred&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Label(value=&apos;I am 99.86% sure that the image provided is a picture of a happy person&apos;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Sample - Classify Image:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;For best UI Experience, we want the user to upload the image first using upload button and then hit on classify to run predictions. Lets build the classify button using IP widgets&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#hide_output
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;btn_run&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widgets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Button&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Classify&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;btn_run&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Button(description=&apos;Classify&apos;, style=ButtonStyle())
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;style&gt;
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+&lt;/style&gt;
+
+&lt;p&gt;Also remember, we need to execute some logic to run when the button is pressed. Lets write a quick “On Click” function to run when user clicks on the button.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;on_click_classify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;change&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;img&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PILImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;create&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;btn_upload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#convert the uploaded data to a PIL image.
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;out_pl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;clear_output&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;out_pl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;display&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_thumb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;128&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# render uploaded image
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred_idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;probs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;learn_inf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;predict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;img&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#run prediction.
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;probs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;probs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;lbl_pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;value&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;sa&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;I am &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;probs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred_idx&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;02&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;% sure that the image provided is a picture of a &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pred&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s&quot;&gt; person&apos;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;#print label result
+&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;btn_run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;on_click&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;on_click_classify&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Sample - Putting it Together:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Finally we can create a new upload button and arrange them all the UI components:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;The Title,&lt;/li&gt;
+  &lt;li&gt;The Upload Button,&lt;/li&gt;
+  &lt;li&gt;The Classify Button that has an associate onclick func,&lt;/li&gt;
+  &lt;li&gt;The Output Image&lt;/li&gt;
+  &lt;li&gt;The Output Prediction.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#hide
+#Putting back btn_upload to a widget for next cell
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;btn_upload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widgets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;FileUpload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;#hide_output
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;VBox&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;widgets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Label&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;====Human Emotion Classifer!====&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;widgets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Label&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;Please upload a closeup picture of your face and let me try guessing your emotion&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;btn_upload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;btn_run&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;out_pl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lbl_pred&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;VBox(children=(Label(value=&apos;====Human Emotion Classifer!====&apos;), Label(value=&apos;Please upload a closeup picture o…
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;step3-deploying-the-app&quot;&gt;STEP3: Deploying the App&lt;/h2&gt;
+
+&lt;p&gt;Ideally we should be creating a fresh notebook with only the required code to show the widgets we need. Take a look at &lt;a href=&quot;https://github.com/VMLverse/HumanEmotionClassifer&quot;&gt;this notebook&lt;/a&gt; in my repository.&lt;/p&gt;
+
+&lt;p&gt;After adding our widget code, we can run these two lines:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;the first line installs the voila library and application&lt;/li&gt;
+  &lt;li&gt;and the second connects it to your existing Jupyter notebook.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pip&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;voila&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;jupyter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;serverextension&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;enable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sys&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prefix&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;voila&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Voilà runs Jupyter notebooks just like the Jupyter notebook server you are using now does, but it also does something very important: it removes all of the cell inputs, and only shows output (including ipywidgets), along with your markdown cells.&lt;/p&gt;
+
+&lt;p&gt;To view your notebook as a Voilà web application, replace the word “notebooks” in your browser’s URL with: “voila/render”. You will see the same content as your notebook, but without any of the code cells.&lt;/p&gt;
+
+&lt;p&gt;Note: If you are using colab or kaggle, you will not see “notebooks” in your URL. So it is not possible to accomplish this step.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2023-08-26-MiniProject_EmotionClassifer_Part3_files/human_emotion_classifier.gif&quot; alt=&quot;gif&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;deploying-the-app---publically&quot;&gt;Deploying the App - Publically&lt;/h3&gt;
+
+&lt;p&gt;The above step deploys your app locally. Others will not be able to see our app yet.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Where do we host our app?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;To deploy publically, we can setup a server and run it. Or an easy way is to use some of the free hosting platforms to host our app and run it. (This is just a quick hobby project and we donot need anything fancy).&lt;/p&gt;
+
+&lt;p&gt;Binder offers a free hosting platform. We can use it to deploy our app publically. Here are the steps:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Add your notebook to a GitHub repository.&lt;/li&gt;
+  &lt;li&gt;Paste the URL of that repo into Binder’s URL, as shown in &amp;lt;&amp;gt;.&lt;/li&gt;
+  &lt;li&gt;Change the File dropdown to instead select URL.&lt;/li&gt;
+  &lt;li&gt;In the “URL to open” field, enter /voila/render/name.ipynb (replacing name with the name of for your notebook).&lt;/li&gt;
+  &lt;li&gt;Click the clickboard button at the bottom right to copy the URL and paste it somewhere safe.&lt;/li&gt;
+  &lt;li&gt;Click Launch.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;strong&gt;Do we need a GPU?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;We also only need a CPU since we will be sending one image at a time. If we had very large user traffic, we may need a GPU so we can collect images and process them in batch. Also there is no model training. So that is another case for not wanting a GPU.&lt;/p&gt;
+
+&lt;h2 id=&quot;closing-thoughts---its-just-an-api&quot;&gt;Closing Thoughts - Its Just an API!&lt;/h2&gt;
+
+&lt;p&gt;Once you have exported your trained model, from that point it becomes a few lines of code to deploy it and have a front end UI for it. Any hosting technology and UI framework should work.&lt;/p&gt;
+
+&lt;p&gt;To avoid any dependencies, it would be best to host the machine learning interpretation on a server and expose an API. That way we could build any number of front end UIs across multiple devices and not have to worry about computing depencies for executing the inference and only worry about setting up the UI to interface with the customer.&lt;/p&gt;
+
+&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Book: Howard, J., &amp;amp; Gugger, S. (2021). Deep learning for coders with FASTAI and pytorch: AI applications without a Phd. O’Reilly Media, Inc. &lt;a href=&quot;https://www.amazon.com/Deep-Learning-Coders-fastai-PyTorch-ebook-dp-B08C2KM7NR/dp/B08C2KM7NR&quot;&gt;link&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content><author><name>Vimal Venugopal</name></author><category term="cnn" /><category term="classifier" /><category term="transfer learning" /><category term="computer vision" /><category term="resnet" /><summary type="html">Part3 of Building a Human Emotion Classifier - Front End GUI and Deployment</summary></entry><entry><title type="html">MiniProject: Emotion Classifier - Part2</title><link href="http://localhost:4000/2023/08/09/MiniProject_EmotionClassifer_Part2.html" rel="alternate" type="text/html" title="MiniProject: Emotion Classifier - Part2" /><published>2023-08-09T00:00:00-04:00</published><updated>2023-08-09T00:00:00-04:00</updated><id>http://localhost:4000/2023/08/09/MiniProject_EmotionClassifer_Part2</id><content type="html" xml:base="http://localhost:4000/2023/08/09/MiniProject_EmotionClassifer_Part2.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;In this part2 of our Human Emotion Classifier Mini Project, we will look at augmenting and cleaning our data that is used for training our model.
 This article will be an extension of the previous &lt;a href=&quot;/2023/08/04/MiniProject_EmotionClassifer_Part1.html&quot;&gt;part1 of Human Emotion Classifier&lt;/a&gt;. Like in the previous project, this python implementation will be based on fastai library.&lt;/p&gt;
 
@@ -11734,237 +12043,4 @@ function add(a, b) {
 &lt;ul&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.jetbrains.com/help/hub/Markdown-Syntax.html&quot;&gt;Jetbrains Markdown Syntax&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.markdownguide.org/getting-started/&quot;&gt;Markdown Guide&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Vimal Venugopal</name></author><category term="posts" /><category term="markdown" /><category term="jekyll" /><summary type="html">This cheatsheet provides a concise reference for frequently used Markdown formatting, helping you create beautiful, well-structured content with ease.</summary></entry><entry><title type="html">Git Commands Simplified: A Beginner’s Guide</title><link href="http://localhost:4000/posts/2023/05/06/github_commands.html" rel="alternate" type="text/html" title="Git Commands Simplified: A Beginner’s Guide" /><published>2023-05-06T00:00:00-04:00</published><updated>2023-05-06T00:00:00-04:00</updated><id>http://localhost:4000/posts/2023/05/06/github_commands</id><content type="html" xml:base="http://localhost:4000/posts/2023/05/06/github_commands.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;Git, the popular version control system, is an essential tool for developers and anyone working with code. In this comprehensive guide, we will delve into the fundamental Git commands, demystifying their purpose and providing practical examples. Whether you’re new to Git or looking to enhance your understanding, this blog post will equip you with the knowledge needed to navigate your projects with confidence.&lt;/p&gt;
-
-&lt;!-- To gain a better understanding of Git terminology, I recommend watching educational videos on YouTube. These videos provide visual explanations and demonstrations, making it easier to grasp complex concepts. 
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/dVil8e0yptQ&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; allowfullscreen&gt;&lt;/iframe&gt;
-&lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/rFtUkk-sCqw&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; allowfullscreen&gt;&lt;/iframe&gt; --&gt;
-
-&lt;h2 id=&quot;initialization&quot;&gt;Initialization&lt;/h2&gt;
-&lt;h3 id=&quot;git-init-creating-a-new-git-repository&quot;&gt;git init: Creating a new Git repository&lt;/h3&gt;
-&lt;p&gt;Use the git init command to create a new, empty repository in the current directory.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git init
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Running this command creates a hidden .git directory. This .git directory is the brain/storage center for the repository. It holds all of the configuration files and directories and is where all of the commits are stored.&lt;/p&gt;
-&lt;h3 id=&quot;git-config-customizing-git-configuration-settings&quot;&gt;git config: Customizing Git configuration settings&lt;/h3&gt;
-&lt;p&gt;The “git config” command allows you to customize various Git configuration settings. These settings can be specific to your user account or applied to a particular Git repository.&lt;/p&gt;
-
-&lt;p&gt;To set your name and email address for commits:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git config --global user.name &quot;Your Name&quot;
-$ git config --global user.email &quot;your.email@example.com&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;These global configurations will be used for all your Git repositories unless overridden at the repository level.&lt;/p&gt;
-
-&lt;p&gt;To view your Git configurations:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git config --list
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;This will display all the configurations currently set on your system.&lt;/p&gt;
-
-&lt;p&gt;To configure settings at the repository level:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git config user.name &quot;Your Name&quot;
-$ git config user.email &quot;your.email@example.com&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;By omitting the “–global” flag, these settings will be specific to the current repository.&lt;/p&gt;
-
-&lt;p&gt;Additionally, you can configure other settings such as preferred text editors, default branch names, and merge conflict resolution tools using the “git config” command.&lt;/p&gt;
-
-&lt;p&gt;Remember, customizing Git configurations can enhance your workflow and improve the accuracy of your commit information. Take advantage of these configurations to make Git work seamlessly for you.&lt;/p&gt;
-
-&lt;h2 id=&quot;basic-operations&quot;&gt;Basic Operations&lt;/h2&gt;
-
-&lt;h3 id=&quot;git-add-adding-files-to-the-staging-area&quot;&gt;git add: Adding files to the staging area&lt;/h3&gt;
-&lt;p&gt;The git add command is used to move files from the Working Directory to the Staging Index.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git add &amp;lt;file1&amp;gt; &amp;lt;file2&amp;gt; … &amp;lt;fileN&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;This command:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;takes a space-separated list of file names&lt;/li&gt;
-  &lt;li&gt;alternatively, the period . can be used in place of a list of files to tell Git to add the current directory (and all nested files)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;git-commit-committing-changes-to-the-repository&quot;&gt;git commit: Committing changes to the repository&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;commit in a git repository records a snapshot of all the (tracked) files in your directory&lt;/li&gt;
-  &lt;li&gt;like a giant copy and paste, but even better!&lt;/li&gt;
-  &lt;li&gt;commits as lightweight as possible though, so it doesn’t just blindly copy the entire directory every time you commit
-&lt;img src=&quot;/assets/images/github_commands/git_commit.gif&quot; alt=&quot;Alt text&quot; width=&quot;512&quot; height=&quot;434&quot; /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;git-status-checking-the-status-of-files&quot;&gt;git status: Checking the status of files&lt;/h3&gt;
-&lt;p&gt;The git status command will display the current status of the repository.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git status
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;I can’t stress enough how important it is to use this command all the time as you’re first learning Git. This command will:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;tell us about new files that have been created in the Working Directory that Git hasn’t started tracking, yet&lt;/li&gt;
-  &lt;li&gt;files that Git is tracking that have been modified&lt;/li&gt;
-  &lt;li&gt;and a whole bunch of other things that we’ll be learning about throughout the rest of this article ;-)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;git-log-viewing-commit-history&quot;&gt;git log: Viewing commit history&lt;/h3&gt;
-&lt;p&gt;The git log command is used to display all of the commits of a repository.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git log
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;By default, this command displays:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;the SHA&lt;/li&gt;
-  &lt;li&gt;the author&lt;/li&gt;
-  &lt;li&gt;the date&lt;/li&gt;
-  &lt;li&gt;and the message&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;…of every commit in the repository. I stress the “By default” part of what Git displays because the git log command can display a lot more information than just this.&lt;/p&gt;
-
-&lt;p&gt;Git uses the command line pager, Less, to page through all of the information. The important keys for Less are:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;to scroll down by a line, use j or ↓&lt;/li&gt;
-  &lt;li&gt;to scroll up by a line, use k or ↑&lt;/li&gt;
-  &lt;li&gt;to scroll down by a page, use the spacebar or the Page Down button&lt;/li&gt;
-  &lt;li&gt;to scroll up by a page, use b or the Page Up button&lt;/li&gt;
-  &lt;li&gt;to quit, use q&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;branching-and-merging&quot;&gt;Branching and Merging:&lt;/h2&gt;
-
-&lt;h3 id=&quot;git-branch-creating-and-managing-branches&quot;&gt;git branch: Creating and managing branches&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;simply pointers to a specific commit – nothing more. branch early, and branch often
-&lt;img src=&quot;/assets/images/github_commands/git_branch.gif&quot; alt=&quot;Alt text&quot; width=&quot;512&quot; height=&quot;434&quot; /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;git-checkout-switching-between-branches&quot;&gt;git checkout: Switching between branches&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;put us on the new branch before committing our changes
-&lt;img src=&quot;/assets/images/github_commands/git_checkout.gif&quot; alt=&quot;Alt text&quot; width=&quot;512&quot; height=&quot;434&quot; /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;git-checkout--b-yourbranchname-creating-new-branch-and-switching-to-it&quot;&gt;git checkout -b [yourbranchname]: Creating new branch and Switching to it&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;create a new branch AND check it out at the same time
-&lt;img src=&quot;/assets/images/github_commands/git_checkout_b.gif&quot; alt=&quot;Alt text&quot; width=&quot;512&quot; height=&quot;434&quot; /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;git-merge-combining-branches&quot;&gt;git merge: Combining branches&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Merging in Git creates a special commit that has two unique parents
-&lt;img src=&quot;/assets/images/github_commands/git_merge.gif&quot; alt=&quot;Alt text&quot; width=&quot;512&quot; height=&quot;434&quot; /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;collaboration-and-remote-repositories&quot;&gt;Collaboration and Remote Repositories&lt;/h2&gt;
-
-&lt;h3 id=&quot;git-clone-cloning-a-remote-repository&quot;&gt;git clone: Cloning a remote repository&lt;/h3&gt;
-&lt;p&gt;The git clone command is used to create an identical copy of an existing repository.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git clone &amp;lt;path-to-repository-to-clone&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;This command:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;takes the path to an existing repository&lt;/li&gt;
-  &lt;li&gt;by default will create a directory with the same name as the repository that’s being cloned&lt;/li&gt;
-  &lt;li&gt;can be given a second argument that will be used as the name of the directory&lt;/li&gt;
-  &lt;li&gt;will create the new repository inside of the current working directory&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;git-pull-updating-your-local-repository-with-remote-changes&quot;&gt;git pull: Updating your local repository with remote changes&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;The “git pull” command is used to update your local repository with the latest changes from a remote repository. - It combines the “git fetch” command, which retrieves the changes, and the “git merge” command, which incorporates those changes into your local branch.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;git-push-pushing-your-local-changes-to-a-remote-repository&quot;&gt;git push: Pushing your local changes to a remote repository&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;The “git push” command is used to upload your local commits to a remote repository, making them accessible to others.&lt;/li&gt;
-  &lt;li&gt;It updates the remote repository with your latest changes.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;git-remote-managing-remote-repositories&quot;&gt;git remote: Managing remote repositories&lt;/h3&gt;
-&lt;p&gt;The “git remote” command allows you to manage remote repositories associated with your local repository. It helps you view, add, rename, or remove remote repositories.&lt;/p&gt;
-
-&lt;p&gt;To view the remote repositories:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git remote -v
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;This command displays a list of remote repositories along with their URLs.&lt;/p&gt;
-
-&lt;p&gt;To add a remote repository:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git remote add &amp;lt;remote-name&amp;gt; &amp;lt;remote-url&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;This command associates a remote repository with a name and a URL.&lt;/p&gt;
-
-&lt;p&gt;To rename a remote repository:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git remote rename &amp;lt;old-name&amp;gt; &amp;lt;new-name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;This command changes the name of an existing remote repository.&lt;/p&gt;
-
-&lt;p&gt;To remove a remote repository:&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ git remote remove &amp;lt;remote-name&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;This command removes the association of a remote repository from your local repository.
-These commands help you interact with remote repositories, facilitating collaboration and keeping your local and remote repositories in sync.&lt;/p&gt;
-
-&lt;h2 id=&quot;advanced-git-commands&quot;&gt;Advanced Git Commands&lt;/h2&gt;
-
-&lt;h3 id=&quot;head&quot;&gt;HEAD&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;HEAD is the symbolic name for the currently checked out commit&lt;/li&gt;
-  &lt;li&gt;it’s essentially what commit you’re working on top of.&lt;/li&gt;
-  &lt;li&gt;HEAD always points to the most recent commit which is reflected in the working tree.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;git-revert&quot;&gt;git revert:&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;git reset doesn’t work for remote branches that others are using.&lt;/li&gt;
-  &lt;li&gt;In order to reverse changes and share those reversed changes with others, we need to use git revert.
-&lt;img src=&quot;/assets/images/github_commands/git_revert.gif&quot; alt=&quot;Alt text&quot; width=&quot;512&quot; height=&quot;434&quot; /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;git-rebase-modifying-commit-history&quot;&gt;git rebase: Modifying commit history&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Rebasing essentially takes a set of commits, “copies” them, and plops them down somewhere else
-&lt;img src=&quot;/assets/images/github_commands/git_rebase.gif&quot; alt=&quot;Alt text&quot; width=&quot;512&quot; height=&quot;434&quot; /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;git-reset-undoing-changes-and-moving-the-head-pointer&quot;&gt;git reset: Undoing changes and moving the HEAD pointer&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;reverses changes by moving a branch reference backwards in time to an older commit
-&lt;img src=&quot;/assets/images/github_commands/git_reset.gif&quot; alt=&quot;Alt text&quot; width=&quot;512&quot; height=&quot;434&quot; /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;detach-head&quot;&gt;detach head:&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Detaching HEAD just means attaching it to a commit instead of a branch.&lt;/li&gt;
-  &lt;li&gt;To detach simply specify checkout by its hash
-&lt;img src=&quot;/assets/images/github_commands/git_detach.gif&quot; alt=&quot;Alt text&quot; width=&quot;512&quot; height=&quot;434&quot; /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;relative-commits&quot;&gt;Relative commits:&lt;/h3&gt;
-&lt;h4 id=&quot;caret--operator&quot;&gt;Caret (^) operator:&lt;/h4&gt;
-&lt;ul&gt;
-  &lt;li&gt;Moving upwards one commit at a time with ^&lt;/li&gt;
-  &lt;li&gt;Each time you append that to a ref name, you are telling Git to find the parent of the specified commit.&lt;/li&gt;
-  &lt;li&gt;saying main^ is equivalent to “the first parent of main”
-&lt;img src=&quot;/assets/images/github_commands/git_caret.gif&quot; alt=&quot;Alt text&quot; width=&quot;512&quot; height=&quot;434&quot; /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;tilde--operator&quot;&gt;tilde (~) operator:&lt;/h4&gt;
-&lt;ul&gt;
-  &lt;li&gt;Moving upwards a number of times with ~&lt;num&gt;&lt;/num&gt;&lt;/li&gt;
-  &lt;li&gt;tilde operator (optionally) takes in a trailing number that specifies the number of parents you would like to ascend
-&lt;img src=&quot;/assets/images/github_commands/git_tilde.gif&quot; alt=&quot;Alt text&quot; width=&quot;512&quot; height=&quot;434&quot; /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;branch-by-force-f&quot;&gt;branch by force(-f):&lt;/h4&gt;
-&lt;ul&gt;
-  &lt;li&gt;You can directly reassign a branch to a commit with the -f option
-&lt;img src=&quot;/assets/images/github_commands/git_branch_f.gif&quot; alt=&quot;Alt text&quot; width=&quot;512&quot; height=&quot;434&quot; /&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
-&lt;p&gt;Understanding the core Git commands is essential for efficient collaboration, version control, and project management. By familiarizing yourself with these commands, you’ll gain the confidence to navigate Git repositories, resolve conflicts, and streamline your development workflow. Embrace the power of Git and elevate your coding journey with these fundamental commands.&lt;/p&gt;
-
-&lt;p&gt;Remember, practice makes perfect when it comes to Git. Don’t hesitate to experiment with these commands in a test repository to deepen your understanding and discover their full potential. Happy coding with Git!&lt;/p&gt;
-
-&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.udacity.com/course/version-control-with-git--ud123&quot;&gt;Udacity’s course on Intro to Git&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://learngitbranching.js.org/&quot;&gt;Learn git branching&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://githowto.com/&quot;&gt;GitHowTo&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Vimal Venugopal</name></author><category term="posts" /><category term="git" /><category term="github" /><category term="version control" /><summary type="html">In this beginner&apos;s guide, I break down the essential Git commands into easy-to-understand explanations and practical examples. From initializing a repository to collaborating with others, this guide will help you navigate the world of Git with confidence.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>Vimal Venugopal</name></author><category term="posts" /><category term="markdown" /><category term="jekyll" /><summary type="html">This cheatsheet provides a concise reference for frequently used Markdown formatting, helping you create beautiful, well-structured content with ease.</summary></entry></feed>

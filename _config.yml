@@ -117,12 +117,13 @@ whitelist:
 collections:
   projects:
     output: true
+    permalink: /:collection/:path/
 
 #DEFINE NEW COLLECTION  - projects
 collections:
-  miniprojects:
+  articles:
     output: true
-    permalink: /projects/:collection/:path/
+    permalink: /:collection/:path/
 
 # default YAML front matter
 defaults:
@@ -153,29 +154,6 @@ defaults:
       comments: true
       share: true
       related: true
-  # projects
-  - scope:
-      path: ""
-      type: projects
-    values:
-      layout: single
-      author_profile: true
-      read_time: true
-      comments: true
-      share: true
-      related: true
-  # miniprojects
-  - scope:
-      path: ""
-      type: miniprojects
-    values:
-      layout: single
-      author_profile: true
-      read_time: true
-      comments: true
-      share: true
-      related: true
-
 #########################
 
 
@@ -198,7 +176,7 @@ comments:
 include:
   - _pages
   - code
-  - _miniprojects
+  - _projects
 
 exclude:
     - notes.log

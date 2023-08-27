@@ -1,4 +1,10 @@
 var store = [{
+        "title": "Human Emotion Classifier",
+        "excerpt":"Human Emotion Classifier using Viola &amp; FastAI Details Uses resnet34 pretrained CNN model Transfer learning on limited Google images Uses fastai library for Deep Learning Uses IPython Widgets and Voila for hosting Model classifies three emotions: Happy, Sad &amp; Angry Blog Post Read my three part blog post which talks...","categories": [],
+        "tags": ["cnn","classifier","transfer learning","computer vision","resnet"],
+        "url": "/articles/human_emotion_classifier/",
+        "teaser": "/assets/images/2023-08-26-MiniProject_EmotionClassifer_Part3_files/human_emotion_classifier.gif"
+      },{
         "title": "Building my Personal Site with Jekyll & Minimal Mistakes",
         "excerpt":"Prelude With my job as PS consultant, I had no projects to host on github. I love writing and I wanted to write about the books I read or other occassional inspirations I get from random things. Ever since I thought about having a blog, my friend has been recommending...","categories": ["posts"],
         "tags": [],
@@ -64,4 +70,10 @@ var store = [{
         "tags": ["cnn","classifier","transfer learning","computer vision","resnet"],
         "url": "/2023/08/09/MiniProject_EmotionClassifer_Part2.html",
         "teaser": "/assets/images/2023-08-09-MiniProject_EmotionClassifer_Part2_files/2023-08-09-MiniProject_EmotionClassifer_Part2_47_0.png"
+      },{
+        "title": "MiniProject: Emotion Classifier - Part3",
+        "excerpt":"Introduction In this part 3 of the series on Emotion Classifer miniproject, we are going to see how we can deploy the human emotion classifer to production and make a usuable front end for a customer. This is going to be the basic steps and not a full on production...","categories": [],
+        "tags": ["cnn","classifier","transfer learning","computer vision","resnet"],
+        "url": "/2023/08/24/MiniProject_EmotionClassifer_Part3.html",
+        "teaser": "/assets/images/2023-08-26-MiniProject_EmotionClassifer_Part3_files/human_emotion_classifier.gif"
       }]

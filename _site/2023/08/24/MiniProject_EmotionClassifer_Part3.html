@@ -1,0 +1,977 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>MiniProject: Emotion Classifier - Part3 | VMLverse</title>
+<meta name="description" content="Part3 of Building a Human Emotion Classifier - Front End GUI and Deployment">
+
+
+  <meta name="author" content="Vimal Venugopal">
+  
+  <meta property="article:author" content="Vimal Venugopal">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="VMLverse">
+<meta property="og:title" content="MiniProject: Emotion Classifier - Part3">
+<meta property="og:url" content="http://localhost:4000/2023/08/24/MiniProject_EmotionClassifer_Part3.html">
+
+
+  <meta property="og:description" content="Part3 of Building a Human Emotion Classifier - Front End GUI and Deployment">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/2023-08-26-MiniProject_EmotionClassifer_Part3_files/human_emotion_classifier.gif">
+
+
+
+
+
+  <meta property="article:published_time" content="2023-08-24T00:00:00-04:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/2023/08/24/MiniProject_EmotionClassifer_Part3.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Vimal Venugopal",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="VMLverse Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo_plain_blck_bg.png" alt="VMLverse"></a>
+        
+        <a class="site-title" href="/">
+          VMLverse
+          <span class="site-subtitle">Explore | Experiment | Expand</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/blog/">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/projects/">Projects</a>
+            </li><li class="masthead__menu-item">
+              <a href="/docs/resume.pdf">Resume</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/DSC1717square.jpeg" alt="Vimal Venugopal" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Vimal Venugopal</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>a curious mind with a passion for machine learning, photography and travel</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://cognitivescrawls.wordpress.com/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Wordpress</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="MiniProject: Emotion Classifier - Part3">
+    <meta itemprop="description" content="Part3 of Building a Human Emotion Classifier - Front End GUI and Deployment">
+    <meta itemprop="datePublished" content="2023-08-24T00:00:00-04:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">MiniProject: Emotion Classifier - Part3
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> Contents</h4></header>
+              <ul class="toc__menu"><li><a href="#introduction">Introduction</a></li><li><a href="#step1-loading-the-pickle-file">STEP1: Loading the pickle file</a></li><li><a href="#step2-create-a-super-simple-notebook-app">STEP2: Create a Super Simple Notebook App</a></li><li><a href="#step3-deploying-the-app">STEP3: Deploying the App</a><ul><li><a href="#deploying-the-app---publically">Deploying the App - Publically</a></li></ul></li><li><a href="#closing-thoughts---its-just-an-api">Closing Thoughts - Its Just an API!</a></li><li><a href="#references">References</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="introduction">Introduction</h2>
+
+<p>In this part 3 of the series on Emotion Classifer miniproject, we are going to see how we can deploy the human emotion classifer to production and make a usuable front end for a customer. This is going to be the basic steps and not a full on production app. The <a href="/2023/08/04/MiniProject_EmotionClassifer_Part1.html">part1</a> of this mini project series covers the basics of transfer learning while <a href="/2023/08/09/MiniProject_EmotionClassifer_Part2.html">part2</a> covers augmenting and cleaning data.</p>
+
+<p>We will accomplish the deployment of the trained model in three steps. First we will try loading the pickle file and running it locally. Second, we will use Notebook’s builtin UI methods to write UI functions to interface between user and the notebook. Lastly, we will look at presenting this UI to the user.</p>
+
+<p><strong>Initial Setup:</strong></p>
+
+<p>We are repeating the required steps from part1 and part2 to setup the imports and functions required for this tutorial. If any of these code doesnt make sense to you, I suggest going back to part1 and part2 to review.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># `!pip install -Uqq &lt;libraries&gt;` upgrades to the latest version of &lt;libraries&gt;
+</span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">Uqq</span> <span class="n">fastai</span> <span class="n">duckduckgo_search</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m75.4/75.4 kB[0m [31m3.1 MB/s[0m eta [36m0:00:00[0m
+[2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m74.5/74.5 kB[0m [31m9.9 MB/s[0m eta [36m0:00:00[0m
+[2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m57.5/57.5 kB[0m [31m7.7 MB/s[0m eta [36m0:00:00[0m
+[2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m2.7/2.7 MB[0m [31m45.9 MB/s[0m eta [36m0:00:00[0m
+[2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m58.3/58.3 kB[0m [31m6.7 MB/s[0m eta [36m0:00:00[0m
+[?25h
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">duckduckgo_search</span> <span class="kn">import</span> <span class="n">ddg_images</span>
+<span class="kn">from</span> <span class="nn">fastcore.all</span> <span class="kn">import</span> <span class="o">*</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#download required classes &amp; packages
+</span><span class="kn">from</span> <span class="nn">duckduckgo_search</span> <span class="kn">import</span> <span class="n">ddg_images</span>
+<span class="kn">from</span> <span class="nn">fastcore.all</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">fastdownload</span> <span class="kn">import</span> <span class="n">download_url</span>
+<span class="kn">from</span> <span class="nn">fastai.vision.all</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="c1">#create method to search images
+</span><span class="k">def</span> <span class="nf">search_images</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">max_images</span><span class="o">=</span><span class="mi">30</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Searching for '</span><span class="si">{</span><span class="n">term</span><span class="si">}</span><span class="s">'"</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">L</span><span class="p">(</span><span class="n">ddg_images</span><span class="p">(</span><span class="n">term</span><span class="p">,</span> <span class="n">max_results</span><span class="o">=</span><span class="n">max_images</span><span class="p">)).</span><span class="n">itemgot</span><span class="p">(</span><span class="s">'image'</span><span class="p">)</span>
+
+<span class="c1">#search for image using keyword and download to destination
+</span><span class="n">dest</span> <span class="o">=</span> <span class="s">'happy.jpg'</span>
+<span class="n">download_url</span><span class="p">(</span><span class="n">search_images</span><span class="p">(</span><span class="s">'smiling person face closeup'</span><span class="p">,</span> <span class="n">max_images</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dest</span><span class="p">,</span> <span class="n">show_progress</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="c1">#finally open the image to show what we have
+</span><span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="p">.</span><span class="nb">open</span><span class="p">(</span><span class="n">dest</span><span class="p">)</span>
+<span class="n">im</span><span class="p">.</span><span class="n">to_thumb</span><span class="p">(</span><span class="mi">256</span><span class="p">,</span><span class="mi">256</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Searching for 'smiling person face closeup'
+
+
+/usr/local/lib/python3.10/dist-packages/duckduckgo_search/compat.py:60: UserWarning: ddg_images is deprecated. Use DDGS().images() generator
+  warnings.warn("ddg_images is deprecated. Use DDGS().images() generator")
+/usr/local/lib/python3.10/dist-packages/duckduckgo_search/compat.py:64: UserWarning: parameter page is deprecated
+  warnings.warn("parameter page is deprecated")
+/usr/local/lib/python3.10/dist-packages/duckduckgo_search/compat.py:66: UserWarning: parameter max_results is deprecated
+  warnings.warn("parameter max_results is deprecated")
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-08-26-MiniProject_EmotionClassifer_Part3_files/2023-08-26-MiniProject_EmotionClassifer_Part3_4_2.png" alt="png" /></p>
+
+<h2 id="step1-loading-the-pickle-file">STEP1: Loading the pickle file</h2>
+
+<p>In the previous <a href="/2023/08/09/MiniProject_EmotionClassifer_Part2.html">part2</a> of this miniproject series, we had exported a pickle file at the last step. The pickle file is a persisted model that contains both the architecture and the trained parameters. The method also saves our definition of Dataloaders. Reason why this is important is we dont have to specify again on how to transform the input data when deploying this pickle file in production.</p>
+
+<p>To use a pickle file, all we need to do is load the .pkl file and call the <code class="language-plaintext highlighter-rouge">predict()</code> on the model for inference. Simple as that!</p>
+
+<p>Note: If you donot have a pickle file, please review the <a href="/2023/08/09/MiniProject_EmotionClassifer_Part2.html">part2</a> of this miniproject.</p>
+
+<p>Lets setup the basic for searching images using ddg_images. This is the same code as we had used in part1 and part2.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">()</span> <span class="c1">#setup current path
+</span><span class="n">learn_inf</span> <span class="o">=</span> <span class="n">load_learner</span><span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="s">'export.pkl'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">prediction_results</span> <span class="o">=</span> <span class="n">learn_inf</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">path</span><span class="o">/</span><span class="s">'happy.jpg'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">result_index</span> <span class="o">=</span> <span class="n">prediction_results</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'predicted category:{}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">learn_inf</span><span class="p">.</span><span class="n">dls</span><span class="p">.</span><span class="n">vocab</span><span class="p">[</span><span class="n">result_index</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'predicted probability:{}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">prediction_results</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">result_index</span><span class="p">]))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>predicted category:happy
+predicted probability:0.9985558390617371
+</code></pre></div></div>
+
+<h2 id="step2-create-a-super-simple-notebook-app">STEP2: Create a Super Simple Notebook App</h2>
+
+<p>There are two important packages within the Python that will help us create FrontEnd UI like components.</p>
+
+<ul>
+  <li>IPython widgets are GUI components that bring together JavaScript and Python functionality in a web browser, and can be created and used within a Jupyter notebook. This is similar to the UI we saw in Part 2 with the Data Cleaner function. FastAI uses IPython widgets behind the scenes to bring about the UI components. The downside is, users have to run jupyter notebooks. We dont want users to run Jupyter notebooks in order to access the app. That is why we have a second package, aptly named <em>Voila</em>!</li>
+  <li>Voilà is a system for making applications consisting of IPython widgets available to end users, without them having to use Jupyter at all.</li>
+</ul>
+
+<p><strong>Sample - Upload Button:</strong></p>
+
+<p>Lets test out rendering Upload button GUI using IPythong Widgets. Code is super simple right?</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#hide_output
+</span><span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="n">widgets</span>
+<span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">btn_upload</span> <span class="o">=</span> <span class="n">widgets</span><span class="p">.</span><span class="n">FileUpload</span><span class="p">()</span>
+<span class="n">btn_upload</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>FileUpload(value={}, description='Upload')
+</code></pre></div></div>
+
+<p><strong>Sample - Uploaded Image:</strong></p>
+
+<p>For the book, we can’t actually click an upload button, so we fake it.</p>
+
+<p>SimpleNamespace is a class provided by the types module in Python’s standard library. It’s a simple container class that allows you to create objects whose attributes can be assigned arbitrary values, similar to using a dictionary or a regular object, but with a more convenient syntax.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#hide_output
+# For the book, we can't actually click an upload button, so we fake it
+</span><span class="n">btn_upload</span> <span class="o">=</span> <span class="n">SimpleNamespace</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="s">'happy.jpg'</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>Lets also render the uploaded image to see if we can view it.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">img</span> <span class="o">=</span> <span class="n">PILImage</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">btn_upload</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</code></pre></div></div>
+
+<p>Instead of viewing the img directly, lets view the image through IPython widgets Output function.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#hide_output
+</span><span class="n">out_pl</span> <span class="o">=</span> <span class="n">widgets</span><span class="p">.</span><span class="n">Output</span><span class="p">()</span>
+<span class="n">out_pl</span><span class="p">.</span><span class="n">clear_output</span><span class="p">()</span>
+<span class="k">with</span> <span class="n">out_pl</span><span class="p">:</span> <span class="n">display</span><span class="p">(</span><span class="n">img</span><span class="p">.</span><span class="n">to_thumb</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="mi">128</span><span class="p">))</span>
+<span class="n">out_pl</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Output()
+</code></pre></div></div>
+
+<p><strong>Sample - Predict Uploaded Image:</strong></p>
+
+<p>Now that we can upload an image from a button, lets use the uploaded image to run prediction on our trained classifer.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pred</span><span class="p">,</span><span class="n">pred_idx</span><span class="p">,</span><span class="n">probs</span> <span class="o">=</span> <span class="n">learn_inf</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+<span class="n">probs</span> <span class="o">=</span> <span class="n">probs</span><span class="o">*</span> <span class="mi">100</span>
+</code></pre></div></div>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<p>Instead of displaying the output in the normal Jupyter way lets display it using the IPythong Widgets.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#hide_output
+</span><span class="n">lbl_pred</span> <span class="o">=</span> <span class="n">widgets</span><span class="p">.</span><span class="n">Label</span><span class="p">()</span>
+<span class="n">lbl_pred</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'I am </span><span class="si">{</span><span class="n">probs</span><span class="p">[</span><span class="n">pred_idx</span><span class="p">]:.</span><span class="mi">02</span><span class="n">f</span><span class="si">}</span><span class="s">% sure that the image provided is a picture of a </span><span class="si">{</span><span class="n">pred</span><span class="si">}</span><span class="s"> person'</span>
+<span class="n">lbl_pred</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Label(value='I am 99.86% sure that the image provided is a picture of a happy person')
+</code></pre></div></div>
+
+<p><strong>Sample - Classify Image:</strong></p>
+
+<p>For best UI Experience, we want the user to upload the image first using upload button and then hit on classify to run predictions. Lets build the classify button using IP widgets</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#hide_output
+</span><span class="n">btn_run</span> <span class="o">=</span> <span class="n">widgets</span><span class="p">.</span><span class="n">Button</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s">'Classify'</span><span class="p">)</span>
+<span class="n">btn_run</span>
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Button(description='Classify', style=ButtonStyle())
+</code></pre></div></div>
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+
+<p>Also remember, we need to execute some logic to run when the button is pressed. Lets write a quick “On Click” function to run when user clicks on the button.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">on_click_classify</span><span class="p">(</span><span class="n">change</span><span class="p">):</span>
+    <span class="n">img</span> <span class="o">=</span> <span class="n">PILImage</span><span class="p">.</span><span class="n">create</span><span class="p">(</span><span class="n">btn_upload</span><span class="p">.</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span> <span class="c1">#convert the uploaded data to a PIL image.
+</span>    <span class="n">out_pl</span><span class="p">.</span><span class="n">clear_output</span><span class="p">()</span>
+    <span class="k">with</span> <span class="n">out_pl</span><span class="p">:</span> <span class="n">display</span><span class="p">(</span><span class="n">img</span><span class="p">.</span><span class="n">to_thumb</span><span class="p">(</span><span class="mi">128</span><span class="p">,</span><span class="mi">128</span><span class="p">))</span> <span class="c1"># render uploaded image
+</span>    <span class="n">pred</span><span class="p">,</span><span class="n">pred_idx</span><span class="p">,</span><span class="n">probs</span> <span class="o">=</span> <span class="n">learn_inf</span><span class="p">.</span><span class="n">predict</span><span class="p">(</span><span class="n">img</span><span class="p">)</span> <span class="c1">#run prediction.
+</span>    <span class="n">probs</span> <span class="o">=</span> <span class="n">probs</span><span class="o">*</span> <span class="mi">100</span>
+    <span class="n">lbl_pred</span><span class="p">.</span><span class="n">value</span> <span class="o">=</span> <span class="sa">f</span><span class="s">'I am </span><span class="si">{</span><span class="n">probs</span><span class="p">[</span><span class="n">pred_idx</span><span class="p">]:.</span><span class="mi">02</span><span class="n">f</span><span class="si">}</span><span class="s">% sure that the image provided is a picture of a </span><span class="si">{</span><span class="n">pred</span><span class="si">}</span><span class="s"> person'</span> <span class="c1">#print label result
+</span>
+<span class="n">btn_run</span><span class="p">.</span><span class="n">on_click</span><span class="p">(</span><span class="n">on_click_classify</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><strong>Sample - Putting it Together:</strong></p>
+
+<p>Finally we can create a new upload button and arrange them all the UI components:</p>
+<ul>
+  <li>The Title,</li>
+  <li>The Upload Button,</li>
+  <li>The Classify Button that has an associate onclick func,</li>
+  <li>The Output Image</li>
+  <li>The Output Prediction.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#hide
+#Putting back btn_upload to a widget for next cell
+</span><span class="n">btn_upload</span> <span class="o">=</span> <span class="n">widgets</span><span class="p">.</span><span class="n">FileUpload</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#hide_output
+</span><span class="n">VBox</span><span class="p">([</span><span class="n">widgets</span><span class="p">.</span><span class="n">Label</span><span class="p">(</span><span class="s">'====Human Emotion Classifer!===='</span><span class="p">),</span> <span class="n">widgets</span><span class="p">.</span><span class="n">Label</span><span class="p">(</span><span class="s">'Please upload a closeup picture of your face and let me try guessing your emotion'</span><span class="p">),</span>
+      <span class="n">btn_upload</span><span class="p">,</span> <span class="n">btn_run</span><span class="p">,</span> <span class="n">out_pl</span><span class="p">,</span> <span class="n">lbl_pred</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>VBox(children=(Label(value='====Human Emotion Classifer!===='), Label(value='Please upload a closeup picture o…
+</code></pre></div></div>
+
+<h2 id="step3-deploying-the-app">STEP3: Deploying the App</h2>
+
+<p>Ideally we should be creating a fresh notebook with only the required code to show the widgets we need. Take a look at <a href="https://github.com/VMLverse/HumanEmotionClassifer">this notebook</a> in my repository.</p>
+
+<p>After adding our widget code, we can run these two lines:</p>
+<ul>
+  <li>the first line installs the voila library and application</li>
+  <li>and the second connects it to your existing Jupyter notebook.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">voila</span>
+<span class="err">!</span><span class="n">jupyter</span> <span class="n">serverextension</span> <span class="n">enable</span> <span class="o">--</span><span class="n">sys</span><span class="o">-</span><span class="n">prefix</span> <span class="n">voila</span>
+
+</code></pre></div></div>
+
+<p>Voilà runs Jupyter notebooks just like the Jupyter notebook server you are using now does, but it also does something very important: it removes all of the cell inputs, and only shows output (including ipywidgets), along with your markdown cells.</p>
+
+<p>To view your notebook as a Voilà web application, replace the word “notebooks” in your browser’s URL with: “voila/render”. You will see the same content as your notebook, but without any of the code cells.</p>
+
+<p>Note: If you are using colab or kaggle, you will not see “notebooks” in your URL. So it is not possible to accomplish this step.</p>
+
+<p><img src="/assets/images/2023-08-26-MiniProject_EmotionClassifer_Part3_files/human_emotion_classifier.gif" alt="gif" /></p>
+
+<h3 id="deploying-the-app---publically">Deploying the App - Publically</h3>
+
+<p>The above step deploys your app locally. Others will not be able to see our app yet.</p>
+
+<p><strong>Where do we host our app?</strong></p>
+
+<p>To deploy publically, we can setup a server and run it. Or an easy way is to use some of the free hosting platforms to host our app and run it. (This is just a quick hobby project and we donot need anything fancy).</p>
+
+<p>Binder offers a free hosting platform. We can use it to deploy our app publically. Here are the steps:</p>
+
+<ol>
+  <li>Add your notebook to a GitHub repository.</li>
+  <li>Paste the URL of that repo into Binder’s URL, as shown in &lt;&gt;.</li>
+  <li>Change the File dropdown to instead select URL.</li>
+  <li>In the “URL to open” field, enter /voila/render/name.ipynb (replacing name with the name of for your notebook).</li>
+  <li>Click the clickboard button at the bottom right to copy the URL and paste it somewhere safe.</li>
+  <li>Click Launch.</li>
+</ol>
+
+<p><strong>Do we need a GPU?</strong></p>
+
+<p>We also only need a CPU since we will be sending one image at a time. If we had very large user traffic, we may need a GPU so we can collect images and process them in batch. Also there is no model training. So that is another case for not wanting a GPU.</p>
+
+<h2 id="closing-thoughts---its-just-an-api">Closing Thoughts - Its Just an API!</h2>
+
+<p>Once you have exported your trained model, from that point it becomes a few lines of code to deploy it and have a front end UI for it. Any hosting technology and UI framework should work.</p>
+
+<p>To avoid any dependencies, it would be best to host the machine learning interpretation on a server and expose an API. That way we could build any number of front end UIs across multiple devices and not have to worry about computing depencies for executing the inference and only worry about setting up the UI to interface with the customer.</p>
+
+<h2 id="references">References</h2>
+<ul>
+  <li>Book: Howard, J., &amp; Gugger, S. (2021). Deep learning for coders with FASTAI and pytorch: AI applications without a Phd. O’Reilly Media, Inc. <a href="https://www.amazon.com/Deep-Learning-Coders-fastai-PyTorch-ebook-dp-B08C2KM7NR/dp/B08C2KM7NR">link</a></li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#classifier" class="page__taxonomy-item" rel="tag">classifier</a><span class="sep">, </span>
+    
+      <a href="/tags/#cnn" class="page__taxonomy-item" rel="tag">cnn</a><span class="sep">, </span>
+    
+      <a href="/tags/#computer-vision" class="page__taxonomy-item" rel="tag">computer vision</a><span class="sep">, </span>
+    
+      <a href="/tags/#resnet" class="page__taxonomy-item" rel="tag">resnet</a><span class="sep">, </span>
+    
+      <a href="/tags/#transfer-learning" class="page__taxonomy-item" rel="tag">transfer learning</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-08-24T00:00:00-04:00">August 24, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  Share On <br>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=MiniProject%3A+Emotion+Classifier+-+Part3%20http%3A%2F%2Flocalhost%3A4000%2F2023%2F08%2F24%2FMiniProject_EmotionClassifer_Part3.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2023%2F08%2F24%2FMiniProject_EmotionClassifer_Part3.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2023%2F08%2F24%2FMiniProject_EmotionClassifer_Part3.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/2023/08/09/MiniProject_EmotionClassifer_Part2.html" class="pagination--pager" title="MiniProject: Emotion Classifier - Part2
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+ TO remove previous:next-->
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2023-08-09-MiniProject_EmotionClassifer_Part2_files/2023-08-09-MiniProject_EmotionClassifer_Part2_47_0.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/2023/08/09/MiniProject_EmotionClassifer_Part2.html" rel="permalink">MiniProject: Emotion Classifier - Part2
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          16 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Part2 of Building a Human Emotion Classifier using CNN by applying transfer Learning on Resnet18 implemented with FastAI
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/MiniProject_Happy_Sad_Classifier_files/MiniProject_Happy_Sad_Classifier_23_0.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/2023/08/04/MiniProject_EmotionClassifer_Part1.html" rel="permalink">MiniProject: Emotion Classifier - Part1
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          12 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Part1 of Building a Human Emotion Classifier using CNN by applying transfer Learning on Resnet18 implemented with FastAI
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/08/04/Machine_Learning_Foundations_Through_QA.html" rel="permalink">Machine Learning Foundations Through Q&amp;A
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          18 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">we will try to understand the foundations of Machine learning &amp; Deep learning in the form of Q&amp;A.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/07/27/Basics_Of_DecisionTrees.html" rel="permalink">Basics of Decision Trees
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          13 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Decision Trees are the gateway to machine learning. They are easy to understand and relate to. However, do we know how they really work?
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Vimal Venugopal. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/2023/08/24/MiniProject_EmotionClassifer_Part3.html";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/2023/08/24/MiniProject_EmotionClassifer_Part3"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://vmlverse.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+  </body>
+</html>
