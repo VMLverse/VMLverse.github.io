@@ -1,0 +1,1055 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Understanding the Basics: Gradient Descent | VMLverse</title>
+<meta name="description" content="Gradient Descent is an optimization algorithm that iteratively adjusts model parameters in the direction of steepest descent of the loss function to find the minimum point, improving model accuracy.">
+
+
+  <meta name="author" content="Vimal Venugopal">
+  
+  <meta property="article:author" content="Vimal Venugopal">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="VMLverse">
+<meta property="og:title" content="Understanding the Basics: Gradient Descent">
+<meta property="og:url" content="http://localhost:4000/2023/09/14/Gradient_Descent_Basics.html">
+
+
+  <meta property="og:description" content="Gradient Descent is an optimization algorithm that iteratively adjusts model parameters in the direction of steepest descent of the loss function to find the minimum point, improving model accuracy.">
+
+
+
+  <meta property="og:image" content="http://localhost:4000/assets/images/2023_09_14_Gradient_Descent_Basics_files/slope_illustration.png">
+
+
+
+
+
+  <meta property="article:published_time" content="2023-09-14T00:00:00-04:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/2023/09/14/Gradient_Descent_Basics.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Vimal Venugopal",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="VMLverse Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo_plain_blck_bg.png" alt="VMLverse"></a>
+        
+        <a class="site-title" href="/">
+          VMLverse
+          <span class="site-subtitle">Explore | Experiment | Expand</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/blog/">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/projects/">Projects</a>
+            </li><li class="masthead__menu-item">
+              <a href="/docs/resume.pdf">Resume</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/DSC1717square.jpeg" alt="Vimal Venugopal" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Vimal Venugopal</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>a curious mind with a passion for machine learning, photography and travel</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://cognitivescrawls.wordpress.com/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Wordpress</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Understanding the Basics: Gradient Descent">
+    <meta itemprop="description" content="Gradient Descent is an optimization algorithm that iteratively adjusts model parameters in the direction of steepest descent of the loss function to find the minimum point, improving model accuracy.">
+    <meta itemprop="datePublished" content="2023-09-14T00:00:00-04:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Understanding the Basics: Gradient Descent
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          12 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right ">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> Contents</h4></header>
+              <ul class="toc__menu"><li><a href="#gradient-descent-workflow">Gradient Descent Workflow</a></li><li><a href="#gradient-descent-intuition">Gradient Descent Intuition</a></li><li><a href="#calculating-gradients">Calculating Gradients</a></li><li><a href="#loss-functions">Loss Functions</a><ul><li><a href="#l1-norm-mean-absolute-difference">L1 Norm (mean absolute difference)</a></li><li><a href="#l2-norm-root-mean-squared-error-rmse-">L2 Norm (root mean squared error (RMSE) )</a></li></ul></li><li><a href="#stepping-with-a-learning-rate">Stepping With a Learning Rate</a></li><li><a href="#sgd-example-quadratic-function">SGD Example: Quadratic Function</a></li><li><a href="#sgd-example-mnist-dataset">SGD Example: MNIST Dataset</a></li><li><a href="#notebook">Notebook</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="gradient-descent-workflow">Gradient Descent Workflow</h2>
+
+<p>The below seven steps are the key to the training of all deep learning models.</p>
+
+<p><img src="/assets/images/2023_09_14_Gradient_Descent_Basics_files/2023_09_14_Gradient_Descent_Basics_2_0.svg" alt="svg" /></p>
+
+<ol>
+  <li>Initialize: We initialize the parameters to random values.</li>
+  <li>Predict: Using current model &amp; parameters, make predictions of the test data.</li>
+  <li>Loss: (testing the effectiveness of any current weight assignment in terms of actual performance). We need some function that will return a number that is small if the performance of the model is good.</li>
+  <li>Gradient: The magic of calculus allows us to directly figure out in which direction, and by roughly how much, to change each weight, without having to try all these small changes. The way to do this is by calculating gradients.</li>
+  <li>Step: Perform performance optimization, by adjusting the weights in the direction and magnitude as determined from the gradients. Keep going back to predict step until stop condition is met.</li>
+  <li>Stop: We decide how many epochs to train the model for. If our model is small, we would keep training until the accuracy of the model started getting worse, or we ran out of time.</li>
+</ol>
+
+<h2 id="gradient-descent-intuition">Gradient Descent Intuition</h2>
+
+<p>We can gain intuition by applying the above steps to a simple problem.</p>
+
+<ul>
+  <li>Let’s pretend a simple quadratic $x^2$ as our loss function, and x is a weight parameter of the function.</li>
+  <li>Lets pick a random value for our weight parameter,say -1.5 and calculate the loss. (we are already at step 3 of the above outline)</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span> <span class="k">return</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">plot_function</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s">'x'</span><span class="p">,</span> <span class="s">'x**2'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="n">f</span><span class="p">(</span><span class="o">-</span><span class="mf">1.5</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">);</span>
+</code></pre></div></div>
+<p><img src="/assets/images/2023_09_14_Gradient_Descent_Basics_files/2023_09_14_Gradient_Descent_Basics_7_0.png" alt="png" /></p>
+
+<ul>
+  <li>To perform step adjustment (step5) of the weight parameter, we need to know the gradients.</li>
+  <li>To get gradients (step4), we can simply calculate slope at that point -1.5.
+<img src="/assets/images/2023_09_14_Gradient_Descent_Basics_files/grad_illustration.svg" alt="svg" /></li>
+  <li>We can change our weight by a little in the direction of the slope, calculate our loss and adjustment again, and repeat this a few times. Eventually, we will get to the lowest point on our curve:
+<img src="/assets/images/2023_09_14_Gradient_Descent_Basics_files/chapter2_perfect.svg" alt="svg" /></li>
+  <li>By always taking a step in the direction of the steepest downward slope, you should eventually arrive at your destination. We use the magnitude of the gradient (i.e., the steepness of the slope) to tell us how big a step to take; specifically, we multiply the gradient by a number we choose called the learning rate to decide on the step size. We then iterate until we have reached the lowest point, which will be our lowest loss point, then we can stop.</li>
+</ul>
+
+<h2 id="calculating-gradients">Calculating Gradients</h2>
+
+<ul>
+  <li>Step4 is the magical step to calculate gradients.</li>
+  <li>The gradients will tell us how much we have to change each weight to make our model better.</li>
+  <li>From calculus, we know the derivative of a function tells you how much a change in its parameters will change its result.</li>
+  <li>For any function, such as the quadratic function we saw in the previous section, we can calculate its derivative. The derivative is another function. It calculates the change, rather than the value. For instance, the derivative of the quadratic function at the value 3 tells us how rapidly the function changes at the value 3.</li>
+  <li>Gradient is defined as rise/run, that is, the change in the value of the function, divided by the change in the value of the parameter. When we know how our function will change, then we know what we need to do to make it smaller. This is the key to machine learning: having a way to change the parameters of a function to make it smaller. Calculus provides us with a computational shortcut, the derivative, which lets us directly calculate the gradients of our functions.</li>
+</ul>
+
+<p>PyTorch is able to automatically compute the derivative of nearly any function.
+Let’s pick a tensor value which we want gradients at:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">xt</span> <span class="o">=</span> <span class="n">tensor</span><span class="p">(</span><span class="mf">3.</span><span class="p">).</span><span class="n">requires_grad_</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>The special method <code class="language-plaintext highlighter-rouge">requires_grad_()</code> is to tell PyTorch that we want to calculate gradients with respect to that variable at that value. It is essentially tagging the variable, so PyTorch will remember to keep track of how to compute gradients of the other, direct calculations on it that you will ask for.</p>
+
+<p>Now we calculate our function with that value. Notice how PyTorch prints not just the value calculated, but also a note that it has a gradient function it’ll be using to calculate our gradients when needed:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">yt</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">xt</span><span class="p">)</span>
+<span class="n">yt</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tensor(9., grad_fn=&lt;PowBackward0&gt;)
+</code></pre></div></div>
+
+<p>Finally, we tell PyTorch to calculate the gradients for us:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">yt</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>The “backward” here refers to backpropagation, which is the name given to the process of calculating the derivative of each layer. This is called the “backward pass” of the network, as opposed to the “forward pass,” which is where the activations are calculated. Life would probably be easier if backward was just called calculate_grad, but deep learning folks really do like to add jargon everywhere they can!</p>
+
+<p>We can now view the gradients by checking the grad attribute of our tensor:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">xt</span><span class="p">.</span><span class="n">grad</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tensor(6.)
+</code></pre></div></div>
+
+<p>The derivative of x<em>*2 is 2</em>x, and we have x=3, so the gradients should be 2*3=6, which is what PyTorch calculated for us!</p>
+
+<p>Here is a summary of the all the steps required to calculate Gradients in Pytorch.</p>
+
+<!-- 
+```python
+gv('''
+tag_input_vars_requires_grad_fn->run_fwd_pass_to_get_activations->calc_gradients_on_activations->access_gradients_on_input
+''')
+``` -->
+
+<p><img src="/assets/images/2023_09_14_Gradient_Descent_Basics_files/2023_09_14_Gradient_Descent_Basics_22_0.svg" alt="svg" /></p>
+
+<!-- 
+
+
+
+```python
+gv('''
+"xt.requires_grad_()"->"yt = f(xt)"->"yt.backward()"->"xt.grad"
+''')
+```
+
+ -->
+
+<p><img src="/assets/images/2023_09_14_Gradient_Descent_Basics_files/2023_09_14_Gradient_Descent_Basics_23_0.svg" alt="svg" /></p>
+
+<p>The gradients only tell us the slope of our function, they don’t actually tell us exactly how far to adjust the parameters. But it gives us some idea of how far; if the slope is very large, then that may suggest that we have more adjustments to do, whereas if the slope is very small, that may suggest that we are close to the optimal value.</p>
+
+<h2 id="loss-functions">Loss Functions</h2>
+<p>The purpose of the loss function is to measure the difference between predicted values and the true values. We already have the labeled results for the data (supervised learning). We also have the predicted outputs from our model. By comparing these predicted values with true values, the Loss functions would tell us if our weight parameters are doing a good job or not.
+There are two very commmon loss functions - L1 Norm and L2 Norm.</p>
+
+<h3 id="l1-norm-mean-absolute-difference">L1 Norm (mean absolute difference)</h3>
+<p>The mean of the absolute value of differences.</p>
+
+<p>Mathematically, the formula for the mean absolute difference (MAD) is given as:</p>
+
+\[MAD = Σ |xᵢ - μ| / N\]
+
+<p>Where:</p>
+<ul>
+  <li>Σ represents the summation symbol, indicating that you sum up the values for all data points.</li>
+  <li>xᵢ represents each individual data point.</li>
+  <li>μ is the mean of the data.</li>
+  <li>N is the total number of data points.</li>
+</ul>
+
+<p>It is a useful measure of dispersion because it tells you, on average, how far each data point is from the mean.
+A smaller MAD indicates that the data points are closely clustered around the mean, while a larger MAD suggests greater variability or spread in the data.</p>
+
+<h3 id="l2-norm-root-mean-squared-error-rmse-">L2 Norm (root mean squared error (RMSE) )</h3>
+<p>The mean of the square of differences (which makes everything positive) and then take the square root (which undoes the squaring).</p>
+
+<p>Mathematically, the formula for RMSE is given as:</p>
+
+\[RMSE = sqrt[Σ(ŷᵢ - yᵢ)² / N]\]
+
+<p>Where:</p>
+<ul>
+  <li>Σ represents the summation symbol, indicating that you sum up the values for all data points.</li>
+  <li>ŷᵢ represents the predicted value for the i-th data point.</li>
+  <li>yᵢ represents the actual (observed) value for the i-th data point.</li>
+  <li>N is the total number of data points.</li>
+</ul>
+
+<p>Squaring the errors penalizes larger errors more heavily, giving more importance to larger deviations between predicted and actual values.</p>
+
+<p>Taking the square root of the mean squared errors scales the metric back to the original units and provides a measure of the average error.</p>
+
+<p>RMSE gives higher weight to outliers compared to the Mean Absolute Error (MAE), making it sensitive to extreme errors.</p>
+
+<p>Lower RMSE values indicate better model performance, as they suggest smaller prediction errors.</p>
+
+<h2 id="stepping-with-a-learning-rate">Stepping With a Learning Rate</h2>
+<ul>
+  <li>Deciding how to change our parameters based on the values of the gradients is an important part of the deep learning process.</li>
+  <li>Nearly all approaches start with the basic idea of multiplying the gradient by some small number, called the learning rate (LR). The learning rate is often a number between 0.001 and 0.1, although it could be anything. Often, people select a learning rate just by trying a few, and finding which results in the best model after training</li>
+</ul>
+
+<p><strong>Why need learning rate?</strong>
+When updating model parameters using gradients, multiplying the gradient by the learning rate scales down the step size. If we directly update the parameters without stepping down the gradients with learning rate, the optimization algorithm may oscillate or diverge, making it difficult to find a good solution.</p>
+
+<p>Once you’ve picked a learning rate, you can adjust your parameters using this simple function:</p>
+
+\[w -= gradient(w) * lr\]
+
+<p>This is known as stepping your parameters, using an optimizer step. The negative sign allows us to adjust the parameter in the direction of the slope by increasing the parameter when the slope is negative and decreasing the parameter when the slope is positive.
+<img src="/assets/images/2023_09_14_Gradient_Descent_Basics_files/slope_illustration.png" alt="png" />
+We want to adjust our parameters in the direction of the slope because our goal in deep learning is to minimize the loss.</p>
+
+<p><strong>Impacts of low &amp; high learning rate:</strong></p>
+
+<p>If you pick a learning rate that’s too low, it can mean having to do a lot of steps. Optimization algorithm will take too long to converge.
+<img src="/assets/images/2023_09_14_Gradient_Descent_Basics_files/low_learning_rate.svg" alt="svg" />
+If the learning rate is too high, it may also “bounce” around, rather than actually diverging;
+<img src="/assets/images/2023_09_14_Gradient_Descent_Basics_files/high_learning_rate.svg" alt="svg" /></p>
+
+<h2 id="sgd-example-quadratic-function">SGD Example: Quadratic Function</h2>
+<p>Now that we have covered the SGD basics, lets run it on the quadratic function as an example. We will see how gradients can help determine the minimum.</p>
+
+<p>Lets build a quadratic function with 20 timesteps.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">time</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">20</span><span class="p">).</span><span class="nb">float</span><span class="p">();</span>
+<span class="n">time</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tensor([ 0.,  1.,  2.,  3.,  4.,  5.,  6.,  7.,  8.,  9., 10., 11., 12., 13., 14., 15., 16., 17., 18., 19.])
+</code></pre></div></div>
+
+<p>Lets add a bit of random noise, since measuring things manually isn’t precise.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># speed = torch.randn(20)*3 + 0.75*(time-9.5)**2 + 1
+</span><span class="n">speed</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span><span class="o">+</span> <span class="mf">0.50</span><span class="o">*</span><span class="p">(</span><span class="n">time</span><span class="o">-</span><span class="mf">9.5</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="n">speed</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023_09_14_Gradient_Descent_Basics_files/2023_09_14_Gradient_Descent_Basics_31_0.png" alt="png" /></p>
+
+<p>The above is our synthetic data. i.e., our x input and y output mappings.</p>
+
+<p>Now lets select a model to start with. Looking at this data, we think a quadratic function would be the best fit. We can’t consider every possible function, so let’s use a guess that it will be quadratic; i.e., a function of the form <code class="language-plaintext highlighter-rouge">a*(time**2)+(b*time)+c</code>. Lets define a model function for this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="n">params</span>
+    <span class="k">return</span> <span class="n">a</span><span class="o">*</span><span class="p">(</span><span class="n">t</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">b</span><span class="o">*</span><span class="n">t</span><span class="p">)</span> <span class="o">+</span> <span class="n">c</span>
+</code></pre></div></div>
+
+<p>By definining this model, we’ve restricted the problem of finding the best imaginable function that fits the data, to finding the best quadratic function. This greatly simplifies the problem, since every quadratic function is fully defined by the three parameters a, b, and c. Thus, to find the best quadratic function, we only need to find the best values for a, b, and c.</p>
+
+<p>We need to define first what we mean by “best.” We define this precisely by choosing a loss function, which will return a value based on a prediction and a target, where lower values of the function correspond to “better” predictions. It is important for loss functions to return lower values when predictions are more accurate, as the SGD procedure we defined earlier will try to minimize this loss. For continuous data, it’s common to use mean squared error:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">mse</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">targets</span><span class="p">):</span> <span class="k">return</span> <span class="p">((</span><span class="n">preds</span><span class="o">-</span><span class="n">targets</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">).</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Finally, let’s work through our 7 step process.</p>
+
+<p><strong>Step 1: Initialize the parameters</strong></p>
+
+<p>First, we initialize the parameters to random values, and tell PyTorch that we want to track their gradients, using requires_grad_:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Generate 3 random initial parameters with gradient tracking enabled.
+# 'requires_grad_()' is used to indicate that gradients will be computed for these parameters during optimization.
+</span><span class="n">params</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">3</span><span class="p">).</span><span class="n">requires_grad_</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 2: Calculate the predictions</strong></p>
+
+<p>Next, we calculate the predictions:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">preds</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>create a little function to see how close our predictions are to our targets, and take a look:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">show_preds</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span> <span class="n">ax</span><span class="o">=</span><span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">speed</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">to_np</span><span class="p">(</span><span class="n">preds</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s">'red'</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">300</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">show_preds</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023_09_14_Gradient_Descent_Basics_files/2023_09_14_Gradient_Descent_Basics_43_0.png" alt="png" /></p>
+
+<p><strong>Step 3: Calculate the loss</strong></p>
+
+<p>We calculate the loss as follows:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">loss</span> <span class="o">=</span> <span class="n">mse</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">speed</span><span class="p">)</span>
+<span class="n">loss</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tensor(679.2726, grad_fn=&lt;MeanBackward0&gt;)
+</code></pre></div></div>
+
+<p>Our goal is now to improve this. To do that, we’ll need to know the gradients</p>
+
+<p><strong>Step 4: Calculate the gradients</strong></p>
+
+<p>The next step is to calculate the gradients. In other words, calculate an approximation of how the parameters need to change:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">loss</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span>
+<span class="n">params</span><span class="p">.</span><span class="n">grad</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tensor([-6668.8774,  -434.5187,   -42.9623])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">params</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tensor([ 0.0121, -0.6397,  0.6416], requires_grad=True)
+</code></pre></div></div>
+
+<p><strong>Step 5: Step the weights.</strong></p>
+
+<p>Now we need to update the parameters based on the gradients we just calculated:</p>
+
+<p>We’ll need to pick a learning rate - for now we’ll just use 1e-5, or 0.00001):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lr</span> <span class="o">=</span> <span class="mf">1e-5</span>
+<span class="n">params</span><span class="p">.</span><span class="n">data</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">params</span><span class="p">.</span><span class="n">grad</span><span class="p">.</span><span class="n">data</span>
+<span class="n">params</span><span class="p">.</span><span class="n">grad</span> <span class="o">=</span> <span class="bp">None</span>
+</code></pre></div></div>
+
+<p><strong>why do we Reset the gradients to zero for the next iteration?</strong></p>
+
+<p>Gradients are accumulated by default in most deep learning frameworks, like PyTorch and TensorFlow. This means that when you call loss.backward() to compute gradients, the gradients are added to any existing gradients in the params.grad tensor. Resetting params.grad to None or zero prevents the accumulation of gradients from previous iterations, ensuring that you only have the gradients computed for the current iteration.</p>
+
+<p>Let’s see if the loss has improved:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">preds</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">time</span><span class="p">,</span><span class="n">params</span><span class="p">)</span>
+<span class="n">mse</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">speed</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tensor(358.8021, grad_fn=&lt;MeanBackward0&gt;)
+</code></pre></div></div>
+
+<p>And take a look at the plot:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">show_preds</span><span class="p">(</span><span class="n">preds</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023_09_14_Gradient_Descent_Basics_files/2023_09_14_Gradient_Descent_Basics_56_0.png" alt="png" /></p>
+
+<p>We need to repeat this a few times, so we’ll create a function to apply one step:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">apply_step</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">prn</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="c1"># Calculate predictions based on the current parameters 'params' using the function 'f' (not provided in the code).
+</span>    <span class="n">preds</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+
+    <span class="c1"># Calculate the loss by comparing the predictions 'preds' to the target values 'speed' using the mean squared error (MSE).
+</span>    <span class="n">loss</span> <span class="o">=</span> <span class="n">mse</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">speed</span><span class="p">)</span>
+
+    <span class="c1"># Compute gradients of the loss with respect to the parameters 'params'.
+</span>    <span class="n">loss</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span>
+
+    <span class="c1"># Update the parameters using gradient descent.
+</span>    <span class="c1"># 'lr' represents the learning rate (not provided in the code).
+</span>    <span class="n">params</span><span class="p">.</span><span class="n">data</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">params</span><span class="p">.</span><span class="n">grad</span><span class="p">.</span><span class="n">data</span>
+
+    <span class="c1"># Reset the gradients to zero for the next iteration.
+</span>    <span class="n">params</span><span class="p">.</span><span class="n">grad</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="c1"># Print the value of the loss (if 'prn' is True).
+</span>    <span class="k">if</span> <span class="n">prn</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">loss</span><span class="p">.</span><span class="n">item</span><span class="p">())</span>
+
+    <span class="c1"># Return the predictions 'preds'.
+</span>    <span class="k">return</span> <span class="n">preds</span>
+
+</code></pre></div></div>
+
+<p><strong>Step 6: Repeat the process</strong></p>
+
+<p>Now we iterate. By looping and performing many improvements, we hope to reach a good result:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span> <span class="n">apply_step</span><span class="p">(</span><span class="n">params</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>358.8021240234375
+298.157470703125
+286.67987060546875
+284.50604248046875
+284.09283447265625
+284.0128173828125
+283.9958190917969
+283.9906921386719
+283.9879150390625
+283.98553466796875
+</code></pre></div></div>
+
+<p>The loss is going down, just as we hoped! But looking only at these loss numbers disguises the fact that each iteration represents an entirely different quadratic function being tried, on the way to finding the best possible quadratic function.</p>
+
+<p>We can see this process visually if, instead of printing out the loss function, we plot the function at every step. Then we can see how the shape is approaching the best possible quadratic function for our data:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">_</span><span class="p">,</span><span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axs</span><span class="p">:</span> <span class="n">show_preds</span><span class="p">(</span><span class="n">apply_step</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="bp">False</span><span class="p">),</span> <span class="n">ax</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023_09_14_Gradient_Descent_Basics_files/2023_09_14_Gradient_Descent_Basics_63_0.png" alt="png" /></p>
+
+<p><strong>Step 7: stop</strong></p>
+
+<p>We just decided to stop after 10 epochs arbitrarily. In practice, we would watch the training and validation losses and our metrics to decide when to stop, as we’ve discussed.</p>
+
+<h2 id="sgd-example-mnist-dataset">SGD Example: MNIST Dataset</h2>
+
+<p>We can now try to attempt something more difficult. Check out my next article which dives into this in detail.</p>
+
+<h2 id="notebook">Notebook</h2>
+<p>You can also find this article in notebook form. 
+<a href="/assets/notebooks/2023_09_14_Gradient_Descent_Basics.ipynb">Link to My Notebook</a></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#basics" class="page__taxonomy-item" rel="tag">basics</a><span class="sep">, </span>
+    
+      <a href="/tags/#deep-learning" class="page__taxonomy-item" rel="tag">deep learning</a><span class="sep">, </span>
+    
+      <a href="/tags/#gradient-descent" class="page__taxonomy-item" rel="tag">gradient descent</a><span class="sep">, </span>
+    
+      <a href="/tags/#machine-learning" class="page__taxonomy-item" rel="tag">machine learning</a><span class="sep">, </span>
+    
+      <a href="/tags/#sgd" class="page__taxonomy-item" rel="tag">SGD</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-09-14T00:00:00-04:00">September 14, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  Share On <br>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Understanding+the+Basics%3A+Gradient+Descent%20http%3A%2F%2Flocalhost%3A4000%2F2023%2F09%2F14%2FGradient_Descent_Basics.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2023%2F09%2F14%2FGradient_Descent_Basics.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2023%2F09%2F14%2FGradient_Descent_Basics.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/2023/08/24/MiniProject_EmotionClassifer_Part3.html" class="pagination--pager" title="MiniProject: Emotion Classifier - Part3
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+ TO remove previous:next-->
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2023-08-26-MiniProject_EmotionClassifer_Part3_files/human_emotion_classifier.gif" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/2023/08/24/MiniProject_EmotionClassifer_Part3.html" rel="permalink">MiniProject: Emotion Classifier - Part3
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Part3 of Building a Human Emotion Classifier - Front End GUI and Deployment
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2023-08-09-MiniProject_EmotionClassifer_Part2_files/2023-08-09-MiniProject_EmotionClassifer_Part2_47_0.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/2023/08/09/MiniProject_EmotionClassifer_Part2.html" rel="permalink">MiniProject: Emotion Classifier - Part2
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          16 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Part2 of Building a Human Emotion Classifier using CNN by applying transfer Learning on Resnet18 implemented with FastAI
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/MiniProject_Happy_Sad_Classifier_files/MiniProject_Happy_Sad_Classifier_23_0.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/2023/08/04/MiniProject_EmotionClassifer_Part1.html" rel="permalink">MiniProject: Emotion Classifier - Part1
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          12 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Part1 of Building a Human Emotion Classifier using CNN by applying transfer Learning on Resnet18 implemented with FastAI
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/posts/2023/08/04/Machine_Learning_Foundations_Through_QA.html" rel="permalink">Machine Learning Foundations Through Q&amp;A
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          18 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">we will try to understand the foundations of Machine learning &amp; Deep learning in the form of Q&amp;A.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Vimal Venugopal. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/2023/09/14/Gradient_Descent_Basics.html";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/2023/09/14/Gradient_Descent_Basics"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://vmlverse.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+  </body>
+</html>

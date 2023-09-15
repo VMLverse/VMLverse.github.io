@@ -1,4 +1,387 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-08-27T00:11:39-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">VMLverse</title><subtitle>&quot;Welcome to VMLverse - Join me as I embark on a continuous learning journey into the fascinating world of Machine Learning.&quot;</subtitle><author><name>Vimal Venugopal</name></author><entry><title type="html">MiniProject: Emotion Classifier - Part3</title><link href="http://localhost:4000/2023/08/24/MiniProject_EmotionClassifer_Part3.html" rel="alternate" type="text/html" title="MiniProject: Emotion Classifier - Part3" /><published>2023-08-24T00:00:00-04:00</published><updated>2023-08-24T00:00:00-04:00</updated><id>http://localhost:4000/2023/08/24/MiniProject_EmotionClassifer_Part3</id><content type="html" xml:base="http://localhost:4000/2023/08/24/MiniProject_EmotionClassifer_Part3.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-09-14T23:35:30-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">VMLverse</title><subtitle>&quot;Welcome to VMLverse - Join me as I embark on a continuous learning journey into the fascinating world of Machine Learning.&quot;</subtitle><author><name>Vimal Venugopal</name></author><entry><title type="html">Understanding the Basics: Gradient Descent</title><link href="http://localhost:4000/2023/09/14/Gradient_Descent_Basics.html" rel="alternate" type="text/html" title="Understanding the Basics: Gradient Descent" /><published>2023-09-14T00:00:00-04:00</published><updated>2023-09-14T00:00:00-04:00</updated><id>http://localhost:4000/2023/09/14/Gradient_Descent_Basics</id><content type="html" xml:base="http://localhost:4000/2023/09/14/Gradient_Descent_Basics.html">&lt;h2 id=&quot;gradient-descent-workflow&quot;&gt;Gradient Descent Workflow&lt;/h2&gt;
+
+&lt;p&gt;The below seven steps are the key to the training of all deep learning models.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2023_09_14_Gradient_Descent_Basics_files/2023_09_14_Gradient_Descent_Basics_2_0.svg&quot; alt=&quot;svg&quot; /&gt;&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Initialize: We initialize the parameters to random values.&lt;/li&gt;
+  &lt;li&gt;Predict: Using current model &amp;amp; parameters, make predictions of the test data.&lt;/li&gt;
+  &lt;li&gt;Loss: (testing the effectiveness of any current weight assignment in terms of actual performance). We need some function that will return a number that is small if the performance of the model is good.&lt;/li&gt;
+  &lt;li&gt;Gradient: The magic of calculus allows us to directly figure out in which direction, and by roughly how much, to change each weight, without having to try all these small changes. The way to do this is by calculating gradients.&lt;/li&gt;
+  &lt;li&gt;Step: Perform performance optimization, by adjusting the weights in the direction and magnitude as determined from the gradients. Keep going back to predict step until stop condition is met.&lt;/li&gt;
+  &lt;li&gt;Stop: We decide how many epochs to train the model for. If our model is small, we would keep training until the accuracy of the model started getting worse, or we ran out of time.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;gradient-descent-intuition&quot;&gt;Gradient Descent Intuition&lt;/h2&gt;
+
+&lt;p&gt;We can gain intuition by applying the above steps to a simple problem.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Let’s pretend a simple quadratic $x^2$ as our loss function, and x is a weight parameter of the function.&lt;/li&gt;
+  &lt;li&gt;Lets pick a random value for our weight parameter,say -1.5 and calculate the loss. (we are already at step 3 of the above outline)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plot_function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;x&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&apos;x**2&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scatter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;red&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;/assets/images/2023_09_14_Gradient_Descent_Basics_files/2023_09_14_Gradient_Descent_Basics_7_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;To perform step adjustment (step5) of the weight parameter, we need to know the gradients.&lt;/li&gt;
+  &lt;li&gt;To get gradients (step4), we can simply calculate slope at that point -1.5.
+&lt;img src=&quot;/assets/images/2023_09_14_Gradient_Descent_Basics_files/grad_illustration.svg&quot; alt=&quot;svg&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;We can change our weight by a little in the direction of the slope, calculate our loss and adjustment again, and repeat this a few times. Eventually, we will get to the lowest point on our curve:
+&lt;img src=&quot;/assets/images/2023_09_14_Gradient_Descent_Basics_files/chapter2_perfect.svg&quot; alt=&quot;svg&quot; /&gt;&lt;/li&gt;
+  &lt;li&gt;By always taking a step in the direction of the steepest downward slope, you should eventually arrive at your destination. We use the magnitude of the gradient (i.e., the steepness of the slope) to tell us how big a step to take; specifically, we multiply the gradient by a number we choose called the learning rate to decide on the step size. We then iterate until we have reached the lowest point, which will be our lowest loss point, then we can stop.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;calculating-gradients&quot;&gt;Calculating Gradients&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Step4 is the magical step to calculate gradients.&lt;/li&gt;
+  &lt;li&gt;The gradients will tell us how much we have to change each weight to make our model better.&lt;/li&gt;
+  &lt;li&gt;From calculus, we know the derivative of a function tells you how much a change in its parameters will change its result.&lt;/li&gt;
+  &lt;li&gt;For any function, such as the quadratic function we saw in the previous section, we can calculate its derivative. The derivative is another function. It calculates the change, rather than the value. For instance, the derivative of the quadratic function at the value 3 tells us how rapidly the function changes at the value 3.&lt;/li&gt;
+  &lt;li&gt;Gradient is defined as rise/run, that is, the change in the value of the function, divided by the change in the value of the parameter. When we know how our function will change, then we know what we need to do to make it smaller. This is the key to machine learning: having a way to change the parameters of a function to make it smaller. Calculus provides us with a computational shortcut, the derivative, which lets us directly calculate the gradients of our functions.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;PyTorch is able to automatically compute the derivative of nearly any function.
+Let’s pick a tensor value which we want gradients at:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;xt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tensor&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;3.&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;requires_grad_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The special method &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;requires_grad_()&lt;/code&gt; is to tell PyTorch that we want to calculate gradients with respect to that variable at that value. It is essentially tagging the variable, so PyTorch will remember to keep track of how to compute gradients of the other, direct calculations on it that you will ask for.&lt;/p&gt;
+
+&lt;p&gt;Now we calculate our function with that value. Notice how PyTorch prints not just the value calculated, but also a note that it has a gradient function it’ll be using to calculate our gradients when needed:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;yt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;yt&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tensor(9., grad_fn=&amp;lt;PowBackward0&amp;gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Finally, we tell PyTorch to calculate the gradients for us:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;yt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;backward&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The “backward” here refers to backpropagation, which is the name given to the process of calculating the derivative of each layer. This is called the “backward pass” of the network, as opposed to the “forward pass,” which is where the activations are calculated. Life would probably be easier if backward was just called calculate_grad, but deep learning folks really do like to add jargon everywhere they can!&lt;/p&gt;
+
+&lt;p&gt;We can now view the gradients by checking the grad attribute of our tensor:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;xt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grad&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tensor(6.)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The derivative of x&lt;em&gt;*2 is 2&lt;/em&gt;x, and we have x=3, so the gradients should be 2*3=6, which is what PyTorch calculated for us!&lt;/p&gt;
+
+&lt;p&gt;Here is a summary of the all the steps required to calculate Gradients in Pytorch.&lt;/p&gt;
+
+&lt;!-- 
+```python
+gv(&apos;&apos;&apos;
+tag_input_vars_requires_grad_fn-&gt;run_fwd_pass_to_get_activations-&gt;calc_gradients_on_activations-&gt;access_gradients_on_input
+&apos;&apos;&apos;)
+``` --&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2023_09_14_Gradient_Descent_Basics_files/2023_09_14_Gradient_Descent_Basics_22_0.svg&quot; alt=&quot;svg&quot; /&gt;&lt;/p&gt;
+
+&lt;!-- 
+
+
+
+```python
+gv(&apos;&apos;&apos;
+&quot;xt.requires_grad_()&quot;-&gt;&quot;yt = f(xt)&quot;-&gt;&quot;yt.backward()&quot;-&gt;&quot;xt.grad&quot;
+&apos;&apos;&apos;)
+```
+
+ --&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2023_09_14_Gradient_Descent_Basics_files/2023_09_14_Gradient_Descent_Basics_23_0.svg&quot; alt=&quot;svg&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The gradients only tell us the slope of our function, they don’t actually tell us exactly how far to adjust the parameters. But it gives us some idea of how far; if the slope is very large, then that may suggest that we have more adjustments to do, whereas if the slope is very small, that may suggest that we are close to the optimal value.&lt;/p&gt;
+
+&lt;h2 id=&quot;loss-functions&quot;&gt;Loss Functions&lt;/h2&gt;
+&lt;p&gt;The purpose of the loss function is to measure the difference between predicted values and the true values. We already have the labeled results for the data (supervised learning). We also have the predicted outputs from our model. By comparing these predicted values with true values, the Loss functions would tell us if our weight parameters are doing a good job or not.
+There are two very commmon loss functions - L1 Norm and L2 Norm.&lt;/p&gt;
+
+&lt;h3 id=&quot;l1-norm-mean-absolute-difference&quot;&gt;L1 Norm (mean absolute difference)&lt;/h3&gt;
+&lt;p&gt;The mean of the absolute value of differences.&lt;/p&gt;
+
+&lt;p&gt;Mathematically, the formula for the mean absolute difference (MAD) is given as:&lt;/p&gt;
+
+\[MAD = Σ |xᵢ - μ| / N\]
+
+&lt;p&gt;Where:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Σ represents the summation symbol, indicating that you sum up the values for all data points.&lt;/li&gt;
+  &lt;li&gt;xᵢ represents each individual data point.&lt;/li&gt;
+  &lt;li&gt;μ is the mean of the data.&lt;/li&gt;
+  &lt;li&gt;N is the total number of data points.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It is a useful measure of dispersion because it tells you, on average, how far each data point is from the mean.
+A smaller MAD indicates that the data points are closely clustered around the mean, while a larger MAD suggests greater variability or spread in the data.&lt;/p&gt;
+
+&lt;h3 id=&quot;l2-norm-root-mean-squared-error-rmse-&quot;&gt;L2 Norm (root mean squared error (RMSE) )&lt;/h3&gt;
+&lt;p&gt;The mean of the square of differences (which makes everything positive) and then take the square root (which undoes the squaring).&lt;/p&gt;
+
+&lt;p&gt;Mathematically, the formula for RMSE is given as:&lt;/p&gt;
+
+\[RMSE = sqrt[Σ(ŷᵢ - yᵢ)² / N]\]
+
+&lt;p&gt;Where:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Σ represents the summation symbol, indicating that you sum up the values for all data points.&lt;/li&gt;
+  &lt;li&gt;ŷᵢ represents the predicted value for the i-th data point.&lt;/li&gt;
+  &lt;li&gt;yᵢ represents the actual (observed) value for the i-th data point.&lt;/li&gt;
+  &lt;li&gt;N is the total number of data points.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Squaring the errors penalizes larger errors more heavily, giving more importance to larger deviations between predicted and actual values.&lt;/p&gt;
+
+&lt;p&gt;Taking the square root of the mean squared errors scales the metric back to the original units and provides a measure of the average error.&lt;/p&gt;
+
+&lt;p&gt;RMSE gives higher weight to outliers compared to the Mean Absolute Error (MAE), making it sensitive to extreme errors.&lt;/p&gt;
+
+&lt;p&gt;Lower RMSE values indicate better model performance, as they suggest smaller prediction errors.&lt;/p&gt;
+
+&lt;h2 id=&quot;stepping-with-a-learning-rate&quot;&gt;Stepping With a Learning Rate&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Deciding how to change our parameters based on the values of the gradients is an important part of the deep learning process.&lt;/li&gt;
+  &lt;li&gt;Nearly all approaches start with the basic idea of multiplying the gradient by some small number, called the learning rate (LR). The learning rate is often a number between 0.001 and 0.1, although it could be anything. Often, people select a learning rate just by trying a few, and finding which results in the best model after training&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Why need learning rate?&lt;/strong&gt;
+When updating model parameters using gradients, multiplying the gradient by the learning rate scales down the step size. If we directly update the parameters without stepping down the gradients with learning rate, the optimization algorithm may oscillate or diverge, making it difficult to find a good solution.&lt;/p&gt;
+
+&lt;p&gt;Once you’ve picked a learning rate, you can adjust your parameters using this simple function:&lt;/p&gt;
+
+\[w -= gradient(w) * lr\]
+
+&lt;p&gt;This is known as stepping your parameters, using an optimizer step. The negative sign allows us to adjust the parameter in the direction of the slope by increasing the parameter when the slope is negative and decreasing the parameter when the slope is positive.
+&lt;img src=&quot;/assets/images/2023_09_14_Gradient_Descent_Basics_files/slope_illustration.png&quot; alt=&quot;png&quot; /&gt;
+We want to adjust our parameters in the direction of the slope because our goal in deep learning is to minimize the loss.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Impacts of low &amp;amp; high learning rate:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;If you pick a learning rate that’s too low, it can mean having to do a lot of steps. Optimization algorithm will take too long to converge.
+&lt;img src=&quot;/assets/images/2023_09_14_Gradient_Descent_Basics_files/low_learning_rate.svg&quot; alt=&quot;svg&quot; /&gt;
+If the learning rate is too high, it may also “bounce” around, rather than actually diverging;
+&lt;img src=&quot;/assets/images/2023_09_14_Gradient_Descent_Basics_files/high_learning_rate.svg&quot; alt=&quot;svg&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;sgd-example-quadratic-function&quot;&gt;SGD Example: Quadratic Function&lt;/h2&gt;
+&lt;p&gt;Now that we have covered the SGD basics, lets run it on the quadratic function as an example. We will see how gradients can help determine the minimum.&lt;/p&gt;
+
+&lt;p&gt;Lets build a quadratic function with 20 timesteps.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arange&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tensor([ 0.,  1.,  2.,  3.,  4.,  5.,  6.,  7.,  8.,  9., 10., 11., 12., 13., 14., 15., 16., 17., 18., 19.])
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Lets add a bit of random noise, since measuring things manually isn’t precise.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# speed = torch.randn(20)*3 + 0.75*(time-9.5)**2 + 1
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;speed&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.50&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;9.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scatter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;speed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2023_09_14_Gradient_Descent_Basics_files/2023_09_14_Gradient_Descent_Basics_31_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The above is our synthetic data. i.e., our x input and y output mappings.&lt;/p&gt;
+
+&lt;p&gt;Now lets select a model to start with. Looking at this data, we think a quadratic function would be the best fit. We can’t consider every possible function, so let’s use a guess that it will be quadratic; i.e., a function of the form &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;a*(time**2)+(b*time)+c&lt;/code&gt;. Lets define a model function for this:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;t&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;By definining this model, we’ve restricted the problem of finding the best imaginable function that fits the data, to finding the best quadratic function. This greatly simplifies the problem, since every quadratic function is fully defined by the three parameters a, b, and c. Thus, to find the best quadratic function, we only need to find the best values for a, b, and c.&lt;/p&gt;
+
+&lt;p&gt;We need to define first what we mean by “best.” We define this precisely by choosing a loss function, which will return a value based on a prediction and a target, where lower values of the function correspond to “better” predictions. It is important for loss functions to return lower values when predictions are more accurate, as the SGD procedure we defined earlier will try to minimize this loss. For continuous data, it’s common to use mean squared error:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;mse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;preds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;targets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;preds&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;targets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Finally, let’s work through our 7 step process.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 1: Initialize the parameters&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;First, we initialize the parameters to random values, and tell PyTorch that we want to track their gradients, using requires_grad_:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Generate 3 random initial parameters with gradient tracking enabled.
+# &apos;requires_grad_()&apos; is used to indicate that gradients will be computed for these parameters during optimization.
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;torch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;requires_grad_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 2: Calculate the predictions&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Next, we calculate the predictions:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;preds&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;create a little function to see how close our predictions are to our targets, and take a look:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;show_preds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;preds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subplots&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scatter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;speed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scatter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;to_np&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;preds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&apos;red&apos;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_ylim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;300&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;show_preds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;preds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2023_09_14_Gradient_Descent_Basics_files/2023_09_14_Gradient_Descent_Basics_43_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 3: Calculate the loss&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;We calculate the loss as follows:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;preds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;speed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tensor(679.2726, grad_fn=&amp;lt;MeanBackward0&amp;gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Our goal is now to improve this. To do that, we’ll need to know the gradients&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 4: Calculate the gradients&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;The next step is to calculate the gradients. In other words, calculate an approximation of how the parameters need to change:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;backward&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grad&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tensor([-6668.8774,  -434.5187,   -42.9623])
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tensor([ 0.0121, -0.6397,  0.6416], requires_grad=True)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 5: Step the weights.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we need to update the parameters based on the gradients we just calculated:&lt;/p&gt;
+
+&lt;p&gt;We’ll need to pick a learning rate - for now we’ll just use 1e-5, or 0.00001):&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1e-5&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grad&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;why do we Reset the gradients to zero for the next iteration?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Gradients are accumulated by default in most deep learning frameworks, like PyTorch and TensorFlow. This means that when you call loss.backward() to compute gradients, the gradients are added to any existing gradients in the params.grad tensor. Resetting params.grad to None or zero prevents the accumulation of gradients from previous iterations, ensuring that you only have the gradients computed for the current iteration.&lt;/p&gt;
+
+&lt;p&gt;Let’s see if the loss has improved:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;preds&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;mse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;preds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;speed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;tensor(358.8021, grad_fn=&amp;lt;MeanBackward0&amp;gt;)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And take a look at the plot:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;show_preds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;preds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2023_09_14_Gradient_Descent_Basics_files/2023_09_14_Gradient_Descent_Basics_56_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We need to repeat this a few times, so we’ll create a function to apply one step:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;apply_step&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# Calculate predictions based on the current parameters &apos;params&apos; using the function &apos;f&apos; (not provided in the code).
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;preds&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Calculate the loss by comparing the predictions &apos;preds&apos; to the target values &apos;speed&apos; using the mean squared error (MSE).
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;preds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;speed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Compute gradients of the loss with respect to the parameters &apos;params&apos;.
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;backward&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Update the parameters using gradient descent.
+&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# &apos;lr&apos; represents the learning rate (not provided in the code).
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grad&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Reset the gradients to zero for the next iteration.
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grad&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Print the value of the loss (if &apos;prn&apos; is True).
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;prn&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loss&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;item&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
+
+    &lt;span class=&quot;c1&quot;&gt;# Return the predictions &apos;preds&apos;.
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;preds&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 6: Repeat the process&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we iterate. By looping and performing many improvements, we hope to reach a good result:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;apply_step&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;358.8021240234375
+298.157470703125
+286.67987060546875
+284.50604248046875
+284.09283447265625
+284.0128173828125
+283.9958190917969
+283.9906921386719
+283.9879150390625
+283.98553466796875
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The loss is going down, just as we hoped! But looking only at these loss numbers disguises the fact that each iteration represents an entirely different quadratic function being tried, on the way to finding the best possible quadratic function.&lt;/p&gt;
+
+&lt;p&gt;We can see this process visually if, instead of printing out the loss function, we plot the function at every step. Then we can see how the shape is approaching the best possible quadratic function for our data:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;n&quot;&gt;_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;subplots&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;figsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;show_preds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;apply_step&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tight_layout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/images/2023_09_14_Gradient_Descent_Basics_files/2023_09_14_Gradient_Descent_Basics_63_0.png&quot; alt=&quot;png&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Step 7: stop&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;We just decided to stop after 10 epochs arbitrarily. In practice, we would watch the training and validation losses and our metrics to decide when to stop, as we’ve discussed.&lt;/p&gt;
+
+&lt;h2 id=&quot;sgd-example-mnist-dataset&quot;&gt;SGD Example: MNIST Dataset&lt;/h2&gt;
+
+&lt;p&gt;We can now try to attempt something more difficult. Check out my next article which dives into this in detail.&lt;/p&gt;
+
+&lt;h2 id=&quot;notebook&quot;&gt;Notebook&lt;/h2&gt;
+&lt;p&gt;You can also find this article in notebook form. 
+&lt;a href=&quot;/assets/notebooks/2023_09_14_Gradient_Descent_Basics.ipynb&quot;&gt;Link to My Notebook&lt;/a&gt;&lt;/p&gt;</content><author><name>Vimal Venugopal</name></author><category term="machine learning" /><category term="deep learning" /><category term="gradient descent" /><category term="SGD" /><category term="basics" /><summary type="html">Gradient Descent is an optimization algorithm that iteratively adjusts model parameters in the direction of steepest descent of the loss function to find the minimum point, improving model accuracy.</summary></entry><entry><title type="html">MiniProject: Emotion Classifier - Part3</title><link href="http://localhost:4000/2023/08/24/MiniProject_EmotionClassifer_Part3.html" rel="alternate" type="text/html" title="MiniProject: Emotion Classifier - Part3" /><published>2023-08-24T00:00:00-04:00</published><updated>2023-08-24T00:00:00-04:00</updated><id>http://localhost:4000/2023/08/24/MiniProject_EmotionClassifer_Part3</id><content type="html" xml:base="http://localhost:4000/2023/08/24/MiniProject_EmotionClassifer_Part3.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
 
 &lt;p&gt;In this part 3 of the series on Emotion Classifer miniproject, we are going to see how we can deploy the human emotion classifer to production and make a usuable front end for a customer. This is going to be the basic steps and not a full on production app. The &lt;a href=&quot;/2023/08/04/MiniProject_EmotionClassifer_Part1.html&quot;&gt;part1&lt;/a&gt; of this mini project series covers the basics of transfer learning while &lt;a href=&quot;/2023/08/09/MiniProject_EmotionClassifer_Part2.html&quot;&gt;part2&lt;/a&gt; covers augmenting and cleaning data.&lt;/p&gt;
 
@@ -11818,229 +12201,4 @@ After change:(32559, 15)
   &lt;li&gt;&lt;a href=&quot;https://github.com/pandas-dev/pandas/blob/main/doc/cheatsheet/Pandas_Cheat_Sheet.pdf&quot;&gt;Pandas Cheat Sheet&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://www.kaggle.com/learn/pandas&quot;&gt;Kaggle Pandas Course&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://pandas.pydata.org/docs/user_guide/index.html&quot;&gt;Pandas User Guide&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Vimal Venugopal</name></author><category term="posts" /><category term="pandas" /><category term="data analysis" /><summary type="html">This article outlines the essential Pandas methods for preliminary data analysis.</summary></entry><entry><title type="html">Markdown Cheatsheet: Quick Reference for Commonly Used Syntax</title><link href="http://localhost:4000/posts/2023/06/08/markdown-cheatsheet.html" rel="alternate" type="text/html" title="Markdown Cheatsheet: Quick Reference for Commonly Used Syntax" /><published>2023-06-08T00:00:00-04:00</published><updated>2023-06-08T00:00:00-04:00</updated><id>http://localhost:4000/posts/2023/06/08/markdown-cheatsheet</id><content type="html" xml:base="http://localhost:4000/posts/2023/06/08/markdown-cheatsheet.html">&lt;h2 id=&quot;the-basics&quot;&gt;The Basics&lt;/h2&gt;
-
-&lt;h3 id=&quot;newline&quot;&gt;Newline&lt;/h3&gt;
-&lt;p&gt;You can create a newline by adding two spaces at the end of a line.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;This is the first line.  
-This is the second line.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;This is the first line.&lt;br /&gt;
-This is the second line.&lt;/p&gt;
-
-&lt;h3 id=&quot;new-paragraph&quot;&gt;New paragraph&lt;/h3&gt;
-&lt;p&gt;You can create a new paragraph by leaving a blank line between the lines of text.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;This is the last line.
-
-This is a new paragraph.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;This is the last line.&lt;/p&gt;
-
-&lt;p&gt;This is a new paragraph.&lt;/p&gt;
-
-&lt;h3 id=&quot;bold--italic&quot;&gt;Bold &amp;amp; Italic&lt;/h3&gt;
-&lt;p&gt;You can italicize text by using single asterisks (‘&lt;em&gt;’) or single underscores (_).&lt;br /&gt;
-You can make text bold by using double asterisks (&lt;strong&gt;) or double underscores (__)&lt;br /&gt;
-You can make text bold &amp;amp; italic by using triple asterisks (&lt;/strong&gt;&lt;/em&gt;) or triple underscores (___)&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;This is *italic* text.
-This is _also_ italic text.
-
-This is **bold** text.
-This is __also__ bold text.
-
-This is ***bold and italic*** text.
-This is ___also bold and italic___ text.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;This is &lt;em&gt;italic&lt;/em&gt; text.&lt;br /&gt;
-This is &lt;em&gt;also&lt;/em&gt; italic text.&lt;/p&gt;
-
-&lt;p&gt;This is &lt;strong&gt;bold&lt;/strong&gt; text.&lt;br /&gt;
-This is &lt;strong&gt;also&lt;/strong&gt; bold text.&lt;/p&gt;
-
-&lt;p&gt;This is &lt;strong&gt;&lt;em&gt;bold and italic&lt;/em&gt;&lt;/strong&gt; text.&lt;br /&gt;
-This is &lt;strong&gt;&lt;em&gt;also bold and italic&lt;/em&gt;&lt;/strong&gt; text.&lt;/p&gt;
-
-&lt;h3 id=&quot;escape-characters&quot;&gt;Escape characters&lt;/h3&gt;
-&lt;p&gt;You can use a backslash () to escape characters that have special meaning and prevent them from being interpreted as formatting or syntax.&lt;/p&gt;
-&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;To display a literal asterisk: \*
-To display a literal underscore: \_
-To display a literal backslash: \\
-To display a literal square bracket: \[ or \]
-To display a literal hash symbol: \#
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;To display a literal asterisk: *&lt;br /&gt;
-To display a literal underscore: _&lt;br /&gt;
-To display a literal backslash: \&lt;br /&gt;
-To display a literal square bracket: [ or ]&lt;br /&gt;
-To display a literal hash symbol: #&lt;/p&gt;
-
-&lt;h3 id=&quot;links&quot;&gt;Links&lt;/h3&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Inline Links:
-    &lt;ul&gt;
-      &lt;li&gt;Syntax: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[link text](url)&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;Example: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[Visit our website](https://www.example.com)&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;Renders as: &lt;a href=&quot;https://www.google.com&quot;&gt;Visit our website&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Inline Links with Title Attribute:
-    &lt;ul&gt;
-      &lt;li&gt;Syntax: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[link text](url &quot;title&quot;)&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;Example: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[Open in new tab](https://www.example.com &quot;Opens in a new tab&quot;)&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;Renders as: &lt;a href=&quot;https://www.example.com&quot; title=&quot;Opens in a new tab Title&quot;&gt;Open in new tab&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Opens in a new tab Title&lt;/code&gt; is shown when hovering over the link.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Reference-style Links:
-    &lt;ul&gt;
-      &lt;li&gt;Syntax: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[link text][reference]&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[reference]: url &quot;title&quot;&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;Example:
-        &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;[Learn more][example]
-[example]: https://www.example.com &quot;Visit our website&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Inline Image Links:
-    &lt;ul&gt;
-      &lt;li&gt;Syntax: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![alt text](image url)&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;Example: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![Logo](https://www.example.com/images/logo.png)&lt;/code&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Inline Image Links with Title Attribute:
-    &lt;ul&gt;
-      &lt;li&gt;Syntax: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![alt text](image url &quot;title&quot;)&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;Example: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![Logo](https://www.example.com/images/logo.png &quot;Company Logo&quot;)&lt;/code&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Reference-style Image Links:
-    &lt;ul&gt;
-      &lt;li&gt;Syntax: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![alt text][reference]&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[reference]: image url &quot;title&quot;&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;Example:
-        &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;![Logo][logo]
-[logo]: https://www.example.com/images/logo.png &quot;Company Logo&quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Remember to replace the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;link text&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;url&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;alt text&lt;/code&gt;, and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;image url&lt;/code&gt; with your desired values. The &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;title&lt;/code&gt; attribute is optional and can be used to provide additional information when the user hovers over the link or image.&lt;/p&gt;
-
-&lt;p&gt;These Markdown link syntaxes allow you to create various types of links within your Markdown content, enabling seamless navigation and enhancing user experience. I personally found the reference-style links to be useful since you can have a footer with all your referenced URLs in your article and maintain them in one place.&lt;/p&gt;
-
-&lt;h3 id=&quot;images&quot;&gt;Images&lt;/h3&gt;
-&lt;p&gt;To add images in Markdown, you can use the following syntax:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Inline Image:
-    &lt;ul&gt;
-      &lt;li&gt;Syntax: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![alt text](image URL)&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;Example: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![Example Image](https://www.example.com/images/example.jpg)&lt;/code&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Reference-style Image:
-    &lt;ul&gt;
-      &lt;li&gt;Syntax: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;![alt text][reference]&lt;/code&gt; and &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;[reference]: image URL&lt;/code&gt;&lt;/li&gt;
-      &lt;li&gt;Example:
-        &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;![Example Image][image-ref]
-[image-ref]: https://www.example.com/images/example.jpg
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;In Markdown, the basic syntax does not provide direct control over image size or position. However, you can use HTML attributes within Markdown to achieve these effects. Here’s how you can size and position images using HTML attributes:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;Sizing Images:
-    &lt;ul&gt;
-      &lt;li&gt;Use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;width&lt;/code&gt; attribute to specify the desired width of the image in pixels or percentage.&lt;/li&gt;
-      &lt;li&gt;Use the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;height&lt;/code&gt; attribute to specify the desired height of the image in pixels or percentage.&lt;/li&gt;
-      &lt;li&gt;Example:
-        &lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image.jpg&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;alt=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Example Image&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;300&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;200&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Positioning Images:
-    &lt;ul&gt;
-      &lt;li&gt;Use CSS styling within an HTML &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;div&amp;gt;&lt;/code&gt; or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;&amp;lt;figure&amp;gt;&lt;/code&gt; element to control the positioning of the image.&lt;/li&gt;
-      &lt;li&gt;Apply CSS properties like &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;float&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;margin&lt;/code&gt;, or &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;text-align&lt;/code&gt; to position the image as desired.&lt;/li&gt;
-      &lt;li&gt;Example:
-        &lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;float: right; margin: 10px;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image.jpg&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;alt=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Example Image&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Combining Sizing and Positioning:
-    &lt;ul&gt;
-      &lt;li&gt;You can combine the sizing and positioning techniques to control both the size and position of the image.&lt;/li&gt;
-      &lt;li&gt;Example:
-        &lt;div class=&quot;language-markdown highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;div&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;style=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;float: right; margin: 10px;&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-  &lt;span class=&quot;nt&quot;&gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;image.jpg&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;alt=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Example Image&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;width=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;300&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;height=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;200&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/div&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;        &lt;/div&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h3 id=&quot;code-blocks&quot;&gt;Code Blocks&lt;/h3&gt;
-&lt;p&gt;To write code in Markdown, you can use the following techniques:&lt;/p&gt;
-
-&lt;ol&gt;
-  &lt;li&gt;
-    &lt;p&gt;Inline Code: Use backticks (`) to enclose the code within a sentence or paragraph. This helps differentiate code snippets from regular text. For example:&lt;/p&gt;
-
-    &lt;p&gt;Markdown code: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;`print(&quot;Hello, World!&quot;)`&lt;/code&gt;&lt;/p&gt;
-
-    &lt;p&gt;Rendered output: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;print(&quot;Hello, World!&quot;)&lt;/code&gt;&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Code Blocks: To display a larger block of code, you can use fenced code blocks. Place triple backticks (```) on a separate line above and below the code. Optionally, specify the programming language for syntax highlighting after the opening backticks. For example:&lt;/p&gt;
-
-    &lt;p&gt;Markdown code:&lt;/p&gt;
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;```python
-def greet(name):
-    print(&quot;Hello, &quot; + name + &quot;!&quot;)
-```
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-
-    &lt;p&gt;Rendered output:&lt;/p&gt;
-    &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;greet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Hello, &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-
-    &lt;p&gt;Note: Some Markdown processors may require a blank line before and after the fenced code block.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Syntax Highlighting: To enable syntax highlighting for the code blocks, specify the programming language after the opening backticks. This will apply appropriate color coding to improve code readability. For example:&lt;/p&gt;
-
-    &lt;p&gt;Markdown code:&lt;/p&gt;
-    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;```javascript
-function add(a, b) {
-    return a + b;
-}
-```
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-
-    &lt;p&gt;Rendered output:&lt;/p&gt;
-    &lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;add&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;p&gt;Commonly supported programming languages for syntax highlighting include JavaScript, Python, Java, C++, HTML, CSS, and more.&lt;/p&gt;
-
-&lt;h2 id=&quot;references&quot;&gt;References&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.jetbrains.com/help/hub/Markdown-Syntax.html&quot;&gt;Jetbrains Markdown Syntax&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.markdownguide.org/getting-started/&quot;&gt;Markdown Guide&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name>Vimal Venugopal</name></author><category term="posts" /><category term="markdown" /><category term="jekyll" /><summary type="html">This cheatsheet provides a concise reference for frequently used Markdown formatting, helping you create beautiful, well-structured content with ease.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name>Vimal Venugopal</name></author><category term="posts" /><category term="pandas" /><category term="data analysis" /><summary type="html">This article outlines the essential Pandas methods for preliminary data analysis.</summary></entry></feed>

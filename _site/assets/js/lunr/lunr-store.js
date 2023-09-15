@@ -76,4 +76,10 @@ var store = [{
         "tags": ["cnn","classifier","transfer learning","computer vision","resnet"],
         "url": "/2023/08/24/MiniProject_EmotionClassifer_Part3.html",
         "teaser": "/assets/images/2023-08-26-MiniProject_EmotionClassifer_Part3_files/human_emotion_classifier.gif"
+      },{
+        "title": "Understanding the Basics: Gradient Descent",
+        "excerpt":"Gradient Descent Workflow The below seven steps are the key to the training of all deep learning models. Initialize: We initialize the parameters to random values. Predict: Using current model &amp; parameters, make predictions of the test data. Loss: (testing the effectiveness of any current weight assignment in terms of...","categories": [],
+        "tags": ["machine learning","deep learning","gradient descent","SGD","basics"],
+        "url": "/2023/09/14/Gradient_Descent_Basics.html",
+        "teaser": "/assets/images/2023_09_14_Gradient_Descent_Basics_files/slope_illustration.png"
       }]
