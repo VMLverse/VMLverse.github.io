@@ -1,0 +1,2406 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Constructing a Neural Network to Classify Handwritten Digits | VMLverse</title>
+<meta name="description" content="Build a Neural Network from scratch to recognize handwritten digits and later implement a Deep Neural Network using Pytorch">
+
+
+  <meta name="author" content="Vimal Venugopal">
+  
+  <meta property="article:author" content="Vimal Venugopal">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="VMLverse">
+<meta property="og:title" content="Constructing a Neural Network to Classify Handwritten Digits">
+<meta property="og:url" content="http://localhost:4000/posts/2023/10/25/MNIST_Recognition.html">
+
+
+  <meta property="og:description" content="Build a Neural Network from scratch to recognize handwritten digits and later implement a Deep Neural Network using Pytorch">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-10-25T00:00:00-04:00">
+
+
+
+
+
+
+<link rel="canonical" href="http://localhost:4000/posts/2023/10/25/MNIST_Recognition.html">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Vimal Venugopal",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="VMLverse Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+          <a class="site-logo" href="/"><img src="/assets/images/logo_plain_blck_bg.png" alt="VMLverse"></a>
+        
+        <a class="site-title" href="/">
+          VMLverse
+          <span class="site-subtitle">Explore | Experiment | Expand</span>
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/about/">About</a>
+            </li><li class="masthead__menu-item">
+              <a href="/blog/">Blog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/projects/">Projects</a>
+            </li><li class="masthead__menu-item">
+              <a href="/docs/resume.pdf">Resume</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/DSC1717square.jpeg" alt="Vimal Venugopal" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">Vimal Venugopal</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>a curious mind with a passion for machine learning, photography and travel</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Toronto, Canada</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span class="label">LinkedIn</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://cognitivescrawls.wordpress.com/" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Wordpress</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Constructing a Neural Network to Classify Handwritten Digits">
+    <meta itemprop="description" content="Build a Neural Network from scratch to recognize handwritten digits and later implement a Deep Neural Network using Pytorch">
+    <meta itemprop="datePublished" content="2023-10-25T00:00:00-04:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Constructing a Neural Network to Classify Handwritten Digits
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          48 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <h2 id="introduction">Introduction</h2>
+<p>I was reading through <a href="https://github.com/fastai/fastbook/blob/master/04_mnist_basics.ipynb">FastAI’s material</a> which covered the basics of a neural network while showing an example of MNIST character recognition. However it was a simple binary classifier which recognizes if a digit was 3 or 7. The complete classification was left as an open assignment. I tried looking up existing articles on MNIST character recognition and most of the articles dived right into Pytorch which was confusing for me.</p>
+
+<p>So in this article,  I attempt to dissect how the neural network recognizes characters, cover the basics of neural network and implement it manually and then later in Pytorch. It did take me some time to complete this article, but I do find myself looking back to this article to cover the basics.</p>
+
+<h2 id="environment-setup">Environment Setup</h2>
+<p>Since we eventually want to code in Pytorch, I will start straight away by using torch instead of numpy so we can switch between manual methods and later replace them with standard Pytorch functions.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torchvision</span>
+<span class="kn">import</span> <span class="nn">torchvision.transforms</span> <span class="k">as</span> <span class="n">transforms</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">torch.nn.functional</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="n">nn</span>
+</code></pre></div></div>
+
+<!-- 
+```python
+#hide
+!pip install -Uqq fastbook
+import fastbook
+fastbook.setup_book()
+from fastbook import *
+```
+
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m719.8/719.8 kB[0m [31m13.0 MB/s[0m eta [36m0:00:00[0m
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m7.7/7.7 MB[0m [31m71.6 MB/s[0m eta [36m0:00:00[0m
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m493.7/493.7 kB[0m [31m40.3 MB/s[0m eta [36m0:00:00[0m
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m1.3/1.3 MB[0m [31m86.1 MB/s[0m eta [36m0:00:00[0m
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m115.3/115.3 kB[0m [31m17.3 MB/s[0m eta [36m0:00:00[0m
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m134.8/134.8 kB[0m [31m20.7 MB/s[0m eta [36m0:00:00[0m
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m302.0/302.0 kB[0m [31m42.4 MB/s[0m eta [36m0:00:00[0m
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m3.8/3.8 MB[0m [31m112.3 MB/s[0m eta [36m0:00:00[0m
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m1.3/1.3 MB[0m [31m95.3 MB/s[0m eta [36m0:00:00[0m
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m1.6/1.6 MB[0m [31m94.0 MB/s[0m eta [36m0:00:00[0m
+    [2K     [90m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[0m [32m295.0/295.0 kB[0m [31m40.0 MB/s[0m eta [36m0:00:00[0m
+    [?25hMounted at /content/gdrive -->
+
+<h2 id="dataset-preparation">Dataset Preparation</h2>
+<p>MNIST consists of 70,000 handwritten digit images, with 60,000 allocated for training and 10,000 for testing. These images are grayscale, sized at 28x28 pixels, and centered to streamline preprocessing and expedite the setup.</p>
+
+<p>The dataset preparation can be described by the following steps:</p>
+<ol>
+  <li>Download &amp; Inspect the data</li>
+  <li>Normalize the data</li>
+  <li>Shuffle &amp; Split into Mini Batches</li>
+</ol>
+
+<p class="notice--info"><strong>Watch out!</strong> In production systems, most of these steps would be combined together for faster and efficient computation. However, for this article, I have delved into the details for better understanding.</p>
+
+<h3 id="download-and-inspect-the-data">Download and Inspect the Data</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create a DataLoader for the training dataset.
+</span><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">torchvision</span><span class="p">.</span><span class="n">datasets</span><span class="p">.</span><span class="n">MNIST</span><span class="p">(</span>
+    <span class="s">'/files/'</span><span class="p">,</span>                <span class="c1"># Specify the directory to store the dataset.
+</span>    <span class="n">train</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>               <span class="c1"># Use the training split.
+</span>    <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>            <span class="c1"># Download the dataset if not already present.
+</span>    <span class="n">transform</span><span class="o">=</span><span class="bp">None</span>       <span class="c1"># Apply the defined transformations.
+</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Length of Train Dataset: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Length of each entry of the dataset: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">])))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Downloading http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz
+Downloading http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz to /files/MNIST/raw/train-images-idx3-ubyte.gz
+
+
+100%|██████████| 9912422/9912422 [00:00&lt;00:00, 127058919.01it/s]
+
+Extracting /files/MNIST/raw/train-images-idx3-ubyte.gz to /files/MNIST/raw
+
+
+
+
+
+
+Downloading http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz
+Downloading http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz to /files/MNIST/raw/train-labels-idx1-ubyte.gz
+
+
+100%|██████████| 28881/28881 [00:00&lt;00:00, 99210232.45it/s]
+
+Extracting /files/MNIST/raw/train-labels-idx1-ubyte.gz to /files/MNIST/raw
+
+Downloading http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz
+
+
+
+
+
+Downloading http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz to /files/MNIST/raw/t10k-images-idx3-ubyte.gz
+
+
+100%|██████████| 1648877/1648877 [00:00&lt;00:00, 37639757.46it/s]
+
+
+Extracting /files/MNIST/raw/t10k-images-idx3-ubyte.gz to /files/MNIST/raw
+
+Downloading http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz
+Downloading http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz to /files/MNIST/raw/t10k-labels-idx1-ubyte.gz
+
+
+100%|██████████| 4542/4542 [00:00&lt;00:00, 7001296.86it/s]
+
+
+Extracting /files/MNIST/raw/t10k-labels-idx1-ubyte.gz to /files/MNIST/raw
+
+Length of Train Dataset: 60000
+Length of each entry of the dataset: 2
+</code></pre></div></div>
+
+<p>Pytorch already has builtin MNIST dataset which can be accessed through <code class="language-plaintext highlighter-rouge">torchvision.datasets.MNIST</code>. We have downloaded 60000 train data and each train data entry has two entries: one PIL Image and one int label.</p>
+
+<p>Lets try accessing the dataset at index 0 and inspect it.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Access image at index 0 and its label
+</span><span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="o">=</span> <span class="n">train_dataset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'image type: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">image</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'label type: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">label</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>image type: &lt;class 'PIL.Image.Image'&gt;
+label type: &lt;class 'int'&gt;
+</code></pre></div></div>
+
+<p>PIL (Python Imaging Library), often referred to as Pillow, is the most commonly used Python package for opening, editing, and displaying images. When working within Jupyter notebooks, PIL images can be automatically displayed, simplifying the image viewing process.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">'label: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">label</span><span class="p">))</span>
+<span class="n">image</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>label: 5
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-10-25-MNIST_Recognition_files/2023-10-25-MNIST_Recognition_11_1.png" alt="png" /></p>
+
+<p>To inspect the numerical representation of this image, we can convert it into a NumPy array.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Convert PIL image to NumPy array
+</span><span class="n">numpy_array</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">array</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+<span class="n">numpy_array</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="mi">6</span><span class="p">:</span><span class="mi">12</span><span class="p">]</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>array([[  0,   0,  30,  36,  94, 154],
+       [  0,  49, 238, 253, 253, 253],
+       [  0,  18, 219, 253, 253, 253],
+       [  0,   0,  80, 156, 107, 253],
+       [  0,   0,   0,  14,   1, 154],
+       [  0,   0,   0,   0,   0, 139]], dtype=uint8)
+</code></pre></div></div>
+
+<p>The notation “6:12” specifies that we’ve selected rows starting from index 6 (inclusive) up to index 12 (exclusive), and the same applies to columns. In NumPy, indexing proceeds from top to bottom and left to right, so this section corresponds to the top-left corner of the image. Here’s the equivalent operation using a PyTorch tensor:</p>
+
+<h3 id="normalize-the-data">Normalize the data</h3>
+<p>Normalization is an important preprocessing step that contributes to the stability, efficiency, and effectiveness of machine learning models.</p>
+
+<h4 id="why-need-normalization">Why need normalization?</h4>
+<ul>
+  <li>With image data like MNIST, converting pixel values (typically in the range [0, 255]) to a standard range (often mean zero and standard deviation one) is referred to as “Normalization”.</li>
+  <li>Normalization ensures that the data is centered around zero and has a similar scale, reducing the likelihood of <a href="https://datascience.stackexchange.com/questions/95160/how-batch-normalization-layer-resolve-the-vanishing-gradient-problem">vanishing or exploding gradients</a> during training.</li>
+  <li>By scaling the data to a standard range, the model becomes less sensitive to variations in input magnitude.</li>
+  <li>This helps ensure that images with different lighting conditions or contrast levels are treated consistently during training, making it easier for the model to learn the relevant patterns in the data.</li>
+  <li>Without data normalization, the loss values during training may be higher, and the convergence may be slower compared to a model trained with normalized data. This is because the input data’s pixel values range from 0 to 255, which can lead to large gradients and slow convergence.</li>
+</ul>
+
+<h4 id="how-do-we-apply-normalization">How do we apply Normalization?</h4>
+<p>Usually our first option is <code class="language-plaintext highlighter-rouge">StandardScaler</code> which is very commonly used. It works via standardizing the data (i.e. centering them), that’s to bring them to a STD=1 and Mean=0. It gets affected by outliers, and should only be used if your data have Gaussian-Like Distribution.</p>
+
+\[StandardScaler = \frac{x_i - mean(x)}{stddev(x)}\]
+
+<p>As we can see from the above formula, the first step in normalizing the data is calculating the mean and standard deviation of the train dataset.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">## define transformation to convert PIL to Pytorch Tensor
+</span><span class="n">transform</span> <span class="o">=</span> <span class="n">transforms</span><span class="p">.</span><span class="n">ToTensor</span><span class="p">()</span>
+
+<span class="c1"># Initialize an empty list to store the labels
+</span><span class="n">train_labels</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">image_tensors</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">image</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">train_dataset</span><span class="p">:</span>
+  <span class="n">image_tensors</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">transform</span><span class="p">(</span><span class="n">image</span><span class="p">).</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="c1">#loop through dataset and convert images to tensors.
+</span>  <span class="n">train_labels</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span> <span class="c1"># extract the labels
+</span></code></pre></div></div>
+
+<p class="notice--info"><strong>NOTE:</strong> <code class="language-plaintext highlighter-rouge">transforms.ToTensor()</code> is used to turn the input data in the range of [0,255] to a 3-dimensional Tensor. This function automatically scales the input data to the range of [0,1].</p>
+
+<p>We will also change them from a list of matrices (a rank-3 tensor) to a list of vectors (a rank-2 tensor).  This is for easier calculation when we do neural network. We can achieve this using the view method, a PyTorch function that alters a tensor’s shape while preserving its contents. The -1 parameter, when applied with view, serves as a unique instruction, essentially stating, “adjust this dimension to accommodate all available data.”</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">'Length of Train Dataset (Tensors): {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">image_tensors</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Shape of Train Dataset (Tensors): {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">image_tensors</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'Type of Train Dataset (Tensors): {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">image_tensors</span><span class="p">[</span><span class="mi">1</span><span class="p">])))</span>
+<span class="k">print</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Length of Train Dataset (Tensors): 60000
+Shape of Train Dataset (Tensors): torch.Size([784])
+Type of Train Dataset (Tensors): &lt;class 'torch.Tensor'&gt;
+</code></pre></div></div>
+
+<p>In this step we can calculate the mean and median of the tensors.</p>
+
+<p>We use <code class="language-plaintext highlighter-rouge">torch.stack</code> to stack the list of tensors into a single tensor. dim=0 specifies that we want to stack along the batch dimension (assuming the tensors represent images). Note that although image_tensors and stacked_tensors have the same shape, we are stacking it to tensors so that we convert the array image_tensors to a tensor stacked_tensors. We do this so we can apply tensor.mean() which is not possible on an array.</p>
+
+<p>We then calculate the mean and standard deviation using .mean() and .std() functions.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Stack the list of tensors into a single tensor
+</span><span class="n">stacked_tensors</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">stack</span><span class="p">(</span><span class="n">image_tensors</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'stacked_tensors shape: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">stacked_tensors</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+
+
+<span class="c1"># Calculate the mean and standard deviation
+</span><span class="n">mean</span> <span class="o">=</span> <span class="n">stacked_tensors</span><span class="p">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">std</span> <span class="o">=</span> <span class="n">stacked_tensors</span><span class="p">.</span><span class="n">std</span><span class="p">()</span>
+
+<span class="c1"># Print the calculated mean and standard deviation
+</span><span class="k">print</span><span class="p">(</span><span class="s">"Mean of stacked_tensors:"</span><span class="p">,</span> <span class="n">mean</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Standard Deviation of stacked_tensors:"</span><span class="p">,</span> <span class="n">std</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stacked_tensors shape: torch.Size([60000, 784])
+Mean of stacked_tensors: tensor(0.1307)
+Standard Deviation of stacked_tensors: tensor(0.3081)
+</code></pre></div></div>
+
+<p>Notice the numbers 0.1307 and 0.3081? Many MNIST articles across the internet have straight away used these numbers as a method of normalizing MNIST data. Now you know that, these numbers are the mean and median of the standard MNIST train dataset.</p>
+
+<p>Finally, we can standardize the stacked_tensor using standard scalar method as we show above. <code class="language-plaintext highlighter-rouge">view</code> is a PyTorch method that changes the shape of a tensor without changing its contents</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Standardize the stacked_tensors
+</span><span class="k">print</span><span class="p">(</span><span class="s">'stacked_tensors shape: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">stacked_tensors</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'mean shape: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">mean</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'mean.view(1, 1): {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">mean</span><span class="p">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+<span class="n">standardized_tensors</span> <span class="o">=</span> <span class="p">(</span><span class="n">stacked_tensors</span> <span class="o">-</span> <span class="n">mean</span><span class="p">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="o">/</span> <span class="n">std</span><span class="p">.</span><span class="n">view</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Calculate the mean and standard deviation
+</span><span class="n">standardized_mean</span> <span class="o">=</span> <span class="n">standardized_tensors</span><span class="p">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">standardized_std</span> <span class="o">=</span> <span class="n">standardized_tensors</span><span class="p">.</span><span class="n">std</span><span class="p">()</span>
+
+<span class="c1"># Print the calculated mean and standard deviation
+</span><span class="k">print</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Mean of standardized_tensors:"</span><span class="p">,</span> <span class="n">standardized_mean</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Standard Deviation of standardized_tensors:"</span><span class="p">,</span> <span class="n">standardized_std</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>stacked_tensors shape: torch.Size([60000, 784])
+mean shape: torch.Size([])
+mean.view(1, 1): tensor([[0.1307]])
+
+Mean of standardized_tensors: tensor(-1.5882e-09)
+Standard Deviation of standardized_tensors: tensor(1.0000)
+</code></pre></div></div>
+
+<p>As we can see, we have now normalized the image tensors to a mean of ~0 and a standard deviation of 1 using the standard scalar normalization method.</p>
+
+<h3 id="split-into-mini-batches">Split into Mini-Batches</h3>
+
+<p>To effectively perform optimization in deep learning, we need to calculate the loss over a subset of data items, rather than the entire dataset or a single item. Let’s discuss this compromise:</p>
+
+<ol>
+  <li>
+    <p><strong>Calculating for the Whole Dataset:</strong> Calculating the loss for the entire dataset is accurate but time-consuming. It’s often impractical, especially for large datasets, as it can be very slow.</p>
+  </li>
+  <li>
+    <p><strong>Calculating for a Single Item:</strong> Calculating the loss for just one data item is quick but highly imprecise. It doesn’t provide a good estimate of how the model performs on the entire dataset, making the gradient updates unstable.</p>
+  </li>
+  <li>
+    <p><strong>Using Mini-Batches:</strong> To strike a balance, we calculate the average loss for a small group of data items known as a mini-batch. The number of data items in a mini-batch is called the batch size. A larger batch size provides a more stable estimate of gradients but can slow down training. The choice of batch size is crucial and depends on factors like the available hardware and dataset size.</p>
+  </li>
+</ol>
+
+<p>Using mini-batches has several advantages:</p>
+
+<ul>
+  <li>
+    <p><strong>Efficiency:</strong> It leverages parallelism in accelerators like GPUs, which perform well when given substantial workloads. Mini-batches provide this workload efficiently.</p>
+  </li>
+  <li>
+    <p><strong>Stability:</strong> It helps stabilize the training process by smoothing out noisy gradients from individual data items.</p>
+  </li>
+  <li>
+    <p><strong>Memory Management:</strong> Mini-batches allow you to make the most of GPU memory without overloading it.</p>
+  </li>
+</ul>
+
+<p>Choosing an appropriate batch size is a practical decision in deep learning, balancing training speed and accuracy. It’s an important consideration in training neural networks effectively.</p>
+
+<h4 id="shuffling">Shuffling</h4>
+<p>To enhance generalization in training, introducing variation is essential. An effective way to achieve this is by diversifying the data items within each mini-batch. Instead of processing the dataset in a fixed order during each epoch, it’s common practice to shuffle the dataset before creating mini-batches. This randomization promotes better learning and adaptability in the model.</p>
+
+<h3 id="the-pytorch-dataloader">The Pytorch Dataloader</h3>
+<p>PyTorch offers a convenient class called DataLoader, which simplifies the process of shuffling and creating mini-batches for you.</p>
+
+<p>With DataLoader, you can transform any Python collection into an iterator over mini-batches, as demonstrated below:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">number_col</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'number_col:{}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">number_col</span><span class="p">)))</span>
+<span class="n">dl</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">number_col</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="nb">list</span><span class="p">(</span><span class="n">dl</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>number_col:[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+
+
+
+
+
+[tensor([ 9,  6,  3,  8, 11]),
+ tensor([10,  2, 14,  5, 12]),
+ tensor([ 0,  7,  1, 13,  4])]
+</code></pre></div></div>
+
+<p>When training a model, we typically need a structured collection containing both independent and dependent variables (i.e., model inputs and corresponding targets). In PyTorch, such a collection is referred to as a Dataset. Here, we can put together the labels and the standardized tensors into the dataset form (x,y):</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dset</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">standardized_tensors</span><span class="p">,</span><span class="n">train_labels</span><span class="p">))</span>
+<span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="o">=</span> <span class="n">dset</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">x</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span><span class="n">y</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(torch.Size([784]), 5)
+</code></pre></div></div>
+
+<p>We can achieve use the same dataloader function to shuffle and create mini-batches of our standardized MNIST image tensors.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="s">'standardized_tensors shape: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">standardized_tensors</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'train_labels len: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_labels</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">()</span>
+
+<span class="n">train_dataloader</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">DataLoader</span><span class="p">(</span><span class="n">dset</span><span class="p">,</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">train_dataloader_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">train_dataloader</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'train_dataloader_list total length: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_dataloader_list</span><span class="p">)))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'60000 images/ 64 batches: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="mi">60000</span><span class="o">/</span><span class="mi">64</span><span class="p">))</span> <span class="c1"># the last batch has 32 images only
+</span><span class="k">print</span><span class="p">(</span><span class="s">'first batch x shape: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">train_dataloader_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="n">shape</span><span class="p">))</span> <span class="c1">#64 standardized image tensors
+</span><span class="k">print</span><span class="p">(</span><span class="s">'first batch y shape: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">train_dataloader_list</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">].</span><span class="n">shape</span><span class="p">))</span> <span class="c1">#64 image labels
+</span><span class="k">print</span><span class="p">(</span><span class="s">'last batch x shape: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">train_dataloader_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">].</span><span class="n">shape</span><span class="p">))</span> <span class="c1">#32 standardized image tensors
+</span><span class="k">print</span><span class="p">(</span><span class="s">'last batch y shape: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">train_dataloader_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">].</span><span class="n">shape</span><span class="p">))</span> <span class="c1">#32 image labels
+</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>standardized_tensors shape: torch.Size([60000, 784])
+train_labels len: 60000
+
+train_dataloader_list total length: 938
+60000 images/ 64 batches: 937.5
+first batch x shape: torch.Size([64, 784])
+first batch y shape: torch.Size([64])
+last batch x shape: torch.Size([32, 784])
+last batch y shape: torch.Size([32])
+</code></pre></div></div>
+
+<p>Notice how the 60000 MNIST training images has been shuffled into 938 batches of 64 images in each batch. (except the last one).</p>
+
+<h3 id="review-data-loader">Review Data Loader</h3>
+
+<p>We can review if our Pytorch dataloader is working well. First lets enumerate the dataloader and load the first batch.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">example_data</span><span class="p">,</span> <span class="n">example_targets</span> <span class="o">=</span> <span class="n">first</span><span class="p">(</span><span class="n">train_dataloader</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'example_data.shape: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">example_data</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'len(example_targets): {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">example_targets</span><span class="p">)))</span>
+<span class="n">example_data</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>example_data.shape: torch.Size([64, 784])
+len(example_targets): 64
+
+
+
+
+
+torch.Size([784])
+</code></pre></div></div>
+
+<p>First batch (batch index=0) has 64 standardized tensor images and 64 corresponding labels. We can plot some of them using matplotlib</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">tight_layout</span><span class="p">()</span>
+  <span class="c1">#convert back to orig shape
+</span>  <span class="n">original_shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">28</span><span class="p">,</span> <span class="mi">28</span><span class="p">)</span>
+  <span class="n">numpy_array</span> <span class="o">=</span> <span class="n">example_data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+  <span class="n">numpy_array</span> <span class="o">=</span> <span class="n">numpy_array</span><span class="p">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">original_shape</span><span class="p">)</span>
+
+  <span class="n">plt</span><span class="p">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">numpy_array</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s">'gray'</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s">'none'</span><span class="p">)</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">"Ground Truth: {}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">example_targets</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">xticks</span><span class="p">([])</span>
+  <span class="n">plt</span><span class="p">.</span><span class="n">yticks</span><span class="p">([])</span>
+<span class="n">fig</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-10-25-MNIST_Recognition_files/2023-10-25-MNIST_Recognition_41_0.png" alt="png" /></p>
+
+<p><img src="/assets/images/2023-10-25-MNIST_Recognition_files/2023-10-25-MNIST_Recognition_41_1.png" alt="png" /></p>
+
+<p>As we can see, our train dataset loader appears to be working fine. To summarize, we first downloaded the data, converted it to tensors, normalized the data, shuffled and split the data into minibatches, finally exposed the data through dataloader.</p>
+
+<!-- ```python
+#hide
+gv('''
+"download data"->"convert to tensor"->"normalize"->"split & shuffle"->"DataLoader"
+''')
+``` -->
+
+<p><img src="/assets/images/2023-10-25-MNIST_Recognition_files/2023-10-25-MNIST_Recognition_43_0.svg" alt="svg" /></p>
+
+<p>Instead of doing all the steps individually, wouldn’t it be easy if we did this all in one go? There is a simplified way for doing just that using Pytorch!</p>
+
+<h3 id="simplified-code-for-dataloader">Simplified Code for DataLoader</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Define a custom transform function to flatten the tensor
+</span><span class="k">def</span> <span class="nf">flatten_transform</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="c1"># Assuming 'data' is a PyTorch tensor of size [batch_size, 28, 28]
+</span>    <span class="c1"># batch_size, height, width = data.size()
+</span>    <span class="k">return</span> <span class="n">data</span><span class="p">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">batch_size_train</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">batch_size_test</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">DataLoader</span><span class="p">(</span>
+  <span class="n">torchvision</span><span class="p">.</span><span class="n">datasets</span><span class="p">.</span><span class="n">MNIST</span><span class="p">(</span><span class="s">'/files/'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                             <span class="n">transform</span><span class="o">=</span><span class="n">torchvision</span><span class="p">.</span><span class="n">transforms</span><span class="p">.</span><span class="n">Compose</span><span class="p">([</span>
+                               <span class="n">torchvision</span><span class="p">.</span><span class="n">transforms</span><span class="p">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+                               <span class="n">torchvision</span><span class="p">.</span><span class="n">transforms</span><span class="p">.</span><span class="n">Normalize</span><span class="p">(</span>
+                                 <span class="p">(</span><span class="mf">0.1307</span><span class="p">,),</span> <span class="p">(</span><span class="mf">0.3081</span><span class="p">,)),</span>
+                               <span class="n">flatten_transform</span>
+                             <span class="p">])),</span>
+  <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size_train</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">test_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">DataLoader</span><span class="p">(</span>
+  <span class="n">torchvision</span><span class="p">.</span><span class="n">datasets</span><span class="p">.</span><span class="n">MNIST</span><span class="p">(</span><span class="s">'/files/'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                             <span class="n">transform</span><span class="o">=</span><span class="n">torchvision</span><span class="p">.</span><span class="n">transforms</span><span class="p">.</span><span class="n">Compose</span><span class="p">([</span>
+                               <span class="n">torchvision</span><span class="p">.</span><span class="n">transforms</span><span class="p">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+                               <span class="n">torchvision</span><span class="p">.</span><span class="n">transforms</span><span class="p">.</span><span class="n">Normalize</span><span class="p">(</span>
+                                 <span class="p">(</span><span class="mf">0.1307</span><span class="p">,),</span> <span class="p">(</span><span class="mf">0.3081</span><span class="p">,)),</span>
+                               <span class="n">flatten_transform</span>
+                             <span class="p">])),</span>
+  <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size_test</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>How simple is that!</p>
+<ul>
+  <li>We have downloaded the data using <code class="language-plaintext highlighter-rouge">download=True</code>,</li>
+  <li>converted the images to tensor and normalized it using known harded coded values for mean(0.1307) and std(0.3081) for MNIST train dataset.</li>
+  <li>shuffled using <code class="language-plaintext highlighter-rouge">shuffle=True</code> parameter</li>
+  <li>mini-batched using <code class="language-plaintext highlighter-rouge">batch_size</code> parameter</li>
+</ul>
+
+<p>Using the <code class="language-plaintext highlighter-rouge">train=True/False</code> parameter, we have created a dataloader for the test loader as well. Note that, the test loader is using the same mean and std values as we did for train. This is because, any datapreprocessing we apply for train should be applied “as-is” for test as well. Moreover, peeping the test data to calculate mean and std is still cheating under the ML rule book.</p>
+
+<p>Lets make sure our new dataloader using Pytorch is returning the corret shapes.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">example_data</span><span class="p">,</span> <span class="n">example_targets</span> <span class="o">=</span> <span class="n">first</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'example_data.shape: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">example_data</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'len(example_targets): {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">example_targets</span><span class="p">)))</span>
+<span class="n">example_data</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>example_data.shape: torch.Size([64, 784])
+len(example_targets): 64
+
+
+
+
+
+torch.Size([784])
+</code></pre></div></div>
+
+<p>Lets check this for test loader as well.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">example_data</span><span class="p">,</span> <span class="n">example_targets</span> <span class="o">=</span> <span class="n">first</span><span class="p">(</span><span class="n">test_loader</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="s">'example_data.shape: {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">example_data</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">'len(example_targets): {}'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">example_targets</span><span class="p">)))</span>
+<span class="n">example_data</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>example_data.shape: torch.Size([64, 784])
+len(example_targets): 64
+
+
+
+
+
+torch.Size([784])
+</code></pre></div></div>
+
+<p>We are good to proceed further!</p>
+
+<h2 id="model-architecture">Model Architecture</h2>
+
+<h3 id="neural-network">Neural Network</h3>
+<p>Lets create a neural network model from scratch. We will start with a simple single layer neural network with the number of inputs to be same size as the pixels we have and the output layer to have 10 outputs. Neural network equation is \(y=wx+b\).</p>
+
+<p><strong>Input &amp; Output:</strong> Before we design our neural network, we have to think about our input and output. Lets take one input and one output. Our input x is an image which has 784 pixels (28x28). i.e., we have 784 numbers for x, output. Our output is a prediction for one of the 10 classes. Therefore, y has to have 10 outputs.</p>
+
+<p><img src="/assets/images/2023-10-25-MNIST_Recognition_files/neural_network_rep.png" alt="png" /></p>
+
+<p><strong>Weights &amp; Biases:</strong> Next we have to think about the shape of weights &amp; bias as well. For this, we will work our way in reverse. We know we need 10 outputs. Bias is a number that gets added to wx to generate 10 outputs. Thus we know we need 10 numbers for bias. For calculating the shape of the weights, we made things simple by flattening our input image which now has 784 numbers for pixel values. Thus the weights should match the input size which is 784. Note the product of weights &amp; input (wx) gets added to bias,  so the weights should also match the shape of bias. Thus weights should be a dimensional matrix of shape (input size, num_classes).</p>
+
+<p><img src="/assets/images/2023-10-25-MNIST_Recognition_files/neural_network_multiplication.png" alt="png" /></p>
+
+<p>We can apply the same logic for batch processing and we will get the same results for the entire batch.</p>
+
+<p><img src="/assets/images/2023-10-25-MNIST_Recognition_files/neural_network_multiplication_batch.png" alt="png" /></p>
+
+<p>Now that we have taken care of the math, first, we want to create a function for initializing the parameters.
+Lets assume a basic single layer neural network.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">init_params</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">requires_grad</span> <span class="o">=</span> <span class="bp">True</span><span class="p">):</span>
+    <span class="s">"""
+    Initialize model parameters with random values.
+
+    Args:
+    - size (tuple): The size or shape of the parameter tensor.
+    - std (float): The standard deviation of the random values (default is 1.0).
+
+    Returns:
+    - params (tensor): A tensor containing randomly initialized values for model parameters.
+    """</span>
+    <span class="c1"># Generate random values from a normal distribution with mean 0 and standard deviation 'std'.
+</span>    <span class="n">random_values</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">randn</span><span class="p">(</span><span class="n">size</span><span class="p">)</span> <span class="o">*</span> <span class="n">std</span>
+
+    <span class="c1"># Mark the tensor to require gradients, indicating that it's a learnable parameter.
+</span>    <span class="k">if</span> <span class="n">requires_grad</span><span class="p">:</span>
+      <span class="n">params</span> <span class="o">=</span> <span class="n">random_values</span><span class="p">.</span><span class="n">requires_grad_</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">params</span> <span class="o">=</span> <span class="n">random_values</span>
+
+    <span class="k">return</span> <span class="n">params</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">weights</span> <span class="o">=</span> <span class="n">init_params</span><span class="p">((</span><span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">weights</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>torch.Size([784, 10])
+</code></pre></div></div>
+
+<p>We will set the bias to have 10 outputs. y=wx represents only a linear relationship. Adding bias b increases the flexibility of the model to travel anywhere along the y-axis.</p>
+
+<p><strong>Why need bias?</strong>
+The bias term represents an offset or an intercept in the model. It allows the model to capture a baseline or an average value that is independent of the input features. Without the bias, the model would always pass through the origin (0,0) and could only represent relationships that go through the origin. Including a bias term increases the flexibility of the model. Without it, the model’s hypothesis space is constrained to linear relationships passing through the origin, which might not be suitable for capturing complex patterns in the data.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bias</span> <span class="o">=</span> <span class="n">init_params</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">bias</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>torch.Size([10])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">xb</span><span class="p">,</span><span class="n">yb</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">train_loader</span><span class="p">))</span>
+<span class="n">xb</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span><span class="n">yb</span><span class="p">.</span><span class="n">shape</span>
+
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(torch.Size([64, 784]), torch.Size([64]))
+</code></pre></div></div>
+
+<p>Lets try calculating the prediction for one image.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="n">xb</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">@</span><span class="n">weights</span><span class="p">).</span><span class="n">shape</span> <span class="c1"># "@" symbol for matrix multiplication
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>torch.Size([10])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pred</span> <span class="o">=</span> <span class="p">(</span><span class="n">xb</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">@</span> <span class="n">weights</span><span class="p">)</span> <span class="o">+</span> <span class="n">bias</span> <span class="c1">#y = wx + b
+</span><span class="n">pred</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tensor([ 24.3919, -51.7686,  13.9901, -22.6144,  47.2925,   4.1529, -24.6324, -37.5008,  47.0262,  35.0089], grad_fn=&lt;AddBackward0&gt;)
+</code></pre></div></div>
+
+<p>We seem to get some predictions numbers. If our task was a binary classification task, we can easily assume any positive number as positive classification and vice versa.</p>
+
+<p>However, since this is a multi-label classification task, where each sample may belong to multiple classes, the prediction with the highest value is the class our simple linear model has classified the image as.</p>
+
+<p>Lets get the argument (position) of the highest prediction value.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Get the index of the maximum value
+</span><span class="n">max_index</span> <span class="o">=</span> <span class="n">pred</span><span class="p">.</span><span class="n">argmax</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"predicted output:{}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">max_index</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"actual output:{}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">yb</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>predicted output:4
+actual output:4
+</code></pre></div></div>
+
+<p class="notice--info"><strong>Note:</strong> At this point, we are only getting the position of the max prediction value. The model does not know if it is predicting a 7 or a 3 or anything else. All the model is doing is giving its calculations for the 10 output positions.</p>
+
+<p>Then you might ask, How can we tell what the model is predicting. This comes up only in the next step when we calculate Loss=(Prediction-Target). Only when the loss value is backpropagated, the model will know it tried to predict a highest value for position 3 however, the target value shows highest result for position 7. Thus by lining up the 10 predicted numbers with the 10 output targets, the model would know it needs to adjust its numbers to render a highest score on position 7.</p>
+
+<h3 id="softmax-function">Softmax function</h3>
+
+<p>In the above example, you might ask, we already know the model’s prediction. Isn’t it enough to compare with the right answer and train whether the model is right or wrong? Can’t we simply ignore the rest of the 9 numbers? No, we should not. Because, the model needs to learn from the incorrect answers as well.</p>
+
+<p>But, we have a problem. The numbers seem to be over a wide range. The above example has a highest value of 45.2565 and lowest value of -23.6937. This is just for one image. Imagine doing this for multiple images and we will end up with multiple range of numbers. How can we make meaningful interpretation from these numbers? We need a common numbering system for the model’s output. (Hint: Normalization)</p>
+
+<p>This is where the SoftMax Function comes in handy. The softmax function grabs a vector of arbitrary real numbers and turn it into probabilities.</p>
+
+<p><img src="/assets/images/2023-10-25-MNIST_Recognition_files/softmax_function.png" alt="png" /></p>
+
+<p>In summary,</p>
+<ol>
+  <li>
+    <p>First, the model looks at each picture and measures how confident it is that a specific digit is in the picture. For example, if the machine sees a picture that looks a lot like the number 3, it will give it a high score for being the digit 3. If it’s not sure, it might give it a lower score.</p>
+  </li>
+  <li>
+    <p>Next, the Softmax Function takes all these scores and turns them into probabilities. It ensures that the sum of all the scores equals 100% (or 1 in decimal form). So, the digit with the highest score gets the highest probability, and the one with the lowest score gets the lowest probability.</p>
+  </li>
+</ol>
+
+<h3 id="normalization-vs-softmax">Normalization vs Softmax</h3>
+<p>You might ask isn’t Softmax same as Normalization? No, they are different.</p>
+
+<ol>
+  <li><strong>Normalization</strong>:
+    <ul>
+      <li>Normalization refers to scaling data to have zero mean and unit variance or scaling it to a specific range (e.g., [0, 1]). It is used for data preprocessing and feature scaling.</li>
+      <li>Normalization doesn’t change the fundamental characteristics of the data. It helps improve training convergence, especially for algorithms like gradient descent, by ensuring that features are on a similar scale.</li>
+      <li>It doesn’t determine probabilities or make decisions; it’s about feature scaling and numerical stability.</li>
+    </ul>
+  </li>
+  <li><strong>Softmax Function</strong>:
+    <ul>
+      <li>The softmax function is a specific activation function used in the output layer of a neural network for multi-class classification tasks.</li>
+      <li>It takes a vector of real numbers and converts them into a probability distribution over multiple classes. It assigns probabilities to each class, ensuring that they sum up to 1.</li>
+      <li>The softmax function is crucial for determining class probabilities and making decisions in classification problems. It’s used to model the likelihood of each class given the network’s input.</li>
+      <li>Softmax is used to map the model’s raw scores (logits) into class probabilities, allowing you to choose the class with the highest probability as the predicted class.</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="softmax-implementation">SoftMax Implementation</h3>
+
+<p>The softmax formula transforms the prediction output in a way that makes the biggest number the most likely choice, the next biggest number the second most likely choice, and so on.</p>
+
+\[\text{Softmax}(x_{i}) = \frac{\exp(x_i)}{\sum_j \exp(x_j)}\]
+
+<p>In simple terms, softmax formula takes the “evidence” or “confidence” in each category \(x_i\), amplifies it using exponentiation \(\exp(x_i)\), and then calculates the probability of the input with respect to rest of the evidences across all categories \(\frac{1}{\sum_j \exp(x_j)}\).</p>
+
+<p>For implementation, we have to think numerical stability. In the softmax function, we need to exponentiate the elements of a vector. The problem arises when you need to compute the exponential of a large or small number, it can result in numerical overflow or underflow. This causes the output of Softmax to end up with <code class="language-plaintext highlighter-rouge">nan</code> outputs.</p>
+
+<p>So to implement the softmax formula, we have to use the max subtraction of the <a href="https://www.xarg.org/2016/06/the-log-sum-exp-trick-in-machine-learning/">log-sum-exp trick</a>. Given a set of values \((x_1, x_2, x_3, \ldots, x_n)\), we would find the maximum value, \((M = \max(x_1, x_2, x_3, \ldots, x_n))\), and then compute the exponentials as follows:</p>
+
+\[\text{exp}(x_1, x_2, x_3, \ldots, x_n) = e^{x_1 - M} + e^{x_2 - M} + e^{x_3 - M} + \ldots + e^{x_n - M}\]
+
+<p>The subtraction of \(M\) helps prevent overflow,</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">softmax</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="s">"""
+      Compute softmax scores given the raw output from the model
+        :param scores: raw scores from the model (N, num_classes)
+        :return:
+            prob: softmax probabilities (N, num_classes)
+      """</span>
+    <span class="c1">#check dim
+</span>    <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">.</span><span class="n">shape</span><span class="p">)</span><span class="o">==</span><span class="mi">2</span><span class="p">):</span>
+      <span class="c1"># Exponentiate each element of the input along dim=1
+</span>      <span class="n">exp_x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="bp">True</span><span class="p">).</span><span class="n">values</span><span class="p">)</span>
+      <span class="c1"># Calculate the sum of exponentiated values along dim=1
+</span>      <span class="n">sum_exp_x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">exp_x</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">keepdim</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+      <span class="n">exp_x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+      <span class="n">sum_exp_x</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">exp_x</span><span class="p">)</span>
+
+
+
+    <span class="c1"># Calculate the softmax probabilities for each element along dim=1
+</span>    <span class="n">softmax_probs</span> <span class="o">=</span> <span class="n">exp_x</span> <span class="o">/</span> <span class="n">sum_exp_x</span>
+
+    <span class="k">return</span> <span class="n">softmax_probs</span>
+</code></pre></div></div>
+
+<p>Lets try this sofmax function out. We expect the sum of the outputs to add up to 1.0 (100% probability).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">prob</span> <span class="o">=</span> <span class="n">softmax</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"prob.sum():{}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">prob</span><span class="p">.</span><span class="nb">sum</span><span class="p">()))</span>
+<span class="n">prob</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>prob.sum():1.0
+
+
+
+
+
+torch.Size([10])
+</code></pre></div></div>
+
+<p>Note that unlike normalization where we would have 0 mean and 1 standard deviation, the softmax doesnt affect the mean or standard deviation. However, it affects the sum of probabilities totalling to 1.0.</p>
+
+<p>We have now converted the output of the predictions into probabilities across the output classes. Lets quickly check if our result is the same as we saw earlier with plain predictions.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Get the index of the maximum value
+</span><span class="n">max_index</span> <span class="o">=</span> <span class="n">prob</span><span class="p">.</span><span class="n">argmax</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"predicted output:{}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">max_index</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"actual output:{}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">yb</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>predicted output:4
+actual output:4
+</code></pre></div></div>
+
+<p>Now that we have the individual components, we can put them together into a model.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">simple_net</span><span class="p">(</span><span class="n">xb</span><span class="p">):</span>
+  <span class="n">pred</span> <span class="o">=</span> <span class="n">xb</span> <span class="o">@</span> <span class="n">weights</span> <span class="o">+</span> <span class="n">bias</span>
+  <span class="n">prob</span> <span class="o">=</span> <span class="n">softmax</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">prob</span>
+</code></pre></div></div>
+
+<h2 id="loss-function">Loss Function</h2>
+
+<p>Now that we have the predicted probabilities for the MNIST digits 0-9, we want to determine the losses so we can feed it back to alter the weights during back propagation.</p>
+
+<p>As mentioned earlier, we dont want to pick the maximum probability and discard the remaining outputs as the wrong answers too are helpful for the model to learn. Example: if a model says, it is 50% confident an image is a 6, but the actual output is 9, we want to train the model so the confidence for 6 goes down. Ideally, the model should say 0% probability for 6 (and every other number), except for 9 which should have 100% probability.</p>
+
+<p>Since we have decided to retain all the output answers, the next question is how do we extract the loss for each classification output? The <strong>Cross Entropy Loss Function</strong> comes to our rescue.</p>
+
+<h3 id="cross-entropy-loss">Cross-entropy loss</h3>
+<ul>
+  <li>The categorical cross-entropy loss is exclusively used in multi-class classification tasks, where each sample belongs exactly to one of the N classes.</li>
+  <li>Cross-entropy loss measures the difference between predicted probabilities and true labels.</li>
+  <li>It heavily penalizes confident incorrect predictions.</li>
+  <li>By minimizing this loss, the model learns to make more accurate predictions, which is the essence of classification in machine learning.</li>
+  <li>The true label can be represented by an one-hot encoded vector of size N, which has the value one for the correct class and zero everywhere else, see example below for N = 4:</li>
+</ul>
+
+\[\text{label}_{4}= 2\rightarrow y = \begin{pmatrix}
+     0\\
+     0\\
+     1\\
+     0\\
+ \end{pmatrix}\]
+
+<h3 id="cross-entropy-formula">Cross-entropy formula</h3>
+
+<p>The formula for categorical cross-entropy loss (also known as softmax loss or log loss) is calculated as:
+\(\text{Categorical Cross-Entropy Loss} = -\sum_{i}^{N} y_i \cdot \log(p_i)\)</p>
+
+<p>Let’s break down the formula for Categorical Cross-Entropy Loss step by step to understand it better.</p>
+
+<ol>
+  <li>
+    <p><strong>\(\sum_{i}^{N}\)</strong>: This symbol stands for summation, which means we are summing over all the classes. In a multi-class classification problem, there can be many classes (e.g., classes for digits 0-9 in MNIST), and \(i\) represents each class.</p>
+  </li>
+  <li>
+    <p><strong>\(y_i\)</strong>: \(y_i\) is the true probability (or one-hot encoded label) for class \(i\). In one-hot encoding, it’s a binary value that is 1 for the true class and 0 for all other classes. For example, if you’re classifying digits and the true class is 3, \(y_i\) would be 1 for \(i = 3\) and 0 for all other \(i\).</p>
+  </li>
+  <li>
+    <p><strong>\(p_i\)</strong>: \(p_i\) is the predicted probability for class \(i\) given by your model. This is the probability that the model assigns to the input example belonging to class \(i\).</p>
+  </li>
+  <li><strong>\(\log(p_i)\)</strong>:
+    <ul>
+      <li>When \(y_i = 1\), it means that the true label for the example corresponds to class \(i\). In other words, the true class is class \(i\).</li>
+      <li>When the model assigns a high probability (\(p_i\)) to the true class (class \(i\)), the loss for that class becomes low because \(-\log(1) = 0\).</li>
+      <li>However, when the model assigns a low probability to the true class, the loss for that class becomes high because \(-\log(p_i)\) is a positive value for \(p_i &lt; 1\). The more the predicted probability deviates from 1 (i.e., it’s lower than expected), the higher the loss.</li>
+    </ul>
+  </li>
+  <li><strong>\(-\sum_{i}^{N} y_i \cdot \log(p_i)\)</strong>: Finally, we sum up these \(-\log(p_i)\) terms over all classes. This summation measures the overall dissimilarity between the predicted probability distribution (\(p_i\)) and the true probability distribution (\(y_i\)).</li>
+</ol>
+
+<p>The Categorical Cross-Entropy Loss quantifies how well the predicted probabilities match the true probabilities (one-hot encoded labels) for a multi-class classification problem. It encourages the model to increase the predicted probability for the true class while reducing the predicted probabilities for other classes. Minimizing this loss during training helps the model make better class predictions.</p>
+
+<h3 id="cross-entropy-loss-implementation">Cross-Entropy Loss Implementation</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">cross_entropy_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">num_classes</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="s">"""
+    Compute the Categorical Cross-Entropy Loss for a single example.
+
+    Args:
+    - y_true: True label for classes.
+    - y_pred: Predicted probability distribution for classes.
+
+    Returns:
+    - loss: Categorical Cross-Entropy Loss for the example.
+    """</span>
+    <span class="c1"># Convert y_true label to one hot encoded label
+</span>    <span class="n">onehot_y</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">eye</span><span class="p">(</span><span class="n">num_classes</span><span class="p">)[</span><span class="n">y_true</span><span class="p">]</span>
+
+    <span class="c1"># Ensure that onehot_y and y_pred have the same shape
+</span>    <span class="k">assert</span> <span class="n">onehot_y</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">y_pred</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="s">"Shapes of y_true and y_pred must match."</span>
+
+    <span class="c1"># Compute the loss using the formula
+</span>    <span class="c1"># Apply the log-sum-exp trick to the computation of the logarithm
+</span>    <span class="c1"># This helps in preventing overflow or underflow when dealing with large or small probabilities
+</span>    <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">torch</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">onehot_y</span> <span class="o">*</span> <span class="n">torch</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="mf">1e-10</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)))</span>
+
+    <span class="k">return</span> <span class="n">loss</span>
+</code></pre></div></div>
+
+<p class="notice--info"><strong>NOTE:</strong> Some of the probablities in y_pred are extremely tiny. Such tiny values are almost close to 0. Trying to do a log() of 0 is inf. This leads to underflow(nans) and overflows(inf). So we clamp the y_preds and consider only a predefined range.</p>
+
+<p>Lets test out the cross entropy loss.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cross_entropy_loss</span><span class="p">(</span><span class="n">yb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">prob</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tensor(0.5688, grad_fn=&lt;NegBackward0&gt;)
+</code></pre></div></div>
+
+<p>Lets try out some toy examples. Suppose the predicted probability is (0.8, 0.1,0.1) is close to the true probability is (1,0,0). We expect the loss to be cross entropy loss to be low.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_true</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.8</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.2</span><span class="p">])</span>
+<span class="n">cross_entropy_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tensor(0.2231)
+</code></pre></div></div>
+
+<p>On the contrary, if predicted probability(0.2, 0.6,0.2) is far off from the true probability is (1,0,0). We expect the loss to be cross entropy loss to be higher.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">y_true</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">([</span><span class="mf">0.2</span><span class="p">,</span><span class="mf">0.6</span><span class="p">,</span><span class="mf">0.2</span><span class="p">])</span>
+<span class="n">cross_entropy_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">num_classes</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tensor(1.6094)
+</code></pre></div></div>
+
+<p>So we have proved our loss function is working as expected.</p>
+
+<p>So far, this is how our model architecture is looking after adding softmax and cross entropy layers.</p>
+
+<p><img src="/assets/images/2023-10-25-MNIST_Recognition_files/model_architecture.png" alt="png" /></p>
+
+<h2 id="gradient-descent---manual-calculation">Gradient Descent - Manual Calculation</h2>
+
+<p>Now that we have the forward pass with activation, lets calculate the backward pass to determine gradients.</p>
+
+<p>Similar to my <a href="/2023/09/14/Gradient_Descent_Basics.html">gradient descent article</a>, we will follow the below steps to determine gradients and update our parameters.</p>
+
+<ol>
+  <li>run model &amp; get predictions</li>
+  <li>calc loss from predictions &amp; true labels</li>
+  <li>calculate gradients</li>
+  <li>update gradients</li>
+</ol>
+
+<p>In terms of Pseudocode, we get:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="n">dl</span><span class="p">:</span>
+    <span class="n">pred</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1">#run model &amp; get predictions
+</span>    <span class="n">loss</span> <span class="o">=</span> <span class="n">loss_func</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="c1">#calc loss from predictions &amp; true labels
+</span>    <span class="n">loss</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span> <span class="c1">#calculate gradients
+</span>    <span class="n">parameters</span> <span class="o">-=</span> <span class="n">parameters</span><span class="p">.</span><span class="n">grad</span> <span class="o">*</span> <span class="n">lr</span> <span class="c1">#update gradients
+</span></code></pre></div></div>
+
+<p><img src="/assets/images/2023-10-25-MNIST_Recognition_files/gradient_descent.png" alt="png" /></p>
+
+<h3 id="run-model--calc-loss">Run Model &amp; Calc Loss</h3>
+
+<p>We will first reinitialize our parameters.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">weights</span> <span class="o">=</span> <span class="n">init_params</span><span class="p">((</span><span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">requires_grad</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span> <span class="c1">#note: we have turned off requires grad
+</span><span class="n">bias</span> <span class="o">=</span> <span class="n">init_params</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">requires_grad</span> <span class="o">=</span> <span class="bp">False</span><span class="p">)</span> <span class="c1">#note: we have turned off requires grad
+</span><span class="n">weights</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span>  <span class="n">bias</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(torch.Size([784, 10]), torch.Size([10]))
+</code></pre></div></div>
+
+<p>We will create a mini-batch of size 4 for testing:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">batch</span> <span class="o">=</span> <span class="n">example_data</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">batch</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>torch.Size([4, 784])
+</code></pre></div></div>
+
+<p>We will run this simple minibatch sample through our model and get predictions. Since predictions are probabilities (across 10 output layers) from the softmax layer, we expect the sum of all predictions to equate to 1.0 (100% probability).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">preds</span> <span class="o">=</span> <span class="n">simple_net</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"preds.shape:{}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">preds</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">preds</span><span class="p">:</span>
+  <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="n">no_grad</span><span class="p">():</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"simple_net -  preds:{}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"simple_net -  sum of preds:{}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">i</span><span class="p">.</span><span class="nb">sum</span><span class="p">()))</span> <span class="c1">#sum of preds should be 1.0
+</span></code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>preds.shape:torch.Size([4, 10])
+simple_net -  preds:tensor([6.5931e-01, 1.0749e-29, 2.3680e-19, 5.9656e-41, 1.0338e-38, 1.2225e-03, 3.3947e-01, 3.7747e-12, 1.2969e-30, 2.8681e-08])
+simple_net -  sum of preds:1.0
+simple_net -  preds:tensor([8.2832e-09, 2.0217e-19, 2.5385e-23, 1.1825e-23, 1.8589e-10, 4.6610e-17, 4.9582e-01, 3.5712e-23, 5.0418e-01, 2.5376e-24])
+simple_net -  sum of preds:1.0
+simple_net -  preds:tensor([7.6778e-01, 3.7658e-03, 1.7342e-10, 4.6965e-13, 2.7946e-34, 7.2466e-12, 2.2846e-01, 2.2359e-07, 7.2267e-22, 4.2496e-19])
+simple_net -  sum of preds:1.0000001192092896
+simple_net -  preds:tensor([1.0000e+00, 1.9510e-28, 2.9353e-10, 1.1456e-20, 5.0176e-28, 8.8912e-07, 6.2503e-19, 1.9154e-26, 2.3416e-30, 4.6136e-22])
+simple_net -  sum of preds:1.0
+</code></pre></div></div>
+
+<p>Looking at the results, we have 4 rows of 10 probabilities for with the model’s prediction in terms of probability for each of the 10 classes. Note with the help of Pytorch’s broadcasting, we dont have to reshape the simple_net model.</p>
+
+<p>Next, we will calculate the cross entrophy loss to see how well our model is performing with respect to the true classes.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">loss</span> <span class="o">=</span> <span class="n">cross_entropy_loss</span><span class="p">(</span><span class="n">example_targets</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">preds</span><span class="p">)</span>
+<span class="n">loss</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tensor(92.1034)
+</code></pre></div></div>
+
+<h3 id="calculate-gradients">Calculate Gradients</h3>
+<ul>
+  <li>Calculus helps us to calculate whether our loss will go up or down when we adjust our parameters up or down.</li>
+  <li>From Calculus basics, derivative of a function tells us how much change in its parameters will change its result.</li>
+</ul>
+
+<p>Before we can calcuate the derivative of a function, we need to represent our model using a <strong>computation graph</strong>. Computation graph is a visual representation of mathematical operations and their dependencies. It helps us describe the flow of data and operations in a mathematical model. Computation graph will help us calculate the gradients.</p>
+
+<p><strong>Computation Graph:</strong></p>
+
+<p><img src="/assets/images/2023-10-25-MNIST_Recognition_files/computation_graph.png" alt="png" /></p>
+
+<p>As we can see computation graph is similar to the model architecture but tries to detail out every mathematical function.</p>
+
+<p><strong>Calculate Derivatives:</strong></p>
+
+<p>Now that we have the computation graph, our intent is to calculate the derivative of the Loss with respect to the parameters (weights &amp; biases). i.e., \(\frac{dL}{dW}\) &amp; \(\frac{dL}{db}\). Calculating these values in one go will be an extremely difficult thing to do. This is why computation graph is helpful: we can walk back from loss and calculate the gradient at each mathematical operation.</p>
+
+<p><img src="/assets/images/2023-10-25-MNIST_Recognition_files/computation_graph_derivative.png" alt="png" /></p>
+
+<p>As shown in the image below, we can start from the end. We have the loss value result.</p>
+<ul>
+  <li>Using the loss value result, and knowing the derivative of the cross-entropy loss &amp; Softmax function, we calculate \(dL/dz\) as follows:
+\(dL/dz = s-y\)</li>
+  <li>With the result of \(dL/dz\), we can calculate the derivative of the loss with respect to bias \(dz/db = 1\) and weights \(dz/db = x\).</li>
+  <li>Finally with calculus’s chain rule, we can calculate the gradients by putting together the above:
+\(\frac{dL}{dW} = \frac{dL}{dz}.\frac{dz}{dW}\).
+Similarly,
+\(\frac{dL}{db} = \frac{dL}{ds}.\frac{ds}{dz}.\frac{dz}{db}\)
+Once we know the gradients of Loss with respect to the parameters: bias and weights, we can update the parameters with these calculated gradients in order to reduce the loss during the next epoch. You might ask how we arrived at these equations:</li>
+</ul>
+
+<p class="notice--info"><strong>NOTE:</strong> We treat the softmax &amp; cross entropy as one layer and calculate the gradients for this combined unit. This is for numerical stability as the softmax &amp; log operations involved in cross-entropy can produce extremely small or large numbers, which may result in numeric overflow or underflow. This is why we avoid calculating dL/ds and rather directly calculate dL/dz</p>
+
+<p><a href="https://towardsdatascience.com/derivative-of-the-softmax-function-and-the-categorical-cross-entropy-loss-ffceefc081d1">This article</a> is an excellent resource that dives into the mathematical details of how the gradients are calculated for softmax and cross entropy layer.</p>
+
+<p><strong>Code Implementation:</strong></p>
+
+<p>Implementing this is easier said than done. One thing to remember is the size of the gradients would match the size of the actual activations. For instance, if the output of softmax is of shape 64x10, then the derivative at the end of softmax should also be 64x10. (A gradient value for every input). As long as we follow, the same shape when deriving derivatives, we are in safe place.</p>
+
+<p>We will start with initializing variables for holding the gradients for weights and bias.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">init_grads</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+    <span class="s">"""
+    Initialize model gradients with zero values.
+
+    Args:
+    - size (tuple): The size or shape of the parameter tensor.
+
+    Returns:
+    - params (tensor): A tensor containing randomly initialized values for model parameters.
+    """</span>
+    <span class="c1"># Generate zeros of required size
+</span>    <span class="n">grads</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">size</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">grads</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grad_weights</span> <span class="o">=</span> <span class="n">init_grads</span><span class="p">((</span><span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">grad_bias</span> <span class="o">=</span> <span class="n">init_grads</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"grad_weights.shape:{}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">grad_weights</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"grad_bias.shape:{}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">grad_bias</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grad_weights.shape:torch.Size([784, 10])
+grad_bias.shape:torch.Size([10])
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">manual_backward</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">batch</span><span class="p">):</span>
+  <span class="s">"""
+    Calculate model gradients. (similar to loss.backward in Pytorch but done manually)
+
+    Args:
+    - s (N,10): probability predictions from softmax layer
+    - y (N): true labels
+
+    Returns:
+    - None
+    """</span>
+  <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="n">no_grad</span><span class="p">():</span> <span class="c1">#we do not want to pytorch to calc gradients since we are manually doing it
+</span>    <span class="c1"># =========== 1) calc b2 gradients ===========
+</span>    <span class="c1">#step1: compute dL_ds where L = CE(softmax(Z),y)
+</span>    <span class="c1">#get num of classes
+</span>    <span class="c1"># print("s.shape:{}".format(s.shape))
+</span>    <span class="c1"># print("y.shape:{}".format(y.shape))
+</span>    <span class="n">num_classes</span> <span class="o">=</span> <span class="n">s</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">onehot_y</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">eye</span><span class="p">(</span><span class="n">num_classes</span><span class="p">)[</span><span class="n">y</span><span class="p">]</span>  <span class="c1"># onehot_y = 64 x 10
+</span>    <span class="c1"># print("num_classes:{}".format(num_classes))
+</span>    <span class="c1"># print("onehot_y.shape:{}".format(onehot_y.shape))
+</span>    <span class="c1"># __step1b:subtract s - y (ensure shape of both are (N,10)
+</span>    <span class="c1"># (64,10) (4,10)
+</span>    <span class="n">dL_dZ</span> <span class="o">=</span> <span class="n">s</span> <span class="o">-</span> <span class="n">onehot_y</span>  <span class="c1"># dL_dA = 64 x 10
+</span>    <span class="c1"># print("s:{}".format(s))
+</span>    <span class="c1"># print("onehot_y:{}".format(onehot_y))
+</span>    <span class="c1"># print("dL_dZ:{}".format(dL_dZ))
+</span>    <span class="c1">#step3: calc dL_db [10x1] = dL_dZ[64x10] * ones [64x1]
+</span>    <span class="n">dZ_db</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">ones</span><span class="p">((</span><span class="n">dL_dZ</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">1</span><span class="p">))</span>
+    <span class="n">dL_db</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">dL_dZ</span><span class="p">.</span><span class="n">T</span><span class="p">,</span><span class="n">dZ_db</span><span class="p">)</span>
+    <span class="c1">#step3: update bias  - divide by batch size N - shape: (10,)
+</span>    <span class="n">grad_bias</span> <span class="o">=</span> <span class="p">(</span><span class="n">dL_db</span><span class="o">/</span><span class="n">batch</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]).</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="c1"># =========== 2) calc W2 gradients ===========
+</span>    <span class="c1">#step1: Compute dZ_dW = X [64x784]
+</span>    <span class="n">dZ_dW</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">copy</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+    <span class="c1">#step2: find dL_dW = dL_dZ [64x10] * dZ_dW [64x784]
+</span>    <span class="n">dL_dW</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">dot</span><span class="p">(</span><span class="n">dL_dZ</span><span class="p">.</span><span class="n">T</span><span class="p">,</span> <span class="n">dZ_dW</span><span class="p">).</span><span class="n">T</span> <span class="c1"># [784x10]
+</span>    <span class="c1"># step3: update bias  - divide by batch size N - shape: (10,)
+</span>    <span class="n">grad_weights</span><span class="o">=</span> <span class="p">(</span><span class="n">dL_dW</span> <span class="o">/</span> <span class="n">batch</span><span class="p">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+  <span class="k">return</span> <span class="n">torch</span><span class="p">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">grad_weights</span><span class="p">),</span> <span class="n">torch</span><span class="p">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">grad_bias</span><span class="p">)</span> <span class="c1">#convert to torch before returning
+</span>
+
+</code></pre></div></div>
+
+<p>Pytorch uses similar technique to calculate gradients. You can read more about it in this <a href="https://pytorch.org/blog/computational-graphs-constructed-in-pytorch/">Pytorch Article</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grad_weights</span><span class="p">,</span> <span class="n">grad_bias</span> <span class="o">=</span> <span class="n">manual_backward</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">example_targets</span><span class="p">[:</span><span class="mi">4</span><span class="p">],</span> <span class="n">example_data</span><span class="p">[:</span><span class="mi">4</span><span class="p">])</span>
+<span class="c1">#making sure the grad weights and grad bias are of proper shape
+</span><span class="k">print</span><span class="p">(</span><span class="s">"grad_weights.shape:{}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">grad_weights</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"grad_bias.shape:{}"</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">grad_bias</span><span class="p">.</span><span class="n">shape</span><span class="p">))</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grad_weights.shape:torch.Size([784, 10])
+grad_bias.shape:torch.Size([10])
+</code></pre></div></div>
+
+<p>Great! Now that we have the gradients for weights and bias, lets put it all into a function for easy calling.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">calc_grad_manual</span><span class="p">(</span><span class="n">xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">xb</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">cross_entropy_loss</span><span class="p">(</span><span class="n">yb</span><span class="p">,</span> <span class="n">preds</span><span class="p">)</span>
+    <span class="n">grad_weights</span><span class="p">,</span> <span class="n">grad_bias</span> <span class="o">=</span> <span class="n">manual_backward</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">yb</span><span class="p">,</span> <span class="n">xb</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">grad_weights</span><span class="p">,</span> <span class="n">grad_bias</span>
+</code></pre></div></div>
+
+<p>Now lets test out the function using our small mini batch.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grad_weights</span><span class="p">,</span> <span class="n">grad_bias</span> <span class="o">=</span> <span class="n">calc_grad_manual</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">example_targets</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">simple_net</span><span class="p">)</span>
+<span class="n">grad_weights</span><span class="p">.</span><span class="nb">sum</span><span class="p">(),</span><span class="n">grad_bias</span><span class="p">.</span><span class="nb">sum</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(tensor(-1.4336e-06, dtype=torch.float64),
+ tensor(7.9055e-08, dtype=torch.float64))
+</code></pre></div></div>
+
+<h3 id="update-parameters">Update parameters</h3>
+
+<ul>
+  <li>The last step is to update the weights and biases based on the gradient and learning rate.</li>
+</ul>
+
+<p>Lets write up a function to take the learning rate, params and model as input, cycle through the input, calculate gradients for the parameters and then finally update the parameters (and also reset it for the next cycle). All this is considered one epoch (aka iteration). For the next iteration, we repeat this process with updating parameters and even learning rate if we consider any decay.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train_epoch_manual</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span><span class="n">bias</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">xb</span><span class="p">,</span><span class="n">yb</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="n">no_grad</span><span class="p">():</span>
+          <span class="n">grad_weights</span><span class="p">,</span> <span class="n">grad_bias</span> <span class="o">=</span> <span class="n">calc_grad_manual</span><span class="p">(</span><span class="n">xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+          <span class="n">weights</span> <span class="o">-=</span> <span class="n">grad_weights</span><span class="o">*</span><span class="n">lr</span>  <span class="c1">#update weights
+</span>          <span class="n">bias</span> <span class="o">-=</span> <span class="n">grad_bias</span><span class="o">*</span><span class="n">lr</span> <span class="c1">#update weights
+</span>          <span class="c1">#no need to resets gradients to zero as they are calc from scratch
+</span>    <span class="k">return</span> <span class="n">weights</span><span class="p">,</span><span class="n">bias</span> <span class="c1">#return updated weights and bias so they can be fed as input during next itration
+</span></code></pre></div></div>
+
+<h2 id="validation">Validation</h2>
+
+<p>During the validation phase, we do not train (update parameters) our model any more. We will evaluate the model to see how well it is doing. Remember, we have validation data as well from MNIST. We will evaluate our model with the validation data. The model will use its trained parameters which are frozen during this validation phase.</p>
+
+<h3 id="compute-accuracy">Compute Accuracy</h3>
+
+<p>Although we have loss, it is only used to calculate the gradients. We need a metric for us, humans to decide how good our model is doing with respect to the original task - classifying MNIST images as numbers. We can use a simple accuracy metric - determine how many correct predictions among all the predictions.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">def</span> <span class="nf">compute_accuracy</span><span class="p">(</span><span class="n">x_pred</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+  <span class="s">"""
+  Compute the accuracy of current batch
+  :param x_pred: Probabilities from the model (N, num_classes)
+  :param y: Labels of instances in the batch
+  :return: The accuracy of the batch
+  """</span>
+  <span class="n">acc</span> <span class="o">=</span> <span class="bp">None</span>
+  <span class="n">predictions</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">x_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">acc</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">eq</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">acc</span>
+
+</code></pre></div></div>
+
+<p>We can quickly check our metric function with our earlier 4 sample images minibatch.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">compute_accuracy</span><span class="p">(</span><span class="n">preds</span><span class="p">,</span> <span class="n">example_targets</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>tensor(0.)
+</code></pre></div></div>
+
+<h3 id="validation-function">Validation Function</h3>
+
+<p>For the validation function, we want to run the validation data through our trained model, get those predictions and compute the accuracy metric to decide how well our model is doing. We can write a function for that:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">validate_epoch</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    <span class="n">accs</span> <span class="o">=</span> <span class="p">[</span><span class="n">compute_accuracy</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">xb</span><span class="p">),</span> <span class="n">yb</span><span class="p">)</span> <span class="k">for</span> <span class="n">xb</span><span class="p">,</span><span class="n">yb</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">]</span> <span class="c1">#notice how we have used "test_loader" to load validation data instead of train loader
+</span>    <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">stack</span><span class="p">(</span><span class="n">accs</span><span class="p">).</span><span class="n">mean</span><span class="p">().</span><span class="n">item</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">validate_epoch</span><span class="p">(</span><span class="n">simple_net</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.0785
+</code></pre></div></div>
+
+<p>This accuracy is our starting point with random values for weights and biases. (we havent trained our model yet). In the next section, we will train our model and repeat validation to see how well our model is doing.</p>
+
+<h2 id="training">Training</h2>
+
+<p>The parameters <code class="language-plaintext highlighter-rouge">weights</code> &amp; <code class="language-plaintext highlighter-rouge">bias</code> are already setup with <code class="language-plaintext highlighter-rouge">requires_grad_()</code> so, Pytorch will automatically continue calculating gradients for us. Let’s train for one epoch, and see if the accuracy improves. One Epoch here means one iteration through the entire MNIST dataset. So this means cycle through all mini batches of train dataset during the train phase and cycle through all mini batches of test dataset during the test phase.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lr</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="n">train_epoch_manual</span><span class="p">(</span><span class="n">simple_net</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span><span class="n">bias</span><span class="p">)</span>
+<span class="n">validate_epoch</span><span class="p">(</span><span class="n">simple_net</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.8776
+</code></pre></div></div>
+
+<p>Our accuracy has improved just after one epoch! Now, lets try training for 20 epochs.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+    <span class="n">weights</span><span class="p">,</span><span class="n">bias</span> <span class="o">=</span> <span class="n">train_epoch_manual</span><span class="p">(</span><span class="n">simple_net</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span><span class="n">bias</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">validate_epoch</span><span class="p">(</span><span class="n">simple_net</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s">' '</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.865 0.7881 0.8779 0.8127 0.852 0.8088 0.8378 0.8521 0.8225 0.865 0.8977 0.8944 0.8738 0.8402 0.886 0.8197 0.8669 0.9133 0.8083 0.7729 
+</code></pre></div></div>
+
+<p>Excellent! Our training seems to train our model, increasing its accuracy during each epoch. In the next section, lets do the same thing but using Pytorch’s auto grad function.</p>
+
+<h2 id="gradient-descent---using-pytorch">Gradient Descent - Using Pytorch</h2>
+
+<p>Before we attempt gradient descent using Pytorch, we will initialize the weights and bias, setup a small batch, run it through our linear model and calculate loss. Unlike last time using manual approach, this time we want Pytorch to calculate the gradients for us. The default value is True so when we call init_params(), our function defaults to require grads.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#initialize weights and bias
+</span><span class="n">weights</span> <span class="o">=</span> <span class="n">init_params</span><span class="p">((</span><span class="mi">28</span><span class="o">*</span><span class="mi">28</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">bias</span> <span class="o">=</span> <span class="n">init_params</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1">#setup batch
+</span><span class="n">batch</span> <span class="o">=</span> <span class="n">example_data</span><span class="p">[:</span><span class="mi">4</span><span class="p">]</span>
+<span class="c1">#predictions
+</span><span class="n">preds</span> <span class="o">=</span> <span class="n">simple_net</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="c1">#calc loss
+</span><span class="n">loss</span> <span class="o">=</span> <span class="n">cross_entropy_loss</span><span class="p">(</span><span class="n">example_targets</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">preds</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>PyTorch is known for its <strong>automatic differentiation capability</strong>, which allows it to compute derivatives of functions with respect to their inputs. This automatic differentiation feature is incredibly powerful for deep learning because it allows you to define complex neural network architectures and loss functions while PyTorch handles the tedious task of calculating gradients.</p>
+
+<p>Now we can calculate the gradients using Pytorch which hugely simplifies things. i.e., we do not need the <code class="language-plaintext highlighter-rouge">manual_backward()</code> from the previous section since Pytorch does it for us. Here is a quick check.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">loss</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span>
+<span class="n">weights</span><span class="p">.</span><span class="n">grad</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span><span class="n">weights</span><span class="p">.</span><span class="n">grad</span><span class="p">.</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(torch.Size([784, 10]), tensor(2.4328e-10))
+</code></pre></div></div>
+
+<p>It still surprises me how this one line of code calculates the entire gradients for weights and biases</p>
+
+<p>Lets put the entire logic into a function. We get:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">calc_grad</span><span class="p">(</span><span class="n">xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">xb</span><span class="p">)</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="n">cross_entropy_loss</span><span class="p">(</span><span class="n">yb</span><span class="p">,</span> <span class="n">preds</span><span class="p">)</span>
+    <span class="n">loss</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span> <span class="c1">#calc gradients
+</span></code></pre></div></div>
+
+<p>We can also make sure this function is working fine with our micro minibatch with 4 samples.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">calc_grad</span><span class="p">(</span><span class="n">batch</span><span class="p">,</span> <span class="n">example_targets</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">simple_net</span><span class="p">)</span>
+<span class="n">weights</span><span class="p">.</span><span class="n">grad</span><span class="p">.</span><span class="nb">sum</span><span class="p">(),</span><span class="n">bias</span><span class="p">.</span><span class="n">grad</span><span class="p">.</span><span class="nb">sum</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(tensor(3.8147e-06), tensor(0.))
+</code></pre></div></div>
+
+<p class="notice--info"><strong>NOTE:</strong> <code class="language-plaintext highlighter-rouge">loss.backward</code> actually adds the gradients of loss to any gradients that are currently stored. So, we have to set the current gradients to 0 first.</p>
+
+<p>If we do not reset the gradients and try to calculate gradients, those calculated gradients will be added to current gradients. So when updating parameters, it would lead to incorrect updates.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">weights</span><span class="p">.</span><span class="n">grad</span><span class="p">.</span><span class="n">zero_</span><span class="p">()</span>
+<span class="n">bias</span><span class="p">.</span><span class="n">grad</span><span class="p">.</span><span class="n">zero_</span><span class="p">();</span>
+</code></pre></div></div>
+
+<h3 id="update-parameters-1">Update parameters</h3>
+
+<ul>
+  <li>The last step is to update the weights and biases based on the gradient and learning rate.</li>
+  <li>When updating the parameters, we have to tell Pytorch to not consider this piece of updating parameters when calculating gradients on the next iteration.</li>
+  <li>If we assign to the data attribute of a tensor then PyTorch will not take the gradient of that step.</li>
+</ul>
+
+<p>Lets write up a function to take the learning rate, params and model as input, cycle through the input, calculate gradients for the parameters and then finally update the parameters (and also reset it for the next cycle). All this is considered one epoch (aka iteration). For the next iteration, we repeat this process with updating parameters and even learning rate if we consider any decay.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train_epoch</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">xb</span><span class="p">,</span><span class="n">yb</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
+        <span class="n">calc_grad</span><span class="p">(</span><span class="n">xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">params</span><span class="p">:</span>
+            <span class="n">p</span><span class="p">.</span><span class="n">data</span> <span class="o">-=</span> <span class="n">p</span><span class="p">.</span><span class="n">grad</span><span class="o">*</span><span class="n">lr</span> <span class="c1">#p.data tells Pytorch to exclude this step during gradient calculation
+</span>            <span class="n">p</span><span class="p">.</span><span class="n">grad</span><span class="p">.</span><span class="n">zero_</span><span class="p">()</span> <span class="c1">#resets gradients to zeros
+</span></code></pre></div></div>
+
+<h3 id="training-1">Training</h3>
+
+<p>We can now run the training for 20 epochs and see how it does on the validation data at the end of each epoch. Note how we do not need to pass in or pass out parameters like we did in the manual way as Pytorch does it for us.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">lr</span> <span class="o">=</span> <span class="mf">1.</span>
+<span class="n">params</span> <span class="o">=</span> <span class="n">weights</span><span class="p">,</span> <span class="n">bias</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">20</span><span class="p">):</span>
+    <span class="n">train_epoch</span><span class="p">(</span><span class="n">simple_net</span><span class="p">,</span> <span class="n">lr</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">validate_epoch</span><span class="p">(</span><span class="n">simple_net</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s">' '</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.3074 0.3084 0.3077 0.3092 0.3059 0.3057 0.3091 0.3093 0.3091 0.3076 0.3047 0.3066 0.3077 0.3096 0.3089 0.3088 0.3094 0.3095 0.3091 0.3113 
+</code></pre></div></div>
+
+<h2 id="optimizing-using-pytorch">Optimizing using Pytorch</h2>
+
+<p>In this section we will create an Optimizer to optimize the code using Pytorch! (see how I played with words there! :))
+Well, ‘Optimizer’ is a Pytorch object that will handle the SGD step for us. We will create a super simple basic optimizer which wil help us to understand how things work in Pytorch. In order to create the Pytorch Optimizer, we first need to rewrite our model using Pytorch.</p>
+
+<h3 id="model-in-pytorch">Model in Pytorch</h3>
+
+<p>Earlier we had used <code class="language-plaintext highlighter-rouge">simple_net()</code> function to create our model. This model too can be defined in Pytorch which will hugely simplify things for us and help us build more complex models just by describing them and not having to worry about the implementation (as Pytorch will take care of it).</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Define your linear model
+</span><span class="n">linear_model</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">28</span> <span class="o">*</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># Create a model that includes the linear layer and softmax layer
+</span><span class="n">simple_net_pytorch</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">linear_model</span><span class="p">,</span>
+    <span class="n">nn</span><span class="p">.</span><span class="n">Softmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<p>We first define the linear model using nn.Linear. Then, we create a new model called <code class="language-plaintext highlighter-rouge">simple_net_pytorch</code> using nn.Sequential, which combines the linear layer with a softmax layer. When you pass input data to <code class="language-plaintext highlighter-rouge">simple_net_pytorch</code>, it will apply the linear transformation and then the softmax activation to produce output probabilities.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">w</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">simple_net_pytorch</span><span class="p">.</span><span class="n">parameters</span><span class="p">()</span>
+<span class="n">w</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span><span class="n">b</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(torch.Size([10, 784]), torch.Size([10]))
+</code></pre></div></div>
+
+<p>Excellent! The shape of our parameters shows that this is exactly the same shape of the parameters used with our manual parameter initialization. Also, notice how we only defined our model while Pytorch took care of the parameters shape and initialization for us. Now that we have the model in Pytorch, the next step is to create a Basic Optimizer.</p>
+
+<h3 id="optimizer-in-pytorch">Optimizer in Pytorch</h3>
+
+<p>Below we define a basic optimizer class called BasicOptim. This class is a simple implementation of an optimizer for updating model parameters during training. It has two main methods, step and zero_grad, which are commonly found in optimizers. The BasicOptim takes two arguments: <code class="language-plaintext highlighter-rouge">params</code> and <code class="language-plaintext highlighter-rouge">lr</code>. <code class="language-plaintext highlighter-rouge">params</code> is a list of model parameters that need to be optimized, and <code class="language-plaintext highlighter-rouge">lr</code> is the learning rate for the optimizer.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">BasicOptim</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">params</span><span class="p">,</span><span class="n">lr</span><span class="p">):</span> <span class="bp">self</span><span class="p">.</span><span class="n">params</span><span class="p">,</span><span class="bp">self</span><span class="p">.</span><span class="n">lr</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">params</span><span class="p">),</span><span class="n">lr</span>
+
+    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">params</span><span class="p">:</span> <span class="n">p</span><span class="p">.</span><span class="n">data</span> <span class="o">-=</span> <span class="n">p</span><span class="p">.</span><span class="n">grad</span><span class="p">.</span><span class="n">data</span> <span class="o">*</span> <span class="bp">self</span><span class="p">.</span><span class="n">lr</span>
+
+    <span class="k">def</span> <span class="nf">zero_grad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">.</span><span class="n">params</span><span class="p">:</span> <span class="n">p</span><span class="p">.</span><span class="n">grad</span> <span class="o">=</span> <span class="bp">None</span>
+</code></pre></div></div>
+
+<p>We can already see the how this Basic Optimizer can be used to replace the parameter update step and reset grad steps in the <code class="language-plaintext highlighter-rouge">train_epoch()</code> we defined earlier.</p>
+
+<p>Note that PyTorch provide built-in optimizers (e.g., torch.optim.SGD, torch.optim.Adam) that are highly optimized and often come with additional features, like support for various optimization algorithms, learning rate schedules, and weight decay.</p>
+
+<p>We can now initialize the Basic optimizer so that it will update the parameters of your simple_net_pytorch model with the specified learning rate during training.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">opt</span> <span class="o">=</span> <span class="n">BasicOptim</span><span class="p">(</span><span class="n">simple_net_pytorch</span><span class="p">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="training-with-optimizer">Training with Optimizer</h3>
+
+<p>Now that we have our optimizer, our <code class="language-plaintext highlighter-rouge">train_epoch()</code> can be updated as below.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train_epoch</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">xb</span><span class="p">,</span><span class="n">yb</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
+        <span class="n">calc_grad</span><span class="p">(</span><span class="n">xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+        <span class="n">opt</span><span class="p">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="n">opt</span><span class="p">.</span><span class="n">zero_grad</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Note there is no change to our validation function. We can simply pass in the new model name <code class="language-plaintext highlighter-rouge">simple_net_pytorch</code>. Lets check out how our untrained parameters performa with the validation data.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">validate_epoch</span><span class="p">(</span><span class="n">simple_net_pytorch</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.0883
+</code></pre></div></div>
+
+<p>We can put all this code together in a function called <code class="language-plaintext highlighter-rouge">train_model()</code> that trains a model for a specified number of epochs and prints validation results after each epoch.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">epochs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+        <span class="n">train_epoch</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">validate_epoch</span><span class="p">(</span><span class="n">model</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s">' '</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_model</span><span class="p">(</span><span class="n">simple_net_pytorch</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.6968 0.7202 0.7344 0.7285 0.7373 0.7441 0.7267 0.7443 0.7383 0.7501 0.7471 0.7525 0.7522 0.7486 0.7462 0.739 0.7401 0.7495 0.7489 0.747 
+</code></pre></div></div>
+
+<p>Excellent, our model seems to training well with our Pytorch simple net model, and Basic Optimizer code. Next, we will replace our Basic Optimizer with Pytorch’s built in SGD optimizer.</p>
+
+<h3 id="using-pytorchs-sgd-optimizer">Using Pytorch’s SGD Optimizer</h3>
+
+<p>The initialization of the SGD Optimizer is same as Basic Optimizer.  This optimizer takes care of updating the model’s parameters and applying the SGD optimization algorithm.</p>
+
+<p>This approach is recommended because PyTorch’s built-in optimizers are well-tested and optimized, and they provide various options for fine-tuning your optimization process, such as momentum, weight decay, and learning rate schedules.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create the SGD optimizer
+</span><span class="n">optSGD</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">simple_net_pytorch</span><span class="p">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>We will create a new train_epoch() with the SGD Optim. We are only changing the variable name. The method names as same.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train_epochSGD</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">xb</span><span class="p">,</span><span class="n">yb</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
+        <span class="n">calc_grad</span><span class="p">(</span><span class="n">xb</span><span class="p">,</span> <span class="n">yb</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+        <span class="n">optSGD</span><span class="p">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="n">optSGD</span><span class="p">.</span><span class="n">zero_grad</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>We will also update the train model function to refer to the SGD train_epoch().</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train_modelSGD</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">epochs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+        <span class="n">train_epochSGD</span><span class="p">(</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">validate_epoch</span><span class="p">(</span><span class="n">model</span><span class="p">),</span> <span class="n">end</span><span class="o">=</span><span class="s">' '</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_modelSGD</span><span class="p">(</span><span class="n">simple_net_pytorch</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.5626 0.5652 0.5647 0.5704 0.571 0.572 0.5754 0.5736 0.5697 0.5753 0.5764 0.5705 0.5782 0.5765 0.5769 0.5728 0.5767 0.5803 0.5761 0.5772 
+</code></pre></div></div>
+
+<h2 id="increasing-model-complexity">Increasing Model Complexity</h2>
+
+<p>So far we have used a super simple model with one linear input layer and Softmax layer for class probabilities. This model is limited in what it can learn. You can see from the previous step that the accuracy of this training gets topped off at 60 to 70\%.</p>
+
+<h3 id="why-linear-models-are-constrained">Why Linear Models are Constrained?</h3>
+<ul>
+  <li>Linear classifiers are simple models that can only separate data using linear decision boundaries.</li>
+  <li>They are suitable for relatively simple classification tasks where the underlying patterns in the data can be captured by straight lines or hyperplanes.</li>
+  <li>However, many real-world problems require more complex models to capture non-linear relationships in the data. Here</li>
+</ul>
+
+<h3 id="how-do-we-increase-model-complexity">How do we increase Model Complexity?</h3>
+<p>We can create a more complex model such as a deep neural networks with non-linear activation functions like ReLU, sigmoid, or tanh between linear networks. These Deep learning models can capture intricate patterns in the data.</p>
+
+<h3 id="non-linear-activation-function-relu">Non-Linear Activation Function: ReLU</h3>
+
+<ul>
+  <li>“ReLU” stands for “Rectified Linear Unit.”</li>
+  <li>The ReLU activation function is defined as:</li>
+</ul>
+
+\[f(x) = max(0, x)\]
+
+<ul>
+  <li>In this formula, \(x\) represents the input to the activation function.</li>
+  <li>If \(x\) is greater than or equal to zero, the ReLU function returns \(x\).</li>
+  <li>If \(x\) is negative, it returns zero.</li>
+  <li>This makes it a simple, piecewise linear function with a non-linearity introduced at \(x = 0\).</li>
+  <li>The term “ReLU” is used to refer to this specific activation function because it rectifies (i.e., sets to zero) any negative values in the input.</li>
+  <li>It is one of the most widely used activation functions in deep learning due to its simplicity and effectiveness.</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="c1"># Define the range of x values
+</span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="p">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+<span class="c1"># Calculate the corresponding ReLU values
+</span><span class="n">relu_values</span> <span class="o">=</span> <span class="p">[</span><span class="n">F</span><span class="p">.</span><span class="n">relu</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">tensor</span><span class="p">(</span><span class="n">val</span><span class="p">)).</span><span class="n">numpy</span><span class="p">()</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">x</span><span class="p">]</span>
+
+<span class="c1"># Create the plot
+</span><span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">relu_values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">'ReLU'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">'x'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">'ReLU(x)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="s">'ReLU Activation Function'</span><span class="p">)</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-10-25-MNIST_Recognition_files/2023-10-25-MNIST_Recognition_210_0.png" alt="png" /></p>
+
+<h3 id="two-layer-net">Two Layer Net</h3>
+
+<p>Lets define a neural network model called <code class="language-plaintext highlighter-rouge">two_layer_net</code> consists of two linear layers separated by a ReLU activation function and a Softmax activation function. It takes an input vector of size 28*28, applies a linear transformation followed by a ReLU activation, then applies another linear transformation, and finally, applies a Softmax activation to produce class probabilities.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create a model that includes two linear layers with a ReLU inbetween and softmax layer output
+</span><span class="n">two_layer_net_pytorch</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">28</span> <span class="o">*</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>
+    <span class="n">nn</span><span class="p">.</span><span class="n">ReLU</span><span class="p">(),</span>
+    <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="n">nn</span><span class="p">.</span><span class="n">Softmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="number-of-model-parameters">Number of Model Parameters</h3>
+
+<p>The number of parameters between our simple_net and two_layer_net have gone up too. This also introduces complexity as the model now has to learn weights and biases for a more unknowns.</p>
+
+<p>In our Simple Net model, we have two components:</p>
+
+<ol>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">nn.Linear(28 * 28, 10)</code> - This is a linear layer that maps an input of size 28 * 28 to an output of size 10. It has a weight matrix of shape (10, 784) and a bias vector of shape (10). So, the number of parameters in this linear layer is:</p>
+
+    <ul>
+      <li>Number of parameters in the weight matrix = 10 (output features) x 784 (input features) = 7,840.</li>
+      <li>Number of parameters in the bias vector = 10.</li>
+    </ul>
+
+    <p>Total parameters in this linear layer = 7,840 (weight matrix) + 10 (bias vector) = 7,850 parameters.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">nn.Softmax(dim=1)</code> - The softmax layer doesn’t introduce any new parameters. It’s simply a mathematical operation applied to the output of the linear layer.</p>
+  </li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">w</span><span class="p">,</span><span class="n">b</span> <span class="o">=</span> <span class="n">simple_net_pytorch</span><span class="p">.</span><span class="n">parameters</span><span class="p">()</span>
+<span class="n">w</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span><span class="n">b</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(torch.Size([10, 784]), torch.Size([10]))
+</code></pre></div></div>
+
+<p>Therefore, the total number of parameters in our <code class="language-plaintext highlighter-rouge">simple_net_pytorch</code> model is the number of parameters in the linear layer, which is 7,850 parameters.</p>
+
+<p>The number of model parameters in our <code class="language-plaintext highlighter-rouge">two_layer_net_pytorch</code> model, Here’s the breakdown:</p>
+
+<ol>
+  <li><strong>First Linear Layer:</strong>
+    <ul>
+      <li>Input Features: 28 * 28 = 784</li>
+      <li>Output Features: 30</li>
+      <li>Number of Parameters (Weights and Biases): (784 input features * 30 output features) + 30 bias terms = 23,550 parameters</li>
+    </ul>
+  </li>
+  <li><strong>Second Linear Layer:</strong>
+    <ul>
+      <li>Input Features: 30</li>
+      <li>Output Features: 10</li>
+      <li>Number of Parameters (Weights and Biases): (30 input features * 10 output features) + 10 bias terms = 310 parameters</li>
+    </ul>
+  </li>
+  <li><strong>Softmax Layer:</strong>
+    <ul>
+      <li>The Softmax layer does not introduce any additional parameters. It’s a normalization operation.</li>
+    </ul>
+  </li>
+</ol>
+
+<p>Now, we can sum up the parameters from each of the layers to get the total number of model parameters:</p>
+
+<p>Total Parameters = 23,550 (First Linear Layer) + 310 (Second Linear Layer) = 23,860 parameters</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">w1</span><span class="p">,</span><span class="n">b1</span><span class="p">,</span><span class="n">w2</span><span class="p">,</span><span class="n">b2</span> <span class="o">=</span> <span class="n">two_layer_net_pytorch</span><span class="p">.</span><span class="n">parameters</span><span class="p">()</span>
+<span class="n">w1</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span><span class="n">b1</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span><span class="n">w2</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span><span class="n">b2</span><span class="p">.</span><span class="n">shape</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(torch.Size([30, 784]),
+ torch.Size([30]),
+ torch.Size([10, 30]),
+ torch.Size([10]))
+</code></pre></div></div>
+
+<p>So, our <code class="language-plaintext highlighter-rouge">two_layer_net_pytorch</code> model has a total of 23,860 parameters. These parameters are used to define the weights and biases that the model learns during training to make predictions. Increasing the number of parameters in a model typically increases its capacity to fit the training data.</p>
+
+<h2 id="end-to-end-pytorch-code">End-to-End Pytorch Code</h2>
+
+<h3 id="setup-dataloaders">Setup DataLoaders</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Define a custom transform function to flatten the tensor
+</span><span class="k">def</span> <span class="nf">flatten_transform</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="c1"># Assuming 'data' is a PyTorch tensor of size [batch_size, 28, 28]
+</span>    <span class="c1"># batch_size, height, width = data.size()
+</span>    <span class="k">return</span> <span class="n">data</span><span class="p">.</span><span class="n">view</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">batch_size_train</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">batch_size_test</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">train_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">DataLoader</span><span class="p">(</span>
+  <span class="n">torchvision</span><span class="p">.</span><span class="n">datasets</span><span class="p">.</span><span class="n">MNIST</span><span class="p">(</span><span class="s">'/files/'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                             <span class="n">transform</span><span class="o">=</span><span class="n">torchvision</span><span class="p">.</span><span class="n">transforms</span><span class="p">.</span><span class="n">Compose</span><span class="p">([</span>
+                               <span class="n">torchvision</span><span class="p">.</span><span class="n">transforms</span><span class="p">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+                               <span class="n">torchvision</span><span class="p">.</span><span class="n">transforms</span><span class="p">.</span><span class="n">Normalize</span><span class="p">(</span>
+                                 <span class="p">(</span><span class="mf">0.1307</span><span class="p">,),</span> <span class="p">(</span><span class="mf">0.3081</span><span class="p">,)),</span>
+                               <span class="n">flatten_transform</span>
+                             <span class="p">])),</span>
+  <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size_train</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">test_loader</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">utils</span><span class="p">.</span><span class="n">data</span><span class="p">.</span><span class="n">DataLoader</span><span class="p">(</span>
+  <span class="n">torchvision</span><span class="p">.</span><span class="n">datasets</span><span class="p">.</span><span class="n">MNIST</span><span class="p">(</span><span class="s">'/files/'</span><span class="p">,</span> <span class="n">train</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                             <span class="n">transform</span><span class="o">=</span><span class="n">torchvision</span><span class="p">.</span><span class="n">transforms</span><span class="p">.</span><span class="n">Compose</span><span class="p">([</span>
+                               <span class="n">torchvision</span><span class="p">.</span><span class="n">transforms</span><span class="p">.</span><span class="n">ToTensor</span><span class="p">(),</span>
+                               <span class="n">torchvision</span><span class="p">.</span><span class="n">transforms</span><span class="p">.</span><span class="n">Normalize</span><span class="p">(</span>
+                                 <span class="p">(</span><span class="mf">0.1307</span><span class="p">,),</span> <span class="p">(</span><span class="mf">0.3081</span><span class="p">,)),</span>
+                               <span class="n">flatten_transform</span>
+                             <span class="p">])),</span>
+  <span class="n">batch_size</span><span class="o">=</span><span class="n">batch_size_test</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="setup-model">Setup Model</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create a model that includes two linear layers with a ReLU inbetween and softmax layer output
+</span><span class="n">two_layer_net_pytorch</span> <span class="o">=</span> <span class="n">nn</span><span class="p">.</span><span class="n">Sequential</span><span class="p">(</span>
+    <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">28</span> <span class="o">*</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>
+    <span class="n">nn</span><span class="p">.</span><span class="n">ReLU</span><span class="p">(),</span>
+    <span class="n">nn</span><span class="p">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+    <span class="n">nn</span><span class="p">.</span><span class="n">Softmax</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="setup-optimizer">Setup Optimizer</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Create the SGD optimizer
+</span><span class="n">lr</span><span class="o">=</span> <span class="mf">0.001</span>
+<span class="n">optSGD</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">optim</span><span class="p">.</span><span class="n">SGD</span><span class="p">(</span><span class="n">two_layer_net_pytorch</span><span class="p">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="n">lr</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="setup-loss-function">Setup Loss Function</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">cross_entropy_loss</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">num_classes</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="s">"""
+    Compute the Categorical Cross-Entropy Loss for a single example.
+
+    Args:
+    - y_true: True label for classes.
+    - y_pred: Predicted probability distribution for classes.
+
+    Returns:
+    - loss: Categorical Cross-Entropy Loss for the example.
+    """</span>
+    <span class="c1"># Convert y_true label to one hot encoded label
+</span>    <span class="n">onehot_y</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">eye</span><span class="p">(</span><span class="n">num_classes</span><span class="p">)[</span><span class="n">y_true</span><span class="p">]</span>
+
+    <span class="c1"># Ensure that onehot_y and y_pred have the same shape
+</span>    <span class="k">assert</span> <span class="n">onehot_y</span><span class="p">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">y_pred</span><span class="p">.</span><span class="n">shape</span><span class="p">,</span> <span class="s">"Shapes of y_true and y_pred must match."</span>
+
+    <span class="c1"># Compute the loss using the formula
+</span>    <span class="c1"># Apply the log-sum-exp trick to the computation of the logarithm
+</span>    <span class="c1"># This helps in preventing overflow or underflow when dealing with large or small probabilities
+</span>    <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">torch</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">onehot_y</span> <span class="o">*</span> <span class="n">torch</span><span class="p">.</span><span class="n">log</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">clamp</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="mf">1e-10</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)))</span>
+
+    <span class="k">return</span> <span class="n">loss</span>
+</code></pre></div></div>
+
+<h3 id="setup-validation-functions">Setup Validation Functions</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code> <span class="k">def</span> <span class="nf">compute_accuracy</span><span class="p">(</span><span class="n">x_pred</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+  <span class="s">"""
+  Compute the accuracy of current batch
+  :param x_pred: Probabilities from the model (N, num_classes)
+  :param y: Labels of instances in the batch
+  :return: The accuracy of the batch
+  """</span>
+  <span class="n">acc</span> <span class="o">=</span> <span class="bp">None</span>
+  <span class="n">predictions</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">x_pred</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+  <span class="n">acc</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nb">sum</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">eq</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">acc</span>
+
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">validate_epoch</span><span class="p">(</span><span class="n">model</span><span class="p">):</span>
+  <span class="n">accs</span> <span class="o">=</span> <span class="p">[</span><span class="n">compute_accuracy</span><span class="p">(</span><span class="n">model</span><span class="p">(</span><span class="n">xb</span><span class="p">),</span> <span class="n">yb</span><span class="p">)</span> <span class="k">for</span> <span class="n">xb</span><span class="p">,</span><span class="n">yb</span> <span class="ow">in</span> <span class="n">test_loader</span><span class="p">]</span> <span class="c1">#notice how we have used "test_loader" to load validation data instead of train loader
+</span>  <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">torch</span><span class="p">.</span><span class="n">stack</span><span class="p">(</span><span class="n">accs</span><span class="p">).</span><span class="n">mean</span><span class="p">().</span><span class="n">item</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="setup-training-loops">Setup Training Loops</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">running_loss_array</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># for plotting
+</span></code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">train_modelSGD</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">epochs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">epochs</span><span class="p">):</span>
+      <span class="c1">#reset running loss term at the start of each epoch
+</span>      <span class="n">running_loss</span> <span class="o">=</span> <span class="mf">0.0</span>
+      <span class="c1"># Inside each training epoch
+</span>      <span class="k">for</span> <span class="n">xb</span><span class="p">,</span><span class="n">yb</span> <span class="ow">in</span> <span class="n">train_loader</span><span class="p">:</span>
+        <span class="c1"># Forward pass: compute the predictions
+</span>        <span class="n">preds</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">xb</span><span class="p">)</span>
+        <span class="c1"># Compute the loss
+</span>        <span class="n">loss</span> <span class="o">=</span> <span class="n">cross_entropy_loss</span><span class="p">(</span><span class="n">yb</span><span class="p">,</span> <span class="n">preds</span><span class="p">)</span>
+        <span class="c1"># Backpropagation: compute gradients
+</span>        <span class="n">loss</span><span class="p">.</span><span class="n">backward</span><span class="p">()</span>
+        <span class="c1"># Update model parameters using the optimizer
+</span>        <span class="n">optSGD</span><span class="p">.</span><span class="n">step</span><span class="p">()</span>
+        <span class="c1"># Zero out gradients for the next iteration
+</span>        <span class="n">optSGD</span><span class="p">.</span><span class="n">zero_grad</span><span class="p">()</span>
+        <span class="c1">#update running loss
+</span>        <span class="n">running_loss</span> <span class="o">+=</span> <span class="n">loss</span><span class="p">.</span><span class="n">item</span><span class="p">()</span>
+        <span class="c1"># Validate model with test data
+</span>      <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Epoch </span><span class="si">{</span><span class="n">epoch</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s">, Loss: </span><span class="si">{</span><span class="n">running_loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+      <span class="n">running_loss_array</span><span class="p">.</span><span class="n">append</span><span class="p">(</span><span class="n">running_loss</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_loader</span><span class="p">))</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Training finished"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p class="notice--info"><strong>Note:</strong><br />
+Instead of our custom cross entropy function, you could also use Pytorch’s builtin CrossEntropy() by replacing with this line <code class="language-plaintext highlighter-rouge">loss = nn.CrossEntropyLoss()(preds, yb)</code>. The loss numbers might be a bit different due to our clipping implementation. Otherwise it should work the same.</p>
+
+<h3 id="validate-untrained-model">Validate Untrained Model</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">validate_epoch</span><span class="p">(</span><span class="n">two_layer_net_pytorch</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.1002
+</code></pre></div></div>
+
+<h3 id="train-model">Train Model</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">train_modelSGD</span><span class="p">(</span><span class="n">two_layer_net_pytorch</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Epoch 1, Loss: 21.64170510809559
+Epoch 2, Loss: 12.012829680940998
+Epoch 3, Loss: 9.28272529616793
+Epoch 4, Loss: 7.771995860503426
+Epoch 5, Loss: 6.813918805198629
+Epoch 6, Loss: 6.1480219960848155
+Epoch 7, Loss: 5.5584299946898845
+Epoch 8, Loss: 5.223822747244001
+Epoch 9, Loss: 4.834864173711998
+Epoch 10, Loss: 4.5417323889318055
+Epoch 11, Loss: 4.348731679829961
+Epoch 12, Loss: 4.027827564062975
+Epoch 13, Loss: 3.8369525568222187
+Epoch 14, Loss: 3.672533843833119
+Epoch 15, Loss: 3.4955074800245924
+Epoch 16, Loss: 3.364580295392191
+Epoch 17, Loss: 3.1875008494297323
+Epoch 18, Loss: 3.051080211345702
+Epoch 19, Loss: 2.900613680180075
+Epoch 20, Loss: 2.789949094840903
+Epoch 21, Loss: 2.678583399398622
+Epoch 22, Loss: 2.524789593232148
+Epoch 23, Loss: 2.4927152235751975
+Epoch 24, Loss: 2.3354366941095543
+Epoch 25, Loss: 2.2465149307413013
+Epoch 26, Loss: 2.196204055855269
+Epoch 27, Loss: 2.1166796047232554
+Epoch 28, Loss: 1.9974658906753702
+Epoch 29, Loss: 1.8981787455377421
+Epoch 30, Loss: 1.8687470412251157
+Epoch 31, Loss: 1.7183933960698814
+Epoch 32, Loss: 1.7198061869739851
+Epoch 33, Loss: 1.6514168239550104
+Epoch 34, Loss: 1.5461196306723552
+Epoch 35, Loss: 1.496226408560552
+Epoch 36, Loss: 1.461776315163114
+Epoch 37, Loss: 1.370120554558758
+Epoch 38, Loss: 1.3613034767716297
+Epoch 39, Loss: 1.267372168176599
+Epoch 40, Loss: 1.2393794075480655
+Training finished
+</code></pre></div></div>
+
+<h3 id="plot-train-loss-curve">Plot Train Loss Curve</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">plot_loss</span><span class="p">(</span><span class="n">loss_array</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">"Loss Curve"</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s">"Epoch"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s">"Loss"</span><span class="p">):</span>
+    <span class="s">"""
+    Plot a loss curve from an array of loss values.
+
+    Args:
+    - loss_array (list): List of loss values to be plotted.
+    - title (str): Title of the plot.
+    - xlabel (str): Label for the x-axis.
+    - ylabel (str): Label for the y-axis.
+    """</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span><span class="n">loss_array</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">"Loss"</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">xlabel</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">ylabel</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">grid</span><span class="p">(</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="p">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_loss</span><span class="p">(</span><span class="n">running_loss_array</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s">"Training Loss"</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s">"Epoch"</span><span class="p">,</span> <span class="n">ylabel</span><span class="o">=</span><span class="s">"Loss"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="/assets/images/2023-10-25-MNIST_Recognition_files/2023-10-25-MNIST_Recognition_244_0.png" alt="png" /></p>
+
+<h3 id="validate-model">Validate Model</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">validate_epoch</span><span class="p">(</span><span class="n">two_layer_net_pytorch</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0.9674
+</code></pre></div></div>
+
+<p>Excellent! We have achieved a good accuracy on our trained model indicating our implementation is working well! We will run some more tests to see if the model is really working.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Make predictions on the test data
+</span><span class="n">predictions</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">true_labels</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">with</span> <span class="n">torch</span><span class="p">.</span><span class="n">no_grad</span><span class="p">():</span>
+  <span class="n">outputs</span> <span class="o">=</span> <span class="n">two_layer_net_pytorch</span><span class="p">(</span><span class="n">example_data</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+  <span class="c1"># find the maximum value and its corresponding index along the second dimension - ignore the max value '_'
+</span>  <span class="n">_</span><span class="p">,</span> <span class="n">predicted</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nb">max</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="n">predictions</span><span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="n">predicted</span><span class="p">)</span>
+  <span class="n">true_labels</span><span class="p">.</span><span class="n">extend</span><span class="p">(</span><span class="n">example_targets</span><span class="p">[</span><span class="mi">5</span><span class="p">:</span><span class="mi">10</span><span class="p">])</span>
+
+<span class="c1"># Interpret the predictions
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">predictions</span><span class="p">)):</span>
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"Prediction: </span><span class="si">{</span><span class="n">predictions</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s">, True Label: </span><span class="si">{</span><span class="n">true_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Prediction: 4, True Label: 4
+Prediction: 6, True Label: 6
+Prediction: 4, True Label: 4
+Prediction: 0, True Label: 0
+Prediction: 7, True Label: 7
+</code></pre></div></div>
+
+<p>Thats the end of this article. You can access this notebook here. <a href="/assets/notebooks/2023-10-25-MNIST_Recognition.ipynb">Link to My Notebook</a></p>
+
+<h2 id="reference">Reference:</h2>
+<ul>
+  <li>https://github.com/fastai/fastbook/blob/master/04_mnist_basics.ipynb</li>
+  <li>https://nextjournal.com/gkoehler/pytorch-mnist</li>
+  <li>https://medium.com/tebs-lab/how-to-classify-mnist-digits-with-different-neural-network-architectures-39c75a0f03e3</li>
+  <li>https://jaykmody.com/blog/stable-softmax/</li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#basics" class="page__taxonomy-item" rel="tag">basics</a><span class="sep">, </span>
+    
+      <a href="/tags/#deep-learning" class="page__taxonomy-item" rel="tag">deep learning</a><span class="sep">, </span>
+    
+      <a href="/tags/#foundations" class="page__taxonomy-item" rel="tag">foundations</a><span class="sep">, </span>
+    
+      <a href="/tags/#mnist" class="page__taxonomy-item" rel="tag">MNIST</a><span class="sep">, </span>
+    
+      <a href="/tags/#neural-network" class="page__taxonomy-item" rel="tag">neural network</a>
+    
+    </span>
+  </p>
+
+
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2023-10-25T00:00:00-04:00">October 25, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  Share On <br>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Constructing+a+Neural+Network+to+Classify+Handwritten+Digits%20http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F10%2F25%2FMNIST_Recognition.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F10%2F25%2FMNIST_Recognition.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fposts%2F2023%2F10%2F25%2FMNIST_Recognition.html" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      <!-- 
+  <nav class="pagination">
+    
+      <a href="/2023/09/14/Gradient_Descent_Basics.html" class="pagination--pager" title="Understanding the Basics: Gradient Descent
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+ TO remove previous:next-->
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2023_09_14_Gradient_Descent_Basics_files/slope_illustration.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/2023/09/14/Gradient_Descent_Basics.html" rel="permalink">Understanding the Basics: Gradient Descent
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          12 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Gradient Descent is an optimization algorithm that iteratively adjusts model parameters in the direction of steepest descent of the loss function to find the...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2023-08-26-MiniProject_EmotionClassifer_Part3_files/human_emotion_classifier.gif" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/2023/08/24/MiniProject_EmotionClassifer_Part3.html" rel="permalink">MiniProject: Emotion Classifier - Part3
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          8 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Part3 of Building a Human Emotion Classifier - Front End GUI and Deployment
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/2023-08-09-MiniProject_EmotionClassifer_Part2_files/2023-08-09-MiniProject_EmotionClassifer_Part2_47_0.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/2023/08/09/MiniProject_EmotionClassifer_Part2.html" rel="permalink">MiniProject: Emotion Classifier - Part2
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          16 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Part2 of Building a Human Emotion Classifier using CNN by applying transfer Learning on Resnet18 implemented with FastAI
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+      <div class="archive__item-teaser">
+        <img src="/assets/images/MiniProject_Happy_Sad_Classifier_files/MiniProject_Happy_Sad_Classifier_23_0.png" alt="">
+      </div>
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/2023/08/04/MiniProject_EmotionClassifer_Part1.html" rel="permalink">MiniProject: Emotion Classifier - Part1
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          12 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Part1 of Building a Human Emotion Classifier using CNN by applying transfer Learning on Resnet18 implemented with FastAI
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="https://www.linkedin.com/in/vimal-venugopal-1311a519/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+        
+      
+        
+          <li><a href="https://github.com/VMLverse" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/vimstargram/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 Vimal Venugopal. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    
+  <script>
+    var disqus_config = function () {
+      this.page.url = "http://localhost:4000/posts/2023/10/25/MNIST_Recognition.html";  /* Replace PAGE_URL with your page's canonical URL variable */
+      this.page.identifier = "/posts/2023/10/25/MNIST_Recognition"; /* Replace PAGE_IDENTIFIER with your page's unique identifier variable */
+    };
+    (function() { /* DON'T EDIT BELOW THIS LINE */
+      var d = document, s = d.createElement('script');
+      s.src = 'https://vmlverse.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+  
+
+
+
+
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+
+
+  </body>
+</html>

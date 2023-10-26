@@ -82,4 +82,10 @@ var store = [{
         "tags": ["machine learning","deep learning","gradient descent","SGD","basics"],
         "url": "/2023/09/14/Gradient_Descent_Basics.html",
         "teaser": "/assets/images/2023_09_14_Gradient_Descent_Basics_files/slope_illustration.png"
+      },{
+        "title": "Constructing a Neural Network to Classify Handwritten Digits",
+        "excerpt":"Introduction I was reading through FastAI’s material which covered the basics of a neural network while showing an example of MNIST character recognition. However it was a simple binary classifier which recognizes if a digit was 3 or 7. The complete classification was left as an open assignment. I tried...","categories": ["posts"],
+        "tags": ["neural network","deep learning","foundations","basics","MNIST"],
+        "url": "/posts/2023/10/25/MNIST_Recognition.html",
+        "teaser": null
       }]

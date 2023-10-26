@@ -11,7 +11,7 @@ Steps To Convert Notebook to blogpost
 
 2. Convert the .ipynb to a markdown (.md) file using command line
     ```
-    $ jupyter nbconvert --to markdown 2023-08-04-Machine_Learning_Foundations_Through_QA.ipynb
+    $ jupyter nbconvert --to markdown 2023-10-25-MNIST_Recognition.ipynb
     ```
 
 3. Move the images folder that was generated in step#2 to ./assets/images/

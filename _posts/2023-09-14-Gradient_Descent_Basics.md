@@ -34,8 +34,7 @@ The below seven steps are the key to the training of all deep learning models.
 ## Gradient Descent Intuition
 
 We can gain intuition by applying the above steps to a simple problem.
-
-- Let's pretend a simple quadratic $x^2$ as our loss function, and x is a weight parameter of the function.
+- Let's pretend a simple quadratic $$x^2$$ as our loss function, and x is a weight parameter of the function.
 - Lets pick a random value for our weight parameter,say -1.5 and calculate the loss. (we are already at step 3 of the above outline)
 
 
@@ -497,7 +496,7 @@ We just decided to stop after 10 epochs arbitrarily. In practice, we would watch
 
 ## SGD Example: MNIST Dataset
 
-We can now try to attempt something more difficult. Check out my next article which dives into this in detail.
+We can now try to attempt something more difficult. Check out my [next article]({% post_url 2023-10-25-MNIST_Recognition %}) which dives into this in detail.
 
 ## Notebook
 You can also find this article in notebook form. 
