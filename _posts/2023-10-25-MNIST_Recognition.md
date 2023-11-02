@@ -188,7 +188,7 @@ numpy_array[6:12,6:12]
 
 
 
-The notation "6:12" specifies that we've selected rows starting from index 6 (inclusive) up to index 12 (exclusive), and the same applies to columns. In NumPy, indexing proceeds from top to bottom and left to right, so this section corresponds to the top-left corner of the image. Here's the equivalent operation using a PyTorch tensor:
+The notation "6:12" specifies that we've selected rows starting from index 6 (inclusive) up to index 12 (exclusive), and the same applies to columns. In NumPy, indexing proceeds from top to bottom and left to right, so this section corresponds to the top-left corner of the image.
 
 ### Normalize the data
 Normalization is an important preprocessing step that contributes to the stability, efficiency, and effectiveness of machine learning models.
