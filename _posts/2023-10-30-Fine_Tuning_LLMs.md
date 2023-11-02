@@ -3,6 +3,8 @@ title:  "Optimizing Language Model Training: PEFT, LoRa, and QLoRa Techniques"
 category: posts
 date: 2023-10-30
 excerpt: "techniques in fine-tuning large language models (LLMs) with significantly reduced RAM requirements"
+header:
+  teaser: /assets/images/2023-10-28-AWS_EnterpriseSearch/IMG_1867t.jpeg
 toc: false
 toc_label: "Contents"
 tags:

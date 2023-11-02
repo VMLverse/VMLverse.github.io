@@ -3,6 +3,8 @@ title:  "LLM Based Enterprise Search Solution using RAG In AWS"
 category: posts
 date: 2023-10-28
 excerpt: "Building Large Language Models for Complex Enterprise Search Tasks using Retrieval Augmented Generation (RAG) - In AWS"
+header:
+  teaser: /assets/images/2023-10-28-AWS_EnterpriseSearch/IMG_1868t.jpeg
 toc: false
 toc_label: "Contents"
 tags:

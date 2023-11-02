@@ -3,6 +3,8 @@ title:  "Constructing a Neural Network to Classify Handwritten Digits"
 category: posts
 date: 2023-10-25
 excerpt: "Build a Neural Network from scratch to recognize handwritten digits and later implement a Deep Neural Network using Pytorch"
+header:
+  teaser: /assets/images/2023-10-25-MNIST_Recognition_files/gradient_descent.png
 toc: false
 toc_label: "Contents"
 tags:
