@@ -1,7 +1,7 @@
 ---
 title:  "LLM Based Enterprise Search Solution using RAG In AWS"
 category: posts
-date: 2023-10-27
+date: 2023-10-28
 excerpt: "Building Large Language Models for Complex Enterprise Search Tasks using Retrieval Augmented Generation (RAG) - In AWS"
 toc: false
 toc_label: "Contents"
@@ -130,3 +130,5 @@ AWS Workflow of Question Answering over Documents:
 - LangChain [link](https://python.langchain.com/docs/get_started/introduction)
 - AWS Kendra Langchain Extensions - Github [link](https://github.com/aws-samples/amazon-kendra-langchain-extensions)
 - AWS Kendra Demo YouTube [link](https://www.youtube.com/watch?v=NJoEyIZ_Tas&ab_channel=AWSDevelopers)
+- Machine Learning How to Start in AWS [link](https://aws.amazon.com/getting-started/decision-guides/machine-learning-on-aws-how-to-choose/)
+- AWS ML Workshop With UseCases [link](https://catalog.us-east-1.prod.workshops.aws/workshops/a4bdb007-5600-4368-81c5-ff5b4154f518/en-US)
