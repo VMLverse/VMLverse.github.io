@@ -5,7 +5,7 @@ date: 2023-10-30
 excerpt: "Building a Q&A app capable of answering questions related to your enterprise documents using LLama2 7B Chat and Chroma Vector Database."
 header:
   teaser: /assets/images/2023-12-10-huggingface_llama2_quantized/Chatbot_lang.png
-toc: false
+toc: true
 toc_label: "Contents"
 tags:
   - LLM
@@ -24,7 +24,7 @@ tags:
 
 RAG lets you give extra info to your large language models without making them go through training again. It's like a shortcut! You grab info from places like document stores, databases, or APIs.
 
-In this blog, we're diving into RAG using a free-tier Google Colab notebook. You'll find out:
+In this blog, we will see how we can implement an Retrievel Based Augmentation using a free-tier Google Colab notebook. Note, that this is only a Proof of Concept to get a better understanding behind RAG. Since this notebook is executable on Colab, you can play around to get a better intuition behind RAG. You'll find out:
 - Why RAG is useful
 - How to turn a document into embeddings
 - Storing those embeddings in a vector database
