@@ -35,17 +35,17 @@ For some reason ipynb markdown supports single $ sign to indicte $math_formula$ 
 
 8. Finally include metadata at the beginning of the article
 ---
-title:  "Machine Learning Foundations Through Q&A"
+title:  "Optimizing Language Model Training: PEFT, LoRa, and QLoRa Techniques"
 category: posts
-date: 2023-08-04
-excerpt: "we will try to understand the foundations of Machine learning & Deep learning in the form of Q&A."
+date: 2023-10-30
+excerpt: "techniques in fine-tuning large language models (LLMs) with significantly reduced RAM requirements"
+header:
+  teaser: /assets/images/2023-10-28-AWS_EnterpriseSearch/IMG_1867t.jpeg
 toc: false
 toc_label: "Contents"
 tags:
-  - machine learning
-  - deep learning
-  - foundations
-  - basics
+  - LLM
+  - fine-tuning
 ---
 9. Check locally first by running commands:
 '$ bundle update'
